@@ -1,0 +1,36 @@
+<!-- Mensaje de error -->
+<div *ngIf="errorMessage" class="error">
+    {{ errorMessage }}
+</div>
+
+<!-- Formulario para crear una especialidad -->
+<form *ngIf="!especialidadEdit" (ngSubmit)="guardarEspecialidad()">
+    <label>Nombre:</label>
+    <input type="text" [(ngModel)]="newEspecialidad.nombre" name="nombre" required />
+  
+    <label>Código:</label>
+    <input type="text" [(ngModel)]="newEspecialidad.codigo" name="codigo" required />
+  
+    <button type="submit">Guardar</button>
+    <button type="button" (click)="cancelarEdicion()">Cancelar</button>
+</form>
+
+<!-- Formulario para editar una especialidad -->
+<form *ngIf="especialidadEdit" (ngSubmit)="guardarEspecialidad()">
+    <label>Nombre:</label>
+    <input type="text" [(ngModel)]="especialidadEdit.nombre" name="nombre" required />
+  
+    <label>Código:</label>
+    <input type="text" [(ngModel)]="especialidadEdit.codigo" name="codigo" required />
+  
+    <button type="submit">Actualizar Especialidad</button>
+    <button type="button" (click)="cancelarEdicion()">Cancelar</button>
+</form>
+
+<!-- Lista de especialidades -->
+<ul>
+    <li *ngFor="let especialidad of especialidades">
+        {{ especialidad.nombre }} ({{ especialidad.codigo }})
+        <button (click)="editarEspecialidad(especialidad)">Editar</button>
+    </li>
+</ul>

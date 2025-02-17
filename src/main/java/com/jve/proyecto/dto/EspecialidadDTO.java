@@ -38,9 +38,4 @@ public class EspecialidadDTO {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
-
-    public Object getDescripcion() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDescripcion'");
-    }
 }

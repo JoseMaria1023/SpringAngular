@@ -51,7 +51,9 @@ public class SecurityConfig {
                 .authorizeRequests(requests -> requests
                         .requestMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll() // Permitir acceso público
                         .requestMatchers(HttpMethod.GET, "/api/participantes/**").permitAll() // Permitir acceso público
-                        .requestMatchers(HttpMethod.GET, "/api/especialidades/**").hasRole("EXPERTO") // TODO -> pruebas
+                        .requestMatchers(HttpMethod.GET, "/api/especialidades/**").hasAuthority("ROLE_ADMIN") // TODO -> pruebas
+                        .requestMatchers(HttpMethod.GET, "/api/especialidades/todos").hasAuthority("ROLE_ADMIN")
+
 //                        .requestMatchers(HttpMethod.GET, "/api/especialidades/**").permitAll() // Permitir acceso público para listar especialidades
                         .requestMatchers(HttpMethod.GET, "/api/expertos/**").permitAll() // Permitir acceso público
                         .requestMatchers(HttpMethod.GET, "/api/ganadores/**").permitAll() // Permitir acceso público

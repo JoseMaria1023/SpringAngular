@@ -12,13 +12,19 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "Especialidad")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Especialidad {
 
     @Id
@@ -41,8 +47,4 @@ public class Especialidad {
     @OneToMany(mappedBy = "especialidad", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<User> users = new ArrayList<>();
 
-    public void setDescripcion(Object descripcion) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setDescripcion'");
-    }
 }
