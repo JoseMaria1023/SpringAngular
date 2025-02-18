@@ -19,6 +19,7 @@ public class ParticipanteConverter {
     }
 
     public Participante dtoToEntity(ParticipanteDTO dto) {
-        return modelMapper.map(dto, Participante.class);
+        Participante participante = modelMapper.map(dto, Participante.class);
+        return participante;
     }
 }

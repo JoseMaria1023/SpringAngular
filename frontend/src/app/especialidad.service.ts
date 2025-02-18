@@ -12,7 +12,7 @@ export class EspecialidadService {
   constructor(private http: HttpClient) {}
 
   getEspecialidades() {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
@@ -21,7 +21,7 @@ export class EspecialidadService {
   }
 
   createEspecialidad(especialidad: any) {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`,  
       'Content-Type': 'application/json'
@@ -31,7 +31,7 @@ export class EspecialidadService {
   }
 
   updateEspecialidad(id: number, especialidad: any): Observable<any> {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'

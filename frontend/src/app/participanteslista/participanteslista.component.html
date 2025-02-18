@@ -1,7 +1,3 @@
-<div *ngIf="loading">Cargando participantes...</div>
-<div *ngIf="!loading && participantes.length === 0">
-  No hay participantes para esta especialidad.
-</div>
 <table *ngIf="!loading && participantes.length > 0">
   <thead>
     <tr>
@@ -9,6 +5,7 @@
       <th>Apellidos</th>
       <th>Centro</th>
       <th>Especialidad</th>
+      <th>Acciones</th> <!-- Columna de acciones -->
     </tr>
   </thead>
   <tbody>
@@ -16,7 +13,11 @@
       <td>{{ participante.nombre }}</td>
       <td>{{ participante.apellidos }}</td>
       <td>{{ participante.centro }}</td>
-      <td>{{ participante.especialidad }}</td>
+      <td>{{ participante.especialidadid }}</td>
+      <td>
+        <!-- Botón de editar, que redirige a la vista de edición -->
+        <button [routerLink]="['/participante/editar', participante.id]" class="btn-edit">Editar</button>
+      </td>
     </tr>
   </tbody>
 </table>

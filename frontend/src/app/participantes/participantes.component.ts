@@ -11,7 +11,7 @@ export class ParticipantesComponent {
   constructor(private router: Router) {}
 
   verParticipantes(): void {
-    this.router.navigate(['/participantes']);
+    this.router.navigate(['/participantes/lista']);
   }
 
   crearParticipante(): void {

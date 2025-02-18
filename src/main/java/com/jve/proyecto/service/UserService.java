@@ -48,16 +48,16 @@ public class UserService {
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
-    public String getEspecialidadByUsername(String username) {
+
+    public Long getEspecialidadByUsername(String username) {
         Optional<User> userOpt = userRepository.findByUsername(username);
     
         if (userOpt.isPresent()) {
             User user = userOpt.get();
             return user.getEspecialidad() != null ? 
-                user.getEspecialidad().toString() : null;  
+                user.getEspecialidad().getIdEspecialidad() : null; 
         } else {
             throw new RuntimeException("Usuario no encontrado"); 
         }
     }
-    
 }

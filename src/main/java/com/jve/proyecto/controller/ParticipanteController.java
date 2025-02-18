@@ -27,9 +27,8 @@ public class ParticipanteController {
     @PostMapping("/crear")
     public ResponseEntity<ParticipanteDTO> crearParticipante(@Valid @RequestBody ParticipanteDTO participanteDTO, Authentication authentication) {
         String username = authentication.getName();
-        String especialidad = userService.getEspecialidadByUsername(username);  
-        participanteDTO.setEspecialidadId(Long.parseLong(especialidad));
-    
+        Long especialidadId = userService.getEspecialidadByUsername(username);
+        participanteDTO.setEspecialidadId(especialidadId); 
         ParticipanteDTO savedParticipante = participanteService.guardarParticipante(participanteDTO);
     
         return ResponseEntity.ok(savedParticipante);
@@ -38,9 +37,9 @@ public class ParticipanteController {
     @GetMapping("/todos")
     public ResponseEntity<List<ParticipanteDTO>> TraerCompetidores(Authentication authentication) {
         String username = authentication.getName();  
-        String especialidad = userService.getEspecialidadByUsername(username);  
+        Long especialidadId = userService.getEspecialidadByUsername(username);
         
-        List<ParticipanteDTO> participantes = participanteService.TraerCompetidoresParticipantesPorEspecialidad(Long.parseLong(especialidad));
+        List<ParticipanteDTO> participantes = participanteService.TraerCompetidoresParticipantesPorEspecialidad(especialidadId);
         return ResponseEntity.ok(participantes);
     }
 

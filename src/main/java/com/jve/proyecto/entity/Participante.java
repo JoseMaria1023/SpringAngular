@@ -4,6 +4,8 @@ package com.jve.proyecto.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,18 +17,17 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "Participante")
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+
 public class Participante {
 
     @Id
@@ -44,7 +45,9 @@ public class Participante {
     private String centro;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "Especialidad_idEspecialidad")
+    
     private Especialidad especialidad;
 
     @OneToMany(mappedBy = "participante", cascade = CascadeType.ALL, orphanRemoval = true)

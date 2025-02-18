@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class ParticipanteService {
 
     private final ParticipanteRepository participanteRepository;
-    private final EspecialidadRepository especialidadRepository;  // Repositorio para obtener la especialidad
+    private final EspecialidadRepository especialidadRepository;  
     private final ParticipanteConverter participanteConverter;
 
     public ParticipanteService(ParticipanteRepository participanteRepository, EspecialidadRepository especialidadRepository, ParticipanteConverter participanteConverter) {

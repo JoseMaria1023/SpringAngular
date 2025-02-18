@@ -10,12 +10,9 @@ export class ExpertoGuard implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const token = this.authService.getToken();
-    console.log("ExpertoGuard: token =", token);
     if (token && this.authService.getRoles().includes('ROLE_EXPERTO')) {
-      console.log("ExpertoGuard: acceso permitido");
       return true;
     } else {
-      console.log("ExpertoGuard: acceso denegado, redirigiendo a /home");
       this.router.navigate(['/home']);
       return false;
     }

@@ -20,7 +20,6 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
   login(credentials: { username: string; password: string }): Observable<LoginResponse> {
-    console.log("AuthService: intentando login con", credentials);
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials);
   }
 
@@ -34,7 +33,6 @@ export class AuthService {
     const roles = response.roles || response.authorities || [];
     sessionStorage.setItem('roles', JSON.stringify(roles));
     this.username = response.username;
-    console.log("AuthService: sesión guardada, username =", response.username);
   }
 
   getToken(): string | null {

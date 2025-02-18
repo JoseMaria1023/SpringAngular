@@ -27,7 +27,6 @@ export class LoginComponent {
     }
   
     const credentials = this.loginForm.value;
-    console.log("LoginComponent: intentando login con", credentials);
     this.authService.login(credentials).subscribe(
       (response) => {
         this.authService.setSession(response);

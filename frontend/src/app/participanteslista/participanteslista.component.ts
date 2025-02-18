@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ParticipanteService } from '../participantes.service';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-participanteslista',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule,RouterModule],
   templateUrl: './participanteslista.component.html',
   styleUrl: './participanteslista.component.css'
 })

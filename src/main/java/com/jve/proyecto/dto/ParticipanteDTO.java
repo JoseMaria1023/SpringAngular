@@ -25,6 +25,6 @@ public class ParticipanteDTO {
     private String centro;
 
     @NotNull(message = "La especialidad es obligatoria")
-    private Long especialidadId; // Debería ser Integer ya que es el ID de la especialidad
+    private Long especialidadId; 
 
 }

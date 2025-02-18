@@ -1,0 +1,20 @@
+<form (ngSubmit)="actualizarParticipante()">
+    <div>
+      <label for="nombre">Nombre:</label>
+      <input [(ngModel)]="participante.nombre" name="nombre" id="nombre" required>
+    </div>
+    <div>
+      <label for="apellidos">Apellidos:</label>
+      <input [(ngModel)]="participante.apellidos" name="apellidos" id="apellidos" required>
+    </div>
+    <div>
+      <label for="centro">Centro:</label>
+      <input [(ngModel)]="participante.centro" name="centro" id="centro" required>
+    </div>
+    <div>
+      <label for="especialidadid">Especialidad:</label>
+      <input [(ngModel)]="participante.especialidadid" name="especialidadid" id="especialidadid" required>
+    </div>
+    <button type="submit">Actualizar</button>
+  </form>
+  
