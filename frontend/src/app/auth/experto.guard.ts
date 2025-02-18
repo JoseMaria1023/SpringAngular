@@ -13,13 +13,13 @@ export class ExpertoGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    const user = this.authService.getUserData(); // Obtener los datos del usuario desde el JWT
+    const user = this.authService.getUserData(); 
 
     if (user && user.roles.includes('experto')) {
-      return true; // Permitir acceso solo si es experto
+      return true;
     } else {
-      this.router.navigate(['/']); // Redirigir al Home si no es experto
-      return false; // Bloquear el acceso
+      this.router.navigate(['/']); 
+      return false; 
     }
   }
 }

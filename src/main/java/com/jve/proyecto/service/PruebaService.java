@@ -26,7 +26,7 @@ public class PruebaService {
         return modelMapper.map(savedPrueba, PruebaDTO.class);
     }
 
-    public List<PruebaDTO> obtenerTodos() {
+    public List<PruebaDTO> TraerTodos() {
         return pruebaRepository.findAll().stream()
                 .map(prueba -> modelMapper.map(prueba, PruebaDTO.class))
                 .collect(Collectors.toList());

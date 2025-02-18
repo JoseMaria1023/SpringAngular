@@ -25,7 +25,7 @@ public class ItemService {
         return itemConverter.entityToDto(savedItem);
     }
 
-    public List<ItemDTO> obtenerTodos() {
+    public List<ItemDTO> TraerTodos() {
         return itemRepository.findAll().stream()
                 .map(itemConverter::entityToDto)
                 .collect(Collectors.toList());

@@ -25,8 +25,8 @@ public class EspecialidadController {
     }
 
     @GetMapping("/todos")
-        public ResponseEntity<List<EspecialidadDTO>> obtenerTodasLasEspecialidades() {
-        List<EspecialidadDTO> especialidades = especialidadService.obtenerTodos();
+        public ResponseEntity<List<EspecialidadDTO>> TraerTodasLasEspecialidades() {
+        List<EspecialidadDTO> especialidades = especialidadService.TraerTodos();
         return ResponseEntity.ok(especialidades);
     }
 

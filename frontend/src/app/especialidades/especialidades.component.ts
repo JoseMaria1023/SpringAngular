@@ -14,7 +14,7 @@ import { of } from 'rxjs';
 })
 export class EspecialidadesComponent implements OnInit {
   especialidades: any[] = [];
-  especialidadEdit: any = null;
+  especialidadEdit: any = null;  // Inicialmente null para mostrar el formulario de crear
   newEspecialidad: any = { nombre: '', codigo: '' };
   isAdmin: boolean = false;
   isExperto: boolean = false;
@@ -45,48 +45,49 @@ export class EspecialidadesComponent implements OnInit {
   }
 
   guardarEspecialidad(): void {
-    if (this.especialidadEdit?.id) {
+    if (this.especialidadEdit?.idEspecialidad) {
       this.editarEspecialidad(this.especialidadEdit);
     } else {
       this.crearEspecialidad();
     }
   }
+
+  seleccionarEspecialidad(especialidad: any): void {
+    this.especialidadEdit = { ...especialidad };  // Cargar los datos para editar
+  }
   
   editarEspecialidad(especialidad: any): void {
-    // Asegurarse de que el ID está presente y es válido
-    if (!especialidad.id) {
-        this.errorMessage = 'ID de especialidad no válido.';
-        return;
+    if (!especialidad.idEspecialidad) {
+      this.errorMessage = 'ID de especialidad no válido.';
+      return;
     }
 
-    this.especialidadService.updateEspecialidad(especialidad.id, especialidad)
+    this.especialidadService.updateEspecialidad(especialidad.idEspecialidad, especialidad)
         .subscribe({
             next: () => {
                 this.loadEspecialidades();
-                this.especialidadEdit = null; // Limpiar la edición
+                this.cancelarEdicion(); // Limpiar la edición después de actualizar
             },
             error: (error) => {
                 this.errorMessage = 'Error al actualizar la especialidad';
             }
         });
-}
-  
-  
+  }
+
   crearEspecialidad(): void {
     this.especialidadService.createEspecialidad(this.newEspecialidad)
       .subscribe({
         next: () => {
           this.loadEspecialidades();
-          this.newEspecialidad = { nombre: '', codigo: '' }; // Limpiar los campos del formulario
+          this.newEspecialidad = { nombre: '', codigo: '' }; // Limpiar el formulario de creación
         },
         error: (error) => {
           this.errorMessage = 'Error al crear la especialidad';
         }
       });
   }
-  
+
   cancelarEdicion(): void {
-    this.especialidadEdit = null; // Limpiar la edición en curso
-    this.newEspecialidad = { nombre: '', codigo: '' }; // Limpiar formulario de creación si se está editando
+    this.especialidadEdit = null; // Volver al formulario de crear
   }
-}  
+}

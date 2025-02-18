@@ -24,14 +24,14 @@ public class ParticipanteService {
         this.participanteConverter = participanteConverter;
     }
 
-    public List<ParticipanteDTO> obtenerParticipantesPorEspecialidad(int especialidadId) {
+    public List<ParticipanteDTO> TraerCompetidoresParticipantesPorEspecialidad(long especialidadId) {
         List<Participante> participantes = participanteRepository.findByEspecialidad_idEspecialidad(especialidadId);
         return participantes.stream()
                             .map(participanteConverter::entityToDto)
                             .collect(Collectors.toList());
     }
 
-    public ParticipanteDTO editarParticipante(Integer id, ParticipanteDTO participanteDTO) {
+    public ParticipanteDTO editarParticipante(Long id, ParticipanteDTO participanteDTO) {
         Participante participanteExistente = participanteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Participante no encontrado"));
 

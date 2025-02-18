@@ -27,8 +27,8 @@ public class PruebaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PruebaDTO>> obtenerTodasLasPruebas() {
-        List<PruebaDTO> pruebas = pruebaService.obtenerTodos();
+    public ResponseEntity<List<PruebaDTO>> TraerTodasLasPruebas() {
+        List<PruebaDTO> pruebas = pruebaService.TraerTodos();
         return ResponseEntity.ok(pruebas);
     }
 }

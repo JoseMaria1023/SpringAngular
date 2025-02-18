@@ -31,15 +31,17 @@ export class EspecialidadService {
   }
 
   updateEspecialidad(id: number, especialidad: any): Observable<any> {
-    console.log('Enviando especialidad:', especialidad);  // Verifica qué datos se están enviando
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
   
-    // Asegúrate de pasar el id correctamente en la URL
-    return this.http.put<any>(`${this.apiUrl}/editar/${id}`, especialidad)
-      .pipe(
-        catchError(error => {
-          console.error('Error al actualizar especialidad', error);
-          return throwError(() => new Error('Error al actualizar especialidad'));
-        })
-      );
+    return this.http.put<any>(`${this.apiUrl}/editar/${id}`, especialidad, { headers }).pipe(
+      catchError(error => {
+        console.error('Error al actualizar especialidad', error);
+        return throwError(() => new Error('Error al actualizar especialidad'));
+      })
+    );
   }
-}  
+}

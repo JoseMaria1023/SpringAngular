@@ -27,8 +27,8 @@ public class ItemController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ItemDTO>> obtenerTodosLosItems() {
-        List<ItemDTO> items = itemService.obtenerTodos();
+    public ResponseEntity<List<ItemDTO>> TraerTodosLosItems() {
+        List<ItemDTO> items = itemService.TraerTodos();
         return ResponseEntity.ok(items);
     }
 }

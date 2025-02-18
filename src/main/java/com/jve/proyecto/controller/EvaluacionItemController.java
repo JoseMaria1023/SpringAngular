@@ -27,8 +27,8 @@ public class EvaluacionItemController {
     }
 
     @GetMapping
-    public ResponseEntity<List<EvaluacionitemDTO>> obtenerTodosLosEvaluacionItems() {
-        List<EvaluacionitemDTO> evaluacionItems = evaluacionItemService.obtenerTodos();
+    public ResponseEntity<List<EvaluacionitemDTO>> TraerTodosLosEvaluacionItems() {
+        List<EvaluacionitemDTO> evaluacionItems = evaluacionItemService.TraerTodos();
         return ResponseEntity.ok(evaluacionItems);
     }
 }

@@ -13,14 +13,13 @@ export class AdminGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    const user = this.authService.getUserData(); // Obtener los datos del usuario desde el JWT
+    const user = this.authService.getUserData(); 
 
-    // Cambiado 'admin' por 'ROLE_ADMIN'
     if (user && user.roles.includes('ROLE_ADMIN')) {
-      return true; // Permitir acceso solo si es admin
+      return true; 
     } else {
-      this.router.navigate(['/']); // Redirigir al Home si no es admin
-      return false; // Bloquear el acceso
+      this.router.navigate(['/']); 
+      return false; 
     }
   }
 }

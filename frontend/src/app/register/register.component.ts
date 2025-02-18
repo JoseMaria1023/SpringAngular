@@ -21,26 +21,4 @@ export class RegisterComponent {
   errorMessage = '';
 
   constructor(private authService: AuthService) {}
-
-  passwordsMatch(): boolean {
-    return this.registerForm.get('password')?.value === this.registerForm.get('confirmPassword')?.value;
-  }
-
-  onSubmit() {
-    if (this.registerForm.valid && this.passwordsMatch()) {
-      const { name, email, password } = this.registerForm.value;
-
-      this.authService.register(name!, email!, password!).subscribe({
-        next: () => {
-          console.log('Registro exitoso');
-        },
-        error: (err) => {
-          this.errorMessage = 'Error en el registro';
-          console.error('Error:', err);
-        },
-      });
-    } else {
-      this.errorMessage = 'Las contraseñas no coinciden';
-    }
-  }
 }

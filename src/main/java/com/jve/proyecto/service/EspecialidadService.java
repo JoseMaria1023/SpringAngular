@@ -26,7 +26,7 @@ public class EspecialidadService {
         return especialidadConverter.entityToDto(savedEspecialidad);
     }
 
-    public List<EspecialidadDTO> obtenerTodos() {
+    public List<EspecialidadDTO> TraerTodos() {
         return especialidadRepository.findAll().stream()
                 .map(especialidadConverter::entityToDto)
                 .collect(Collectors.toList());

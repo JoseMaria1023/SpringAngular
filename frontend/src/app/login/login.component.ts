@@ -2,16 +2,16 @@ import { Component } from '@angular/core';
 import { AuthService } from '../auth.service'; 
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';  // Importar ReactiveFormsModule y FormBuilder
+import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms'; 
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  imports: [CommonModule, ReactiveFormsModule]  // Asegúrate de importar ReactiveFormsModule
+  imports: [CommonModule, ReactiveFormsModule] 
 })
 export class LoginComponent {
-  loginForm: FormGroup;  // Declarar el formulario reactivo
+  loginForm: FormGroup;  
   errorMessage: string = '';
   username: any;
   password: any;
@@ -19,8 +19,8 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router, private fb: FormBuilder) {
 
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required]],  // Validación de campo requerido
-      password: ['', [Validators.required]]   // Validación de campo requerido
+      username: ['', [Validators.required]], 
+      password: ['', [Validators.required]]   
     });
   }
 
@@ -32,14 +32,11 @@ export class LoginComponent {
     const credentials = this.loginForm.value;
     this.authService.login(credentials).subscribe(
       (response) => {
-        // Guardar el token en localStorage
         localStorage.setItem('token', response.token);
   
-        // Depurar: mostrar la información decodificada del token
         const userData = this.authService.getUserData();
         console.log('Token decodificado:', userData);
   
-        // Redirigir según el rol
         if (this.authService.isAdmin()) {
           this.router.navigate(['/especialidades']);
         } else if (this.authService.isExperto()) {

@@ -25,7 +25,7 @@ public class EvaluacionItemService {
         return evaluacionItemConverter.entityToDto(savedItem);
     }
 
-    public List<EvaluacionitemDTO> obtenerTodos() {
+    public List<EvaluacionitemDTO> TraerTodos() {
         return evaluacionItemRepository.findAll().stream()
                 .map(evaluacionItemConverter::entityToDto)
                 .collect(Collectors.toList());
