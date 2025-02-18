@@ -5,13 +5,13 @@ import jakarta.validation.constraints.Size;
 
 public class EvaluacionitemDTO {
 
-    private Integer idEvaluacionItem;
+    private Long idEvaluacionItem;
 
     @NotNull(message = "La evaluación es obligatoria")
-    private Integer evaluacionId;
+    private Long evaluacionId;
 
     @NotNull(message = "El ítem es obligatorio")
-    private Integer itemId;
+    private Long itemId;
 
     @NotNull(message = "La valoración es obligatoria")
     private Integer valoracion;
@@ -20,27 +20,27 @@ public class EvaluacionitemDTO {
     private String explicacion;
 
     // Getters y Setters
-    public Integer getIdEvaluacionItem() {
+    public Long getIdEvaluacionItem() {
         return idEvaluacionItem;
     }
 
-    public void setIdEvaluacionItem(Integer idEvaluacionItem) {
+    public void setIdEvaluacionItem(Long idEvaluacionItem) {
         this.idEvaluacionItem = idEvaluacionItem;
     }
 
-    public Integer getEvaluacionId() {
+    public Long getEvaluacionId() {
         return evaluacionId;
     }
 
-    public void setEvaluacionId(Integer evaluacionId) {
+    public void setEvaluacionId(Long evaluacionId) {
         this.evaluacionId = evaluacionId;
     }
 
-    public Integer getItemId() {
+    public Long getItemId() {
         return itemId;
     }
 
-    public void setItemId(Integer itemId) {
+    public void setItemId(Long itemId) {
         this.itemId = itemId;
     }
 

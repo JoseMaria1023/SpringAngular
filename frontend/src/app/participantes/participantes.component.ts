@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ParticipantesService } from '../participantes.service';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-participantes',
@@ -7,24 +7,18 @@ import { ParticipantesService } from '../participantes.service';
   templateUrl: './participantes.component.html',
   styleUrl: './participantes.component.css'
 })
-export class ParticipantesComponent implements OnInit {
-  participantes: any[] = [];
-  especialidadId: number | string = '';
+export class ParticipantesComponent {
+  constructor(private router: Router) {}
 
-  constructor(private participantesService: ParticipantesService) { }
-
-  ngOnInit(): void {
-    this.traerCompetidores();
+  verParticipantes(): void {
+    this.router.navigate(['/participantes']);
   }
 
-  traerCompetidores(): void {
-    this.participantesService.traerCompetidores(this.especialidadId).subscribe(
-      (data) => {
-        this.participantes = data;
-      },
-      (error) => {
-        console.error('Error al traer competidores', error);
-      }
-    );
+  crearParticipante(): void {
+    this.router.navigate(['/participante/crear']);
+  }
+
+  editarParticipante(): void {
+    this.router.navigate(['/participante/editar']);
   }
 }

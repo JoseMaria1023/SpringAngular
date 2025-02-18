@@ -32,7 +32,7 @@ public class Participante {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idParticipante")
-    private Integer idParticipante;
+    private Long idParticipante;
 
     @Column(name = "Nombre", nullable = false, length = 45)
     private String nombre;

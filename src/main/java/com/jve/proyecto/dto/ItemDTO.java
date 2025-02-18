@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 
 public class ItemDTO {
 
-    private Integer idItem;
+    private Long idItem;
 
     @NotBlank(message = "La descripción es obligatoria")
     @Size(min = 2, max = 200, message = "La descripción debe tener entre 2 y 200 caracteres")
@@ -22,14 +22,14 @@ public class ItemDTO {
     private Integer gradosConsecucion;
 
     @NotNull(message = "La prueba es obligatoria")
-    private Integer pruebaId;
+    private Long pruebaId;
 
     // Getters y Setters
-    public Integer getIdItem() {
+    public Long getIdItem() {
         return idItem;
     }
 
-    public void setIdItem(Integer idItem) {
+    public void setIdItem(Long idItem) {
         this.idItem = idItem;
     }
 
@@ -57,11 +57,11 @@ public class ItemDTO {
         this.gradosConsecucion = gradosConsecucion;
     }
 
-    public Integer getPruebaId() {
+    public Long getPruebaId() {
         return pruebaId;
     }
 
-    public void setPruebaId(Integer pruebaId) {
+    public void setPruebaId(Long pruebaId) {
         this.pruebaId = pruebaId;
     }
 }

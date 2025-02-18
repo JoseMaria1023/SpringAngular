@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 public class ParticipanteDTO {
 
-    private Integer idParticipante;
+    private Long idParticipante;
 
     @NotBlank(message = "El nombre es obligatorio")
     @Size(min = 2, max = 45, message = "El nombre debe tener entre 2 y 45 caracteres")

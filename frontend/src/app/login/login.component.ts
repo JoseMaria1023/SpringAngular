@@ -23,7 +23,6 @@ export class LoginComponent {
 
   login(): void {
     if (this.loginForm.invalid) {
-      console.log("LoginComponent: formulario inválido");
       return;
     }
   
@@ -31,14 +30,10 @@ export class LoginComponent {
     console.log("LoginComponent: intentando login con", credentials);
     this.authService.login(credentials).subscribe(
       (response) => {
-        console.log("LoginComponent: respuesta de login", response);
-        // Guarda la sesión (token, username, roles)
         this.authService.setSession(response);
-        // Redirige según el rol
         this.authService.redirectUser();
       },
       (error) => {
-        console.error("LoginComponent: error en login", error);
         this.errorMessage = 'Credenciales incorrectas';
       }
     );

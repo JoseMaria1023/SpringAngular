@@ -1,25 +1,49 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class ParticipantesService {
+export class ParticipanteService {
+  private apiUrl = 'http://localhost:9000/api/participantes';
 
-  private apiUrl = 'http://localhost:9000/api/participantes'; 
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
+  // Obtener todos los participantes
+  getParticipantes(): Observable<any[]> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+    });
 
-  traerCompetidores(especialidadId: number | string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/todos?especialidadId=${especialidadId}`);
+    return this.http.get<any[]>(`${this.apiUrl}/todos`, { headers });
   }
 
-  crearParticipante(participante: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/crear`, participante);
+  createParticipante(participante: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+
+    return this.http.post<any>(`${this.apiUrl}/crear`, participante, { headers });
   }
 
-  editarParticipante(id: number, participante: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/editar/${id}`, participante);
+  // Actualizar un participante existente
+  updateParticipante(id: number, participante: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+
+    return this.http.put<any>(`${this.apiUrl}/editar/${id}`, participante, { headers }).pipe(
+      catchError(error => {
+        console.error('Error al actualizar participante', error);
+        return throwError(() => new Error('Error al actualizar participante'));
+      })
+    );
   }
 }

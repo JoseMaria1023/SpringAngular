@@ -5,51 +5,51 @@ import jakarta.validation.constraints.NotNull;
 
 public class EvaluacionDTO {
 
-    private Integer idEvaluacion;
+    private Long idEvaluacion;
 
     @NotNull(message = "El participante es obligatorio")
-    private Integer participanteId;
+    private Long participanteId;
 
     @NotNull(message = "La prueba es obligatoria")
-    private Integer pruebaId;
+    private Long pruebaId;
 
     @NotNull(message = "El usuario es obligatorio")
-    private Integer userId;
+    private Long userId;
 
     @NotNull(message = "La nota final es obligatoria")
     @Min(value = 0, message = "La nota final no puede ser negativa")
     private Double notaFinal;
 
     // Getters y Setters
-    public Integer getIdEvaluacion() {
+    public Long getIdEvaluacion() {
         return idEvaluacion;
     }
 
-    public void setIdEvaluacion(Integer idEvaluacion) {
+    public void setIdEvaluacion(Long idEvaluacion) {
         this.idEvaluacion = idEvaluacion;
     }
 
-    public Integer getParticipanteId() {
+    public Long getParticipanteId() {
         return participanteId;
     }
 
-    public void setParticipanteId(Integer participanteId) {
+    public void setParticipanteId(Long participanteId) {
         this.participanteId = participanteId;
     }
 
-    public Integer getPruebaId() {
+    public Long getPruebaId() {
         return pruebaId;
     }
 
-    public void setPruebaId(Integer pruebaId) {
+    public void setPruebaId(Long pruebaId) {
         this.pruebaId = pruebaId;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

@@ -32,7 +32,7 @@ public class Evaluacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idEvaluacion")
-    private Integer idEvaluacion;
+    private Long idEvaluacion;
 
     @ManyToOne
     @JoinColumn(name = "Participante_idParticipante")

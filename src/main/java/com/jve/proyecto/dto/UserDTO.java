@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 
 public class UserDTO {
 
-    private Integer idUser;
+    private Long idUser;
 
     @NotBlank(message = "El rol es obligatorio")
     private String role;
@@ -20,7 +20,7 @@ public class UserDTO {
     private String password;
 
     @NotNull(message = "La especialidad es obligatoria")
-    private Integer especialidadId;
+    private Long especialidadId;
 
     @NotBlank(message = "El nombre es obligatorio")
     @Size(min = 2, max = 45, message = "El nombre debe tener entre 2 y 45 caracteres")
@@ -35,11 +35,11 @@ public class UserDTO {
     private String dni;
 
     // Getters y Setters
-    public Integer getIdUser() {
+    public Long getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(Integer idUser) {
+    public void setIdUser(Long idUser) {
         this.idUser = idUser;
     }
 
@@ -67,11 +67,11 @@ public class UserDTO {
         this.password = password;
     }
 
-    public Integer getEspecialidadId() {
+    public Long getEspecialidadId() {
         return especialidadId;
     }
 
-    public void setEspecialidadId(Integer especialidadId) {
+    public void setEspecialidadId(Long especialidadId) {
         this.especialidadId = especialidadId;
     }
 

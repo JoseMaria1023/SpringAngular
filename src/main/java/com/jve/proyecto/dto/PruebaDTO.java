@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 public class PruebaDTO {
 
-    private Integer idPrueba;
+    private Long idPrueba;
 
     @NotBlank(message = "El enunciado es obligatorio")
     private String enunciado;
@@ -19,11 +19,11 @@ public class PruebaDTO {
     private Integer puntuacionMaxima;
 
     // Getters y Setters
-    public Integer getIdPrueba() {
+    public Long getIdPrueba() {
         return idPrueba;
     }
 
-    public void setIdPrueba(Integer idPrueba) {
+    public void setIdPrueba(Long idPrueba) {
         this.idPrueba = idPrueba;
     }
 
