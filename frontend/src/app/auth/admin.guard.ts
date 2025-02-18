@@ -6,20 +6,18 @@ import { AuthService } from '../auth.service';
   providedIn: 'root',
 })
 export class AdminGuard implements CanActivate {
-
   constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): boolean {
-    const user = this.authService.getUserData(); 
-
-    if (user && user.roles.includes('ROLE_ADMIN')) {
-      return true; 
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    const token = this.authService.getToken();
+    console.log("AdminGuard: token =", token);
+    if (token && this.authService.getRoles().includes('ROLE_ADMIN')) {
+      console.log("AdminGuard: acceso permitido");
+      return true;
     } else {
-      this.router.navigate(['/']); 
-      return false; 
+      console.log("AdminGuard: acceso denegado, redirigiendo a /home");
+      this.router.navigate(['/home']);
+      return false;
     }
   }
 }

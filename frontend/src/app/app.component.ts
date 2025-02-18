@@ -21,19 +21,18 @@ export class AppComponent implements OnInit {
   }
 
   EstadoLogin() {
-    const userData = this.authService.getUserData();
-    if (userData) {
+    if (this.authService.isLoggedIn()) {
       this.isLoggedIn = true;
-      this.username = userData.username;
+      this.username = this.authService.getUsername(); 
     }
   }
 
   login(username: string, password: string) {
     this.authService.login({ username, password }).subscribe(
       (response) => {
-        localStorage.setItem('token', response.token); // Guardamos el token en localStorage
-        this.EstadoLogin(); // Actualizamos el estado de login
-        this.authService.redirectUser(); // Redirigimos al usuario según el rol
+        localStorage.setItem('token', response.token);
+        this.EstadoLogin(); 
+        this.authService.redirectUser(); 
       },
       (error) => {
         console.error('Login error:', error);
@@ -42,9 +41,9 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem('token'); // Eliminamos el token del localStorage
-    this.isLoggedIn = false; // Actualizamos el estado de login
+    localStorage.removeItem('token'); 
+    this.isLoggedIn = false; 
     this.username = ''; 
-    this.authService.redirectUser(); // Redirigimos al usuario a la página principal
+    this.authService.redirectUser(); 
   }
 }

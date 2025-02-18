@@ -11,7 +11,6 @@ import com.jve.proyecto.entity.Participante;
 @Repository
 public interface ParticipanteRepository extends JpaRepository<Participante, Integer> {
     List<Participante> findByEspecialidad_idEspecialidad(long especialidadId);
-    Optional<Participante> findById(Long id);  // Este método ya existe por defecto en JpaRepository
 
 
 }

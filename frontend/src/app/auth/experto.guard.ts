@@ -6,20 +6,18 @@ import { AuthService } from '../auth.service';
   providedIn: 'root',
 })
 export class ExpertoGuard implements CanActivate {
-
   constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): boolean {
-    const user = this.authService.getUserData(); 
-
-    if (user && user.roles.includes('experto')) {
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    const token = this.authService.getToken();
+    console.log("ExpertoGuard: token =", token);
+    if (token && this.authService.getRoles().includes('ROLE_EXPERTO')) {
+      console.log("ExpertoGuard: acceso permitido");
       return true;
     } else {
-      this.router.navigate(['/']); 
-      return false; 
+      console.log("ExpertoGuard: acceso denegado, redirigiendo a /home");
+      this.router.navigate(['/home']);
+      return false;
     }
   }
 }

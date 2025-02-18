@@ -13,11 +13,8 @@ import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angula
 export class LoginComponent {
   loginForm: FormGroup;  
   errorMessage: string = '';
-  username: any;
-  password: any;
 
   constructor(private authService: AuthService, private router: Router, private fb: FormBuilder) {
-
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]], 
       password: ['', [Validators.required]]   
@@ -26,29 +23,24 @@ export class LoginComponent {
 
   login(): void {
     if (this.loginForm.invalid) {
+      console.log("LoginComponent: formulario inválido");
       return;
     }
   
     const credentials = this.loginForm.value;
+    console.log("LoginComponent: intentando login con", credentials);
     this.authService.login(credentials).subscribe(
       (response) => {
-        localStorage.setItem('token', response.token);
-  
-        const userData = this.authService.getUserData();
-        console.log('Token decodificado:', userData);
-  
-        if (this.authService.isAdmin()) {
-          this.router.navigate(['/especialidades']);
-        } else if (this.authService.isExperto()) {
-          this.router.navigate(['/home']);
-        } else {
-          this.router.navigate(['/home']);
-        }
+        console.log("LoginComponent: respuesta de login", response);
+        // Guarda la sesión (token, username, roles)
+        this.authService.setSession(response);
+        // Redirige según el rol
+        this.authService.redirectUser();
       },
       (error) => {
+        console.error("LoginComponent: error en login", error);
         this.errorMessage = 'Credenciales incorrectas';
       }
     );
-    
-}
+  }
 }

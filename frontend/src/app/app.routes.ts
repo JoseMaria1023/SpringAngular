@@ -10,4 +10,6 @@ export const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'especialidades', component: EspecialidadesComponent, canActivate: [AdminGuard] }];
+  { path: 'especialidades', component: EspecialidadesComponent, canActivate: [AdminGuard] }
+
+  ]
