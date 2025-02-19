@@ -1,0 +1,86 @@
+/* Estilo base del navbar */
+.navbar {
+    background-color: #333; /* Color de fondo oscuro */
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+/* Contenedor del menú */
+.menu {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-grow: 1; /* Permite que el contenido ocupe el espacio disponible */
+}
+
+/* Contenedor de las opciones de usuario */
+.user-options {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Contenedor del login para alinearlo a la derecha */
+.login-container {
+    margin-left: auto; /* Mueve el botón de login a la derecha */
+}
+
+/* Estilo para los botones */
+.menu button, .user-options button {
+    background-color: #007bff; /* Azul */
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.menu button:hover, .user-options button:hover {
+    background-color: #0056b3; /* Azul más oscuro */
+}
+
+/* Estilos de los enlaces */
+.menu a, .user-options a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.menu a:hover, .user-options a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Estilo del texto de bienvenida */
+.user-options span {
+    font-weight: bold;
+}
+
+/* Responsive: Ajustes en pantallas pequeñas */
+@media (max-width: 600px) {
+    .navbar {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .menu {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .user-options {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .login-container {
+        margin-left: 0; /* Alinea el login al centro en pantallas pequeñas */
+    }
+}

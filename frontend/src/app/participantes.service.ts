@@ -14,13 +14,10 @@ export class ParticipanteService {
   constructor(private http: HttpClient,private authService: AuthService) {}
 
   getParticipantes(): Observable<any[]> {
-    const token = sessionStorage.getItem('token');
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-    });
-
-    return this.http.get<any[]>(`${this.apiUrl}/todos`, { headers });
+    return this.http.get<any[]>(`${this.apiUrl}/todos`);
   }
+  
+  
 
   createParticipante(participante: any): Observable<any> {
     const token = sessionStorage.getItem('token');
@@ -33,6 +30,7 @@ export class ParticipanteService {
 
     return this.http.post<any>(`${this.apiUrl}/crear`, participante, { headers });
   }
+  
   getParticipanteById(id: number): Observable<any> {
     const token = sessionStorage.getItem('token');
     const headers = new HttpHeaders({

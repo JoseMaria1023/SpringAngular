@@ -31,6 +31,13 @@ public class ParticipanteService {
                             .collect(Collectors.toList());
     }
 
+    public List<ParticipanteDTO> TraerParticipantes() {
+        List<Participante> participantes = participanteRepository.findAll();
+        return participantes.stream()
+                            .map(participanteConverter::entityToDto)
+                            .collect(Collectors.toList());
+    }
+
     public ParticipanteDTO editarParticipante(Long id, ParticipanteDTO participanteDTO) {
         Participante participanteExistente = participanteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Participante no encontrado"));

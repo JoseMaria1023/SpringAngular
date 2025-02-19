@@ -27,7 +27,7 @@ export class LoginComponent {
     }
   
     const credentials = this.loginForm.value;
-    this.authService.login(credentials).subscribe(
+      this.authService.login(credentials).subscribe(
       (response) => {
         this.authService.setSession(response);
         this.authService.redirectUser();

@@ -1,7 +1,16 @@
 <div class="container">
-    <h1>Bienvenido a AndaluciaSkill</h1>
-    <p>Inicia Sesion para acceder al sistema.</p>
-  
-    <button class="btn btn-primary">Ver participantes</button>
+  <h1>Bienvenido a AndaluciaSkill</h1>
+  <p>Inicia sesión para acceder al sistema.</p>
+
+  <button class="btn btn-primary" (click)="cargarParticipantes()">Ver participantes</button>
+
+  <!-- Lista de participantes -->
+  <div *ngIf="mostrarParticipantes">
+    <h2>Lista de Participantes</h2>
+    <ul>
+      <li *ngFor="let participante of participantes">
+        {{ participante.nombre }} {{ participante.apellidos }} - {{ participante.centro }}
+      </li>
+    </ul>
   </div>
-  
+</div>

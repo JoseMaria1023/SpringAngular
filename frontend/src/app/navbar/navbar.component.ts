@@ -1,22 +1,49 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { EspecialidadService } from '../especialidad.service';
+import { CommonModule, NgFor } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css'],
-  imports: [CommonModule]
+  imports: [CommonModule,FormsModule,NgFor],
+  styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
-  constructor(public authService: AuthService, private router: Router) {}
+export class NavbarComponent implements OnInit {
+  especialidadNombre: string = '';
 
-  login() {
+  constructor(
+    public authService: AuthService,
+    private router: Router,
+    private especialidadService: EspecialidadService
+  ) {}
+
+  ngOnInit(): void {
+    if (this.authService.isExperto()) {
+      this.obtenerEspecialidad();
+    }
+  }
+
+  obtenerEspecialidad(): void {
+    this.especialidadService.getEspecialidades().subscribe({
+      next: (especialidades) => {
+        const especialidadId = this.authService.getEspecialidadId();
+        const especialidad = especialidades.find(e => e.idEspecialidad === especialidadId);
+        this.especialidadNombre = especialidad ? especialidad.nombre : 'Especialidad';
+      },
+      error: () => {
+        this.especialidadNombre = 'Especialidad';
+      }
+    });
+  }
+
+  login(): void {
     this.router.navigate(['/login']);
   }
 
-  logout() {
+  logout(): void {
     this.authService.logout();
     this.router.navigate(['/']);
   }

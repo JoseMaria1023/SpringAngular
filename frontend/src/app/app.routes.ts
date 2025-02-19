@@ -18,10 +18,10 @@ export const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'especialidades', component: EspecialidadesComponent, canActivate: [AdminGuard] },
-  { path: 'participantes/lista', component: ParticipanteslistaComponent, canActivate: [ExpertoGuard] },
+  { path: 'participantes/lista', component: ParticipanteslistaComponent },
   { path: 'participante/crear', component: ParticipantescrearComponent,canActivate: [ExpertoGuard]},
   {  path: 'participante/editar/:id', component: ParticipanteeditarComponent, canActivate: [ExpertoGuard]},
-  { path: 'participantes', component: ParticipantesComponent,canActivate: [ExpertoGuard]}, 
+  { path: 'participantes', component: ParticipantesComponent}, 
   { path: 'admin', component: AdminComponent }, 
   { path: 'crear/experto', component: CrearexpertoComponent }, 
   { path: '', redirectTo: '/participantes-main', pathMatch: 'full' }

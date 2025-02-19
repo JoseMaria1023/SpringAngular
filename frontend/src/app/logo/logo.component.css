@@ -1,0 +1,9 @@
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    background-color: #222; /* Fondo oscuro para destacar */
+    padding: 15px 0;
+    width: 100%;
+}

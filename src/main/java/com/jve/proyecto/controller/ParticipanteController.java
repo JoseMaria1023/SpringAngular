@@ -36,13 +36,18 @@ public class ParticipanteController {
     }
 
     @GetMapping("/todos")
-    public ResponseEntity<List<ParticipanteDTO>> TraerParticipantes(Authentication authentication) {
+public ResponseEntity<List<ParticipanteDTO>> TraerParticipantes(Authentication authentication) {
+    if (authentication != null) {
         String username = authentication.getName();  
         Long especialidadId = userService.getEspecialidadByUsername(username);
         
         List<ParticipanteDTO> participantes = participanteService.TraerParticipantesPorEspecialidad(especialidadId);
         return ResponseEntity.ok(participantes);
+    } else {
+        List<ParticipanteDTO> participantes = participanteService.TraerParticipantes();
+        return ResponseEntity.ok(participantes);
     }
+}
 
 
     @PutMapping("/editar/{id}")

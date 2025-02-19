@@ -1,9 +1,26 @@
-<nav class="navbar">  
-    <div class="menu">
+<nav class="navbar">
+  <div class="menu">
+    <div class="login-container">
       <button *ngIf="!authService.isLoggedIn()" (click)="login()">Login</button>
-      <div *ngIf="authService.isLoggedIn()">
-        <span>Bienvenido, {{ authService.getUsername() }}</span>
-        <button (click)="logout()">Logout</button>
-      </div>
     </div>
-  </nav>
+
+
+      <!-- Opciones para ADMIN -->
+      <div *ngIf="authService.isAdmin()">
+        <a routerLink="/admin/experto">Expertos</a>
+        <a routerLink="/admin/especialidad">Especialidades</a>
+      </div>
+
+      <!-- Opciones para EXPERTO -->
+      <div *ngIf="authService.isExperto()">
+        <a routerLink="/experto/participantes">Participantes</a>
+        <a routerLink="/experto/especialidad">{{ especialidadNombre }}</a>
+      </div>
+
+      <div *ngIf="authService.isLoggedIn()" class="user-options">
+        <span>Bienvenido, {{ authService.getUsername() }}</span>
+
+      <button (click)="logout()">Logout</button>
+    </div>
+  </div>
+</nav>
