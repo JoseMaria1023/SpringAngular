@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-participanteeditar',
   templateUrl: './participanteeditar.component.html',
-  imports:[FormsModule],
+  imports: [FormsModule],
   styleUrls: ['./participanteeditar.component.css']
 })
 export class ParticipanteeditarComponent implements OnInit {
@@ -25,10 +25,9 @@ export class ParticipanteeditarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const idParam = this.route.snapshot.paramMap.get('id');
-    if (idParam !== null) {
-      const id = Number(idParam);
-      if (!isNaN(id)) {
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      if (id) {
         this.participanteService.getParticipanteById(id).subscribe(
           (data) => {
             this.participante = data;
@@ -37,14 +36,14 @@ export class ParticipanteeditarComponent implements OnInit {
             console.error('Error al obtener participante:', error);
           }
         );
-      } 
-    } 
+      }
+    });
   }
 
   actualizarParticipante(): void {
     this.participanteService.updateParticipante(this.participante.idParticipante, this.participante).subscribe(
       () => {
-        this.router.navigate(['participantes/lista']); 
+        this.router.navigate(['participantes/lista']);
       },
       (error) => {
         console.error('Error al actualizar participante:', error);

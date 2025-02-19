@@ -14,7 +14,7 @@ import { of } from 'rxjs';
 })
 export class EspecialidadesComponent implements OnInit {
   especialidades: any[] = [];
-  especialidadEdit: any = null;  // Inicialmente null para mostrar el formulario de crear
+  especialidadEdit: any = null;  
   newEspecialidad: any = { nombre: '', codigo: '' };
   isAdmin: boolean = false;
   isExperto: boolean = false;
