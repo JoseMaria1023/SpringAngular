@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ParticipanteService } from '../participantes.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -13,31 +13,35 @@ import { CommonModule } from '@angular/common';
   styleUrl: './participantescrear.component.css'
   
 })
-export class ParticipantescrearComponent {
-  participante: any = { nombre: '', apellidos: '', centro: '', especialidadId: null };
-  errorMessage: string = '';
-
+export class ParticipantescrearComponent implements OnInit {
+  participante = {
+    nombre: '',
+    apellidos: '',
+    centro: '',
+    especialidadId: 0
+  };
 
   constructor(
-    private participanteService: ParticipanteService, 
+    private participanteService: ParticipanteService,
     private authService: AuthService,
     private router: Router
   ) {}
 
-  crearParticipante(): void {
-    if (!this.authService.isExperto()) {
-      return;
+  ngOnInit(): void {
+    const especialidadId = this.authService.getEspecialidadId();
+    if (especialidadId) {
+      this.participante.especialidadId = especialidadId;
+    } else {
+      alert('No tienes una especialidad asignada.');
+      this.router.navigate(['/home']);
     }
+  }
 
-    this.participanteService.createParticipante(this.participante).subscribe(
-      (data) => {
-        console.log('Participante creado', data);
+  crearParticipante(): void {
+    this.participanteService.createParticipante(this.participante).subscribe({
+      next: () => {
         this.router.navigate(['/participantes']);
-      },
-      (error) => {
-        console.error('Error al crear participante', error);
-        this.errorMessage = 'Error al crear participante';
       }
-    );
+    });
   }
 }

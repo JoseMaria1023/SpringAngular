@@ -9,6 +9,6 @@ import com.jve.proyecto.entity.Especialidad;
 
 @Repository
 public interface EspecialidadRepository extends JpaRepository<Especialidad, Long> {
-    Optional<Especialidad> findById(Long id);  // Este método ya existe por defecto en JpaRepository
+    Optional<Especialidad> findById(Long id);  
 
 }

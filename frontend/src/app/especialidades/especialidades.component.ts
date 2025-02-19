@@ -66,7 +66,7 @@ export class EspecialidadesComponent implements OnInit {
         .subscribe({
             next: () => {
                 this.loadEspecialidades();
-                this.cancelarEdicion(); // Limpiar la edición después de actualizar
+                this.cancelarEdicion(); 
             },
             error: (error) => {
                 this.errorMessage = 'Error al actualizar la especialidad';

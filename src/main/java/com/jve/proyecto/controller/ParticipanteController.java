@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/api/participantes")
 @CrossOrigin(origins = "http://localhost:4200")
@@ -35,11 +36,11 @@ public class ParticipanteController {
     }
 
     @GetMapping("/todos")
-    public ResponseEntity<List<ParticipanteDTO>> TraerCompetidores(Authentication authentication) {
+    public ResponseEntity<List<ParticipanteDTO>> TraerParticipantes(Authentication authentication) {
         String username = authentication.getName();  
         Long especialidadId = userService.getEspecialidadByUsername(username);
         
-        List<ParticipanteDTO> participantes = participanteService.TraerCompetidoresParticipantesPorEspecialidad(especialidadId);
+        List<ParticipanteDTO> participantes = participanteService.TraerParticipantesPorEspecialidad(especialidadId);
         return ResponseEntity.ok(participantes);
     }
 
@@ -49,4 +50,10 @@ public class ParticipanteController {
         ParticipanteDTO updatedParticipante = participanteService.editarParticipante(id, participanteDTO);
         return ResponseEntity.ok(updatedParticipante);
     }
+
+    @GetMapping("/buscar/{id}")
+    public ResponseEntity<ParticipanteDTO> obtenerParticipantePorId(@PathVariable Long id) {
+    ParticipanteDTO participanteDTO = participanteService.buscarParticipantePorId(id);
+    return ResponseEntity.ok(participanteDTO);
+}
 }

@@ -5,7 +5,7 @@
       <th>Apellidos</th>
       <th>Centro</th>
       <th>Especialidad</th>
-      <th>Acciones</th> <!-- Columna de acciones -->
+      <th>Acciones</th>
     </tr>
   </thead>
   <tbody>
@@ -13,10 +13,12 @@
       <td>{{ participante.nombre }}</td>
       <td>{{ participante.apellidos }}</td>
       <td>{{ participante.centro }}</td>
-      <td>{{ participante.especialidadid }}</td>
+      <td>{{ participante.especialidadId }}</td>
       <td>
-        <!-- Botón de editar, que redirige a la vista de edición -->
-        <button [routerLink]="['/participante/editar', participante.id]" class="btn-edit">Editar</button>
+        <td>
+          <button [routerLink]="['/participante/editar', participante.idParticipante]" class="btn-edit">
+            Editar
+          </button>        
       </td>
     </tr>
   </tbody>

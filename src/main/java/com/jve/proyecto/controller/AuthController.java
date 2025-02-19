@@ -3,6 +3,7 @@ package com.jve.proyecto.controller;
 import com.jve.proyecto.dto.AuthRequest;
 import com.jve.proyecto.dto.LoginResponse;
 import com.jve.proyecto.dto.UserDTO;
+import com.jve.proyecto.entity.User;
 import com.jve.proyecto.exception.ErrorContrasenaException;
 import com.jve.proyecto.security.JwtTokenProvider;
 import com.jve.proyecto.service.UserService;
@@ -57,22 +58,28 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login2(@RequestBody AuthRequest loginDTO) {
-
+    
         Authentication authDTO = new UsernamePasswordAuthenticationToken(
                 loginDTO.getUsername(), loginDTO.getPassword()
         );
         Authentication authentication = this.authenticationManager.authenticate(authDTO);
         String token = this.jwtTokenProvider.generateToken(authentication);
-
-        return  ResponseEntity
-                .ok()
-                .body(
-                        new LoginResponse(
-                                loginDTO.getUsername(),
-                                authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList(),
-                                token
-                        )
-                );
-
+    
+        User user = (User) authentication.getPrincipal();
+    
+        Long especialidadId = (user.getEspecialidad() != null) 
+                ? user.getEspecialidad().getIdEspecialidad() 
+                : null;
+    
+        return ResponseEntity.ok().body(
+                new LoginResponse(
+                        user.getUsername(), 
+                        authentication.getAuthorities().stream()
+                                      .map(GrantedAuthority::getAuthority)
+                                      .toList(),
+                        token,
+                        especialidadId 
+                )
+        );
     }
 }

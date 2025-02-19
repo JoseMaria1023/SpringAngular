@@ -9,7 +9,8 @@ import { ParticipanteslistaComponent } from './participanteslista/participantesl
 import { ParticipantescrearComponent } from './participantescrear/participantescrear.component';
 import { ExpertoGuard } from './auth/experto.guard';
 import { ParticipanteeditarComponent } from './participanteeditar/participanteeditar.component';
-//import { ParticipanteEditComponent } from './participante-edit/participante-edit.component';
+import { AdminComponent } from './admin/admin.component';
+import { CrearexpertoComponent } from './crearexperto/crearexperto.component';
 
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -20,6 +21,8 @@ export const appRoutes: Routes = [
   { path: 'participantes/lista', component: ParticipanteslistaComponent, canActivate: [ExpertoGuard] },
   { path: 'participante/crear', component: ParticipantescrearComponent,canActivate: [ExpertoGuard]},
   {  path: 'participante/editar/:id', component: ParticipanteeditarComponent, canActivate: [ExpertoGuard]},
-  { path: 'participantes', component: ParticipantesComponent,canActivate: [ExpertoGuard]}, // Ruta principal para participantes
+  { path: 'participantes', component: ParticipantesComponent,canActivate: [ExpertoGuard]}, 
+  { path: 'admin', component: AdminComponent }, 
+  { path: 'crear/experto', component: CrearexpertoComponent }, 
   { path: '', redirectTo: '/participantes-main', pathMatch: 'full' }
   ]

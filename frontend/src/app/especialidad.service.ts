@@ -39,7 +39,6 @@ export class EspecialidadService {
   
     return this.http.put<any>(`${this.apiUrl}/editar/${id}`, especialidad, { headers }).pipe(
       catchError(error => {
-        console.error('Error al actualizar especialidad', error);
         return throwError(() => new Error('Error al actualizar especialidad'));
       })
     );

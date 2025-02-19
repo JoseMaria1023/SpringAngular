@@ -5,9 +5,10 @@ import { Router } from '@angular/router';
 
 interface LoginResponse {
   username: string;
-  roles?: string[];     // Puede venir como roles...
-  authorities?: string[]; // ...o como authorities
+  roles?: string[];
+  authorities?: string[];
   token: string;
+  especialidadId?: number;
 }
 
 @Injectable({
@@ -32,23 +33,22 @@ export class AuthService {
     sessionStorage.setItem('username', response.username);
     const roles = response.roles || response.authorities || [];
     sessionStorage.setItem('roles', JSON.stringify(roles));
+
+    if (response.especialidadId) {
+      sessionStorage.setItem('especialidadId', response.especialidadId.toString());
+    }
+
     this.username = response.username;
   }
 
   getToken(): string | null {
-    const token = sessionStorage.getItem('token');
-    return token;
+    return sessionStorage.getItem('token');
   }
 
   getRoles(): string[] {
-    const rolesStr = sessionStorage.getItem('roles');
-    if (!rolesStr || rolesStr === 'undefined') {
-      return [];
-    }
     try {
-      const roles = JSON.parse(rolesStr);
-      return roles;
-    } catch (e) {
+      return JSON.parse(sessionStorage.getItem('roles') || '[]');
+    } catch {
       return [];
     }
   }
@@ -58,21 +58,20 @@ export class AuthService {
   }
 
   isAdmin(): boolean {
-    const roles = this.getRoles();
-    const admin = roles.includes('ROLE_ADMIN');
-    return admin;
+    return this.getRoles().includes('ROLE_ADMIN');
   }
 
   isExperto(): boolean {
-    const roles = this.getRoles();
-    const experto = roles.includes('ROLE_EXPERTO');
-    return experto;
+    return this.getRoles().includes('ROLE_EXPERTO');
+  }
+
+  getEspecialidadId(): number | null {
+    const especialidadId = sessionStorage.getItem('especialidadId');
+    return especialidadId ? Number(especialidadId) : null;
   }
 
   logout(): void {
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('username');
-    sessionStorage.removeItem('roles');
+    sessionStorage.clear();
     this.username = '';
     this.router.navigate(['/home']);
   }
@@ -83,7 +82,7 @@ export class AuthService {
 
   redirectUser(): void {
     if (this.isAdmin()) {
-      this.router.navigate(['/especialidades']);
+      this.router.navigate(['/admin']);
     } else if (this.isExperto()) {
       this.router.navigate(['/participantes']);
     } else {

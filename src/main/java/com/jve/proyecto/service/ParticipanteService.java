@@ -24,7 +24,7 @@ public class ParticipanteService {
         this.participanteConverter = participanteConverter;
     }
 
-    public List<ParticipanteDTO> TraerCompetidoresParticipantesPorEspecialidad(long especialidadId) {
+    public List<ParticipanteDTO> TraerParticipantesPorEspecialidad(long especialidadId) {
         List<Participante> participantes = participanteRepository.findByEspecialidad_idEspecialidad(especialidadId);
         return participantes.stream()
                             .map(participanteConverter::entityToDto)
@@ -60,4 +60,11 @@ public class ParticipanteService {
         Participante savedParticipante = participanteRepository.save(participante);
         return participanteConverter.entityToDto(savedParticipante);
     }
+
+    public ParticipanteDTO buscarParticipantePorId(Long id) {
+        Participante participante = participanteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Participante no encontrado"));
+        return participanteConverter.entityToDto(participante);
+    }
+    
 }
