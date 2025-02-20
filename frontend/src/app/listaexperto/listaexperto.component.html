@@ -1,6 +1,8 @@
 <div class="user-list-container">
     <h2>Lista de Expertos</h2>
   
+    <button class="btn btn-success" (click)="irACrearExperto()">Crear Experto</button>
+  
     <div *ngIf="users.length === 0" class="no-users">
       <p>No se encontraron expertos.</p>
     </div>
@@ -12,7 +14,7 @@
           <th>Nombre</th>
           <th>Apellido</th>
           <th>Rol</th>
-          <th>Acciones</th> 
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -22,7 +24,7 @@
           <td>{{ user.apellidos }}</td>
           <td>{{ user.role }}</td>
           <td>
-            <button (click)="editarUsuario(user.idUser)">Editar</button> 
+            <button class="btn btn-primary" (click)="editarUsuario(user.idUser)">Editar</button>
           </td>
         </tr>
       </tbody>

@@ -54,7 +54,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/participantes/todos").permitAll() // Permitir acceso público
                         .requestMatchers(HttpMethod.POST, "/api/participantes/crear").hasAuthority("ROLE_EXPERTO") // Solo expertos pueden crear
                         .requestMatchers(HttpMethod.PUT, "/api/participantes/editar/**").hasAuthority("ROLE_EXPERTO") // Solo expertos pueden editar
-                        .requestMatchers(HttpMethod.GET, "/api/especialidades/**").hasAuthority("ROLE_ADMIN") // TODO -> pruebas
+                        .requestMatchers(HttpMethod.GET, "/api/especialidades/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/especialidades/todos").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/participantes/crear").hasAuthority("ROLE_EXPERTO")
 

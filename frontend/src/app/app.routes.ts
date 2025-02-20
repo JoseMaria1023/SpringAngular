@@ -21,7 +21,7 @@ export const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },  
-  { path: 'admin/especialidad', component: ListarespecialidadComponent, canActivate: [AdminGuard] },
+  { path: 'especialidad', component: ListarespecialidadComponent},
   { path: 'admin/especialidad/crear', component: CreaespecialidadComponent, canActivate: [AdminGuard] },
   { path: 'admin/especialidad/editar/:id', component: EditarespecialidadComponent, canActivate: [AdminGuard] },
   { path: 'participantes/lista', component: ParticipanteslistaComponent },

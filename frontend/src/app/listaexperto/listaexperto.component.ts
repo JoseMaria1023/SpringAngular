@@ -22,7 +22,9 @@ export class ListaexpertoComponent implements OnInit {
   editarUsuario(id: number): void {
     this.router.navigate(['/admin/editarexperto', id]);
   }
-  
+  irACrearExperto(): void {
+    this.router.navigate(['admin/crear/experto']);
+  }
 
   activarCreacion(): void {
     this.mostrarFormularioCrear = true;

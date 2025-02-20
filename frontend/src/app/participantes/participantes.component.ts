@@ -15,10 +15,10 @@ export class ParticipantesComponent {
   }
 
   crearParticipante(): void {
-    this.router.navigate(['/participante/crear']);
+    this.router.navigate(['/experto/participante/crear']);
   }
 
   editarParticipante(): void {
-    this.router.navigate(['/participante/editar']);
+    this.router.navigate(['/experto/participante/editar']);
   }
 }

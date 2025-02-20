@@ -1,45 +1,91 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EspecialidadService } from '../especialidad.service';
 import { CreaespecialidadComponent } from "../creaespecialidad/creaespecialidad.component";
 import { EditarespecialidadComponent } from "../editarespecialidad/editarespecialidad.component";
 import { CommonModule } from '@angular/common';
+import { catchError, of } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-listarespecialidad',
   templateUrl: './listarespecialidad.component.html',
   styleUrls: ['./listarespecialidad.component.css'],
-  imports: [CreaespecialidadComponent, EditarespecialidadComponent,CommonModule]
+  imports: [CreaespecialidadComponent, EditarespecialidadComponent,CommonModule,FormsModule]
 })
-export class ListarespecialidadComponent {
-  especialidades: any[] = [];  // Lista de especialidades
-  especialidadEdit: any = null; // Especialidad que se va a editar
+export class ListarespecialidadComponent implements OnInit {
+  especialidades: any[] = [];
   mostrarFormularioCrear: boolean = false;
+  especialidadEnEdicion: any = null;
+
+  nuevaEspecialidad: any = { nombre: '', codigo: '' };
   errorMessage: string = '';
+  exitoMessage: string = '';
 
-  constructor(public especialidadService: EspecialidadService) {}
+  constructor(private especialidadService: EspecialidadService) {}
 
-  ngOnInit() {
-    this.loadEspecialidades();
+  ngOnInit(): void {
+    this.cargarEspecialidades();
   }
 
-  // Método para cargar las especialidades
-  loadEspecialidades(): void {
+  cargarEspecialidades(): void {
     this.especialidadService.getEspecialidades()
+      .pipe(
+        catchError(err => {
+          this.errorMessage = 'Error al cargar especialidades';
+          return of([]);
+        })
+      )
+      .subscribe(data => {
+        this.especialidades = data;
+      });
+  }
+
+  activarCreacion(): void {
+    this.mostrarFormularioCrear = true;
+    this.especialidadEnEdicion = null;
+  }
+
+  cancelarCreacion(): void {
+    this.mostrarFormularioCrear = false;
+    this.nuevaEspecialidad = { nombre: '', codigo: '' };
+  }
+
+  crearEspecialidad(): void {
+    this.especialidadService.crearEspecialidad(this.nuevaEspecialidad)
       .subscribe({
-        next: (data) => {
-          this.especialidades = data;
+        next: () => {
+          this.exitoMessage = 'Especialidad creada con éxito';
+          this.cargarEspecialidades();
+          this.cancelarCreacion();
         },
-        error: (error) => {
-          this.errorMessage = 'Error al cargar las especialidades';
+        error: () => {
+          this.errorMessage = 'Error al crear la especialidad';
         }
       });
   }
 
   activarEdicion(especialidad: any): void {
-    this.especialidadService.setEspecialidad(especialidad);
+    this.especialidadEnEdicion = { ...especialidad };
+    this.mostrarFormularioCrear = false;
   }
 
-  activarCreacion(): void {
-    this.mostrarFormularioCrear = true;
+  cancelarEdicion(): void {
+    this.especialidadEnEdicion = null;
+  }
+
+  guardarEdicion(): void {
+    if (!this.especialidadEnEdicion) return;
+
+    this.especialidadService.editarEspecialidad(this.especialidadEnEdicion)
+      .subscribe({
+        next: () => {
+          this.exitoMessage = 'Especialidad actualizada con éxito';
+          this.cargarEspecialidades();
+          this.cancelarEdicion();
+        },
+        error: () => {
+          this.errorMessage = 'Error al actualizar la especialidad';
+        }
+      });
   }
 }

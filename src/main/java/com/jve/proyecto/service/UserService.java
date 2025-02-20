@@ -67,6 +67,11 @@ public class UserService {
                 .map(userConverter::entityToDto)
                 .collect(Collectors.toList());
     }
+    public UserDTO TraerUsuarioPorId(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        return userConverter.entityToDto(user);
+    }
     public UserDTO actualizarUsuario(Long id, UserDTO userDTO) {
         Optional<User> optionalUser = userRepository.findById(id);
         

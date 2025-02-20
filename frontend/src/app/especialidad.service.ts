@@ -7,49 +7,34 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class EspecialidadService {
-  private especialidad: any = null; 
+  setEspecialidad(especialidad: any) {
+    throw new Error('Method not implemented.');
+  }
   private apiUrl = 'http://localhost:9000/api/especialidades';
 
   constructor(private http: HttpClient) {}
 
-  getEspecialidades() {
-    const token = sessionStorage.getItem('token');
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-
-    return this.http.get<any[]>(`${this.apiUrl}/todos`, { headers }); 
+  getEspecialidades(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/todos`);
   }
 
-  setEspecialidad(especialidad: any): void {
-    this.especialidad = especialidad;
-  }
-
-  getEspecialidad(): any {
-    return this.especialidad;
-  }
-
-  createEspecialidad(especialidad: any) {
-    const token = sessionStorage.getItem('token');
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,  
-      'Content-Type': 'application/json'
-    });
-
-    return this.http.post<any>(`${this.apiUrl}/crear`, especialidad, { headers });
-  }
-
-  updateEspecialidad(id: number, especialidad: any): Observable<any> {
+  crearEspecialidad(especialidad: any): Observable<any> {
     const token = sessionStorage.getItem('token');
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     });
 
-    return this.http.put<any>(`${this.apiUrl}/editar/${id}`, especialidad, { headers }).pipe(
-      catchError(error => {
-        return throwError(() => new Error('Error al actualizar especialidad'));
-      })
-    );
+    return this.http.post(`${this.apiUrl}/crear`, especialidad, { headers });
+  }
+
+  editarEspecialidad(especialidad: any): Observable<any> {
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+
+    return this.http.put(`${this.apiUrl}/editar/${especialidad.idEspecialidad}`, especialidad, { headers });
   }
 }

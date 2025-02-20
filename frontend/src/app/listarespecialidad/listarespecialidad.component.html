@@ -1,13 +1,59 @@
-<button (click)="activarCreacion()" class="btn-crear">Crear Especialidad</button>
-
-<app-creaespecialidad *ngIf="mostrarFormularioCrear"></app-creaespecialidad>
-
-<ul>
-  <li *ngFor="let especialidad of especialidades">
-    {{ especialidad.nombre }} ({{ especialidad.codigo }})
-    <button (click)="activarEdicion(especialidad)" class="btn-editar">Editar</button>
-  </li>
-</ul>
-
-<!-- Formulario de edición -->
-<app-editarespecialidad *ngIf="especialidadService.getEspecialidad()"></app-editarespecialidad>
+<div class="especialidad-container">
+    <h2>Gestión de Especialidades</h2>
+  
+    <!-- Botón para activar la creación -->
+    <button (click)="activarCreacion()" class="btn-crear">Crear Especialidad</button>
+  
+    <!-- Formulario de creación -->
+    <div *ngIf="mostrarFormularioCrear" class="form-container">
+      <h3>Crear Nueva Especialidad</h3>
+  
+      <div *ngIf="errorMessage" class="error">
+        {{ errorMessage }}
+      </div>
+  
+      <div *ngIf="exitoMessage" class="exito">
+        {{ exitoMessage }}
+      </div>
+  
+      <form (ngSubmit)="crearEspecialidad()">
+        <label for="nombre">Nombre:</label>
+        <input id="nombre" type="text" [(ngModel)]="nuevaEspecialidad.nombre" name="nombre" required />
+  
+        <label for="codigo">Código:</label>
+        <input id="codigo" type="text" [(ngModel)]="nuevaEspecialidad.codigo" name="codigo" required />
+  
+        <button type="submit" class="btn-guardar">Crear</button>
+        <button type="button" (click)="cancelarCreacion()" class="btn-cancelar">Cancelar</button>
+      </form>
+    </div>
+  
+    <!-- Lista de especialidades -->
+    <ul>
+      <li *ngFor="let especialidad of especialidades">
+        {{ especialidad.nombre }} ({{ especialidad.codigo }})
+        <button (click)="activarEdicion(especialidad)" class="btn-editar">Editar</button>
+      </li>
+    </ul>
+  
+    <!-- Formulario de edición -->
+    <div *ngIf="especialidadEnEdicion" class="form-container">
+      <h3>Editar Especialidad</h3>
+  
+      <div *ngIf="errorMessage" class="error">
+        {{ errorMessage }}
+      </div>
+  
+      <form (ngSubmit)="guardarEdicion()">
+        <label for="edit-nombre">Nombre:</label>
+        <input id="edit-nombre" type="text" [(ngModel)]="especialidadEnEdicion.nombre" name="nombre" required />
+  
+        <label for="edit-codigo">Código:</label>
+        <input id="edit-codigo" type="text" [(ngModel)]="especialidadEnEdicion.codigo" name="codigo" required />
+  
+        <button type="submit" class="btn-guardar">Guardar Cambios</button>
+        <button type="button" (click)="cancelarEdicion()" class="btn-cancelar">Cancelar</button>
+      </form>
+    </div>
+  </div>
+  

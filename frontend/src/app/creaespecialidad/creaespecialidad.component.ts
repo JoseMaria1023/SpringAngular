@@ -21,7 +21,7 @@ export class CreaespecialidadComponent {
       return;
     }
 
-    this.especialidadService.createEspecialidad(this.nuevaEspecialidad)
+    this.especialidadService.crearEspecialidad(this.nuevaEspecialidad)
       .subscribe({
         next: () => {
           this.nuevaEspecialidad = { nombre: '', codigo: '' };

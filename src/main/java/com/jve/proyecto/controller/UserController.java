@@ -26,6 +26,11 @@ public class UserController {
         List<UserDTO> users = userService.TraerTodos();
         return ResponseEntity.ok(users);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> TraerUsuarioPorId(@PathVariable Long id) {
+    UserDTO user = userService.TraerUsuarioPorId(id);
+    return ResponseEntity.ok(user);
+}
     @GetMapping("/role/{role}")
     public ResponseEntity<List<UserDTO>> getUsersByRole(@PathVariable String role) {
         List<UserDTO> users = userService.getUsersByRole(role);

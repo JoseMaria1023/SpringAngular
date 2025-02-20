@@ -16,7 +16,7 @@ export class EditarespecialidadComponent implements OnInit {
   constructor(private especialidadService: EspecialidadService) {}
 
   ngOnInit() {
-    this.especialidad = this.especialidadService.getEspecialidad();
+    this.especialidad = this.especialidadService.getEspecialidades();
     if (!this.especialidad) {
       this.errorMessage = 'No se encontró la especialidad para editar.';
     }
@@ -28,7 +28,7 @@ export class EditarespecialidadComponent implements OnInit {
       return;
     }
 
-    this.especialidadService.updateEspecialidad(this.especialidad.idEspecialidad, this.especialidad)
+    this.especialidadService.editarEspecialidad(this.especialidad.idEspecialidad)
       .subscribe({
         next: () => {
           console.log('Especialidad actualizada con éxito');
