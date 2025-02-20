@@ -1,0 +1,13 @@
+<button (click)="activarCreacion()" class="btn-crear">Crear Especialidad</button>
+
+<app-creaespecialidad *ngIf="mostrarFormularioCrear"></app-creaespecialidad>
+
+<ul>
+  <li *ngFor="let especialidad of especialidades">
+    {{ especialidad.nombre }} ({{ especialidad.codigo }})
+    <button (click)="activarEdicion(especialidad)" class="btn-editar">Editar</button>
+  </li>
+</ul>
+
+<!-- Formulario de edición -->
+<app-editarespecialidad *ngIf="especialidadService.getEspecialidad()"></app-editarespecialidad>

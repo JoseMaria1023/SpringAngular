@@ -20,15 +20,21 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping
-    public ResponseEntity<UserDTO> crearUser(@Valid @RequestBody UserDTO userDTO) {
-        UserDTO savedUser = userService.guardarUsuario(userDTO);
-        return ResponseEntity.ok(savedUser);
-    }
 
     @GetMapping
-    public ResponseEntity<List<UserDTO>> obtenerTodosLosUsuarios() {
-        List<UserDTO> users = userService.obtenerTodos();
+    public ResponseEntity<List<UserDTO>> TraerTodosLosUsuarios() {
+        List<UserDTO> users = userService.TraerTodos();
         return ResponseEntity.ok(users);
     }
+    @GetMapping("/role/{role}")
+    public ResponseEntity<List<UserDTO>> getUsersByRole(@PathVariable String role) {
+        List<UserDTO> users = userService.getUsersByRole(role);
+        return ResponseEntity.ok(users);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDTO> actualizarUsuario(@PathVariable Long id, @Valid @RequestBody UserDTO userDTO) {
+    UserDTO updatedUser = userService.actualizarUsuario(id, userDTO);
+    return ResponseEntity.ok(updatedUser);
+}
+
 }

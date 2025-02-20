@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:9000/auth';
+  private apiUrl = 'http://localhost:9000/api/users';
 
   constructor(private http: HttpClient) {}
 
@@ -19,4 +19,35 @@ export class UserService {
 
     return this.http.post<any>(`${this.apiUrl}/register`, user, { headers });
   }
+  loadExperts(): Observable<any> {
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+  
+    return this.http.get<any>(`${this.apiUrl}/role/ROLE_EXPERTO`, { headers });
+  }
+  getUserById(id: string): Observable<any> {
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+  
+    return this.http.get<any>(`http://localhost:9000/api/users/${id}`, { headers });
+  }
+  
+  updateUser(user: any): Observable<any> {
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+  
+    return this.http.put<any>(`http://localhost:9000/api/users/${user.idUser}`, user, { headers });
+  }
+  
+  
+  
 }

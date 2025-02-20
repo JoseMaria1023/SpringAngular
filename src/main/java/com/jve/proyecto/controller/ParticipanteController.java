@@ -57,7 +57,7 @@ public ResponseEntity<List<ParticipanteDTO>> TraerParticipantes(Authentication a
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<ParticipanteDTO> obtenerParticipantePorId(@PathVariable Long id) {
+    public ResponseEntity<ParticipanteDTO> TraerParticipantePorId(@PathVariable Long id) {
     ParticipanteDTO participanteDTO = participanteService.buscarParticipantePorId(id);
     return ResponseEntity.ok(participanteDTO);
 }

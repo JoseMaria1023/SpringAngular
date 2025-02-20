@@ -1,0 +1,19 @@
+<div *ngIf="especialidad" class="form-container">
+    <h3>Editar Especialidad</h3>
+  
+    <div *ngIf="errorMessage" class="error">
+      {{ errorMessage }}
+    </div>
+  
+    <form (ngSubmit)="guardarEdicion()">
+      <label for="edit-nombre">Nombre:</label>
+      <input id="edit-nombre" type="text" [(ngModel)]="especialidad.nombre" name="nombre" required />
+  
+      <label for="edit-codigo">Código:</label>
+      <input id="edit-codigo" type="text" [(ngModel)]="especialidad.codigo" name="codigo" required />
+  
+      <button type="submit" class="btn-guardar">Guardar Cambios</button>
+      <button type="button" (click)="cancelarEdicion()" class="btn-cancelar">Cancelar</button>
+    </form>
+  </div>
+  

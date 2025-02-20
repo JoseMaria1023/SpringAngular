@@ -4,22 +4,20 @@
       <button *ngIf="!authService.isLoggedIn()" (click)="login()">Login</button>
     </div>
 
+    <!-- Opciones para ADMIN -->
+    <div *ngIf="authService.isAdmin()">
+      <a routerLink="/admin/listar/experto">Expertos</a>
+      <a routerLink="/admin/especialidad">Especialidades</a>
+    </div>
 
-      <!-- Opciones para ADMIN -->
-      <div *ngIf="authService.isAdmin()">
-        <a routerLink="/admin/experto">Expertos</a>
-        <a routerLink="/admin/especialidad">Especialidades</a>
-      </div>
+    <!-- Opciones para EXPERTO -->
+    <div *ngIf="authService.isExperto()">
+      <a routerLink="/experto/participantes">Participantes</a>
+      <a routerLink="/experto/especialidad">{{ especialidadNombre }}</a>
+    </div>
 
-      <!-- Opciones para EXPERTO -->
-      <div *ngIf="authService.isExperto()">
-        <a routerLink="/experto/participantes">Participantes</a>
-        <a routerLink="/experto/especialidad">{{ especialidadNombre }}</a>
-      </div>
-
-      <div *ngIf="authService.isLoggedIn()" class="user-options">
-        <span>Bienvenido, {{ authService.getUsername() }}</span>
-
+    <div *ngIf="authService.isLoggedIn()" class="user-options">
+      <span>Bienvenido, {{ authService.getUsername() }}</span>
       <button (click)="logout()">Logout</button>
     </div>
   </div>

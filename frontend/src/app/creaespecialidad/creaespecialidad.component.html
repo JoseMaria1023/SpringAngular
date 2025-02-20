@@ -1,0 +1,23 @@
+<div class="form-container">
+    <h3>Crear Nueva Especialidad</h3>
+  
+    <div *ngIf="errorMessage" class="error">
+      {{ errorMessage }}
+    </div>
+  
+    <div *ngIf="exitoMessage" class="exito">
+      {{ exitoMessage }}
+    </div>
+  
+    <form (ngSubmit)="crearEspecialidad()">
+      <label for="nombre">Nombre:</label>
+      <input id="nombre" type="text" [(ngModel)]="nuevaEspecialidad.nombre" name="nombre" required />
+  
+      <label for="codigo">Código:</label>
+      <input id="codigo" type="text" [(ngModel)]="nuevaEspecialidad.codigo" name="codigo" required />
+  
+      <button type="submit" class="btn-guardar">Crear</button>
+      <button type="button" (click)="cancelarCreacion()" class="btn-cancelar">Cancelar</button>
+    </form>
+  </div>
+  

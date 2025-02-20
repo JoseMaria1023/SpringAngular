@@ -1,0 +1,31 @@
+<div class="user-list-container">
+    <h2>Lista de Expertos</h2>
+  
+    <div *ngIf="users.length === 0" class="no-users">
+      <p>No se encontraron expertos.</p>
+    </div>
+  
+    <table *ngIf="users.length > 0" class="user-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Rol</th>
+          <th>Acciones</th> 
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.idUser }}</td>
+          <td>{{ user.nombre }}</td>
+          <td>{{ user.apellidos }}</td>
+          <td>{{ user.role }}</td>
+          <td>
+            <button (click)="editarUsuario(user.idUser)">Editar</button> 
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

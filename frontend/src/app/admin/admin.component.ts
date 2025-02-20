@@ -11,8 +11,6 @@ export class AdminComponent {
 
   constructor(private router: Router) {}
 
-  crearExperto() {
-    this.router.navigate(['/crear/experto']);
-  }
+
 }
 

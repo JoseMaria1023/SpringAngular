@@ -35,7 +35,6 @@ public class AuthController {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    // Endpoint de Registro
     @PostMapping("/register")
     public ResponseEntity<UserDTO> register(@RequestBody @Valid UserDTO userDTO) {
         if (userDTO.getPassword().length() < 8) {

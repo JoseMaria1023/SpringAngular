@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.jve.proyecto.converter.UserConverter;
 import com.jve.proyecto.dto.UserDTO;
+import com.jve.proyecto.entity.Especialidad;
 import com.jve.proyecto.entity.User;
 import com.jve.proyecto.repository.UserRepository;
 
@@ -39,7 +40,7 @@ public class UserService {
         return userConverter.entityToDto(savedUser);
     }
 
-    public List<UserDTO> obtenerTodos() {
+    public List<UserDTO> TraerTodos() {
         return userRepository.findAll().stream()
                 .map(userConverter::entityToDto)
                 .collect(Collectors.toList());
@@ -60,4 +61,33 @@ public class UserService {
             throw new RuntimeException("Usuario no encontrado"); 
         }
     }
+     public List<UserDTO> getUsersByRole(String role) {
+        List<User> users = userRepository.findByRole(role);
+        return users.stream()
+                .map(userConverter::entityToDto)
+                .collect(Collectors.toList());
+    }
+    public UserDTO actualizarUsuario(Long id, UserDTO userDTO) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+    
+            user.setRole(userDTO.getRole());
+            user.setNombre(userDTO.getNombre());
+            user.setApellidos(userDTO.getApellidos());
+            user.setDni(userDTO.getDni());
+            if (userDTO.getEspecialidadId() != null) {
+                Especialidad especialidad = new Especialidad();
+                especialidad.setIdEspecialidad(userDTO.getEspecialidadId());
+                user.setEspecialidad(especialidad);
+            }
+            User updatedUser = userRepository.save(user);
+            return userConverter.entityToDto(updatedUser);
+        } else {
+            throw new RuntimeException("Usuario no encontrado con ID: " + id);
+        }
+    }
+    
+
 }

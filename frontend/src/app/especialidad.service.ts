@@ -7,6 +7,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class EspecialidadService {
+  private especialidad: any = null; 
   private apiUrl = 'http://localhost:9000/api/especialidades';
 
   constructor(private http: HttpClient) {}
@@ -16,8 +17,16 @@ export class EspecialidadService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-  
+
     return this.http.get<any[]>(`${this.apiUrl}/todos`, { headers }); 
+  }
+
+  setEspecialidad(especialidad: any): void {
+    this.especialidad = especialidad;
+  }
+
+  getEspecialidad(): any {
+    return this.especialidad;
   }
 
   createEspecialidad(especialidad: any) {
@@ -36,7 +45,7 @@ export class EspecialidadService {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     });
-  
+
     return this.http.put<any>(`${this.apiUrl}/editar/${id}`, especialidad, { headers }).pipe(
       catchError(error => {
         return throwError(() => new Error('Error al actualizar especialidad'));

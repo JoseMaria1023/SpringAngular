@@ -1,0 +1,88 @@
+/* Contenedor principal del formulario de edición */
+.form-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Título del formulario */
+  .form-container h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Estilos para mensajes de error */
+  .error {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  /* Estilos generales del formulario */
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Estilos para los labels */
+  form label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #555;
+  }
+  
+  /* Estilos para los inputs */
+  form input {
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+  }
+  
+  form input:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  /* Estilos para los botones */
+  form button {
+    padding: 12px;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Estilos para el botón de guardar */
+  .btn-guardar {
+    background-color: #28a745;
+    margin-bottom: 10px;
+  }
+  
+  .btn-guardar:hover {
+    background-color: #218838;
+  }
+  
+  /* Estilos para el botón de cancelar */
+  .btn-cancelar {
+    background-color: #dc3545;
+  }
+  
+  .btn-cancelar:hover {
+    background-color: #c82333;
+  }
+  
+  /* Asegurarse que los botones ocupen todo el ancho disponible */
+  form button {
+    width: 100%;
+  }
+  

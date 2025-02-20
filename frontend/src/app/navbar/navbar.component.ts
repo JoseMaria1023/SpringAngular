@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { EspecialidadService } from '../especialidad.service';
 import { CommonModule, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  imports: [CommonModule,FormsModule,NgFor],
+  imports: [CommonModule,FormsModule,NgFor,RouterModule],
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {

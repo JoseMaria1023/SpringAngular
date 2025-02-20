@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth.service';
-import { LogoComponent } from "./logo/logo.component"; // Importa tu servicio de autenticación
+import { LogoComponent } from "./logo/logo.component"; 
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 
