@@ -53,21 +53,14 @@ import com.jve.proyecto.repository.EspecialidadRepository;
             }
         }
     
-        /**
-         * Guarda una prueba recibiendo un archivo PDF (subido desde el equipo del experto),
-         * la puntuación máxima y el ID de la especialidad. El archivo se guarda en el directorio
-         * configurado y su URL se asigna al campo "enunciado".
-         */
+       
         public PruebaDTO guardarPruebaConPDF(MultipartFile file, Integer puntuacionMaxima, Long especialidadId) {
-            // Buscar la especialidad
             Especialidad especialidad = especialidadRepository.findById(especialidadId)
                     .orElseThrow(() -> new RuntimeException("Especialidad no encontrada"));
     
-            // Guardar el archivo PDF subido y obtener el nombre generado
             String fileName = guardarArchivo(file);
             String fileUrl = "/uploads/pruebas/" + fileName;
     
-            // Crear la entidad Prueba y asignar la URL del PDF al campo "enunciado"
             Prueba prueba = new Prueba();
             prueba.setEnunciado(fileUrl);
             prueba.setPuntuacionMaxima(puntuacionMaxima);
@@ -77,7 +70,6 @@ import com.jve.proyecto.repository.EspecialidadRepository;
             return pruebaConverter.entityToDto(savedPrueba);
         }
     
-        // Método auxiliar para guardar el archivo en el directorio configurado
         private String guardarArchivo(MultipartFile file) {
             try {
                 String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();

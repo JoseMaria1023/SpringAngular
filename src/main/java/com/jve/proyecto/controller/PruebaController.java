@@ -20,13 +20,6 @@ public class PruebaController {
         this.pruebaService = pruebaService;
     }
 
-    /**
-     * Endpoint para crear una prueba subiendo un archivo PDF desde el equipo del experto.
-     * Se espera que se envíe un multipart request con:
-     * - "file": el archivo PDF.
-     * - "puntuacionMaxima": la puntuación máxima de la prueba.
-     * - "especialidadId": el ID de la especialidad correspondiente.
-     */
     @PostMapping("/crear-con-pdf")
     public ResponseEntity<PruebaDTO> crearPruebaConPDF(
             @RequestPart("file") MultipartFile file,
