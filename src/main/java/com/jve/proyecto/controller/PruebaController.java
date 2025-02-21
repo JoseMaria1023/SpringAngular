@@ -1,11 +1,14 @@
 package com.jve.proyecto.controller;
 
-import com.jve.proyecto.dto.PruebaDTO;
-import com.jve.proyecto.service.PruebaService;
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import com.jve.proyecto.dto.PruebaDTO;
+import com.jve.proyecto.service.PruebaService;
 
 @RestController
 @RequestMapping("/api/pruebas")
@@ -17,9 +20,34 @@ public class PruebaController {
         this.pruebaService = pruebaService;
     }
 
+    /**
+     * Endpoint para crear una prueba subiendo un archivo PDF desde el equipo del experto.
+     * Se espera que se envíe un multipart request con:
+     * - "file": el archivo PDF.
+     * - "puntuacionMaxima": la puntuación máxima de la prueba.
+     * - "especialidadId": el ID de la especialidad correspondiente.
+     */
+    @PostMapping("/crear-con-pdf")
+    public ResponseEntity<PruebaDTO> crearPruebaConPDF(
+            @RequestPart("file") MultipartFile file,
+            @RequestParam("puntuacionMaxima") Integer puntuacionMaxima,
+            @RequestParam("especialidadId") Long especialidadId) {
+
+        PruebaDTO nuevaPrueba = pruebaService.guardarPruebaConPDF(file, puntuacionMaxima, especialidadId);
+        return new ResponseEntity<>(nuevaPrueba, HttpStatus.CREATED);
+    }
+
     @GetMapping("/todas")
-    public ResponseEntity<List<PruebaDTO>> getAllPruebas() {
-        List<PruebaDTO> pruebas = pruebaService.getAllPruebas();
-        return ResponseEntity.ok(pruebas);
+    public ResponseEntity<?> obtenerTodas() {
+        return ResponseEntity.ok(pruebaService.traerTodas());
+    }
+
+    @PutMapping("/editar/{id}")
+    public ResponseEntity<PruebaDTO> editarPrueba(
+            @PathVariable Long id,
+            @RequestPart(value = "file", required = false) MultipartFile file,
+            @RequestPart("prueba") PruebaDTO pruebaDTO) {
+        PruebaDTO pruebaActualizada = pruebaService.editarPrueba(id, file, pruebaDTO);
+        return ResponseEntity.ok(pruebaActualizada);
     }
 }

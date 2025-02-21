@@ -15,6 +15,7 @@ import { ExpertoGuard } from './auth/experto.guard';
 import { EditarespecialidadComponent } from './editarespecialidad/editarespecialidad.component';
 import { ListaexpertoComponent } from './listaexperto/listaexperto.component';
 import { EditarexpertoComponent } from './editarexperto/editarexperto.component';
+import { PruebaComponent } from './prueba/prueba.component';
 
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -32,5 +33,7 @@ export const appRoutes: Routes = [
   { path: 'admin/crear/experto', component: CrearexpertoComponent, canActivate: [AdminGuard] },
   { path: 'admin/listar/experto', component: ListaexpertoComponent, canActivate: [AdminGuard] },
   { path: 'admin/editarexperto/:id', component: EditarexpertoComponent },
+  { path: 'pruebas', component: PruebaComponent },
+
 
 ];
