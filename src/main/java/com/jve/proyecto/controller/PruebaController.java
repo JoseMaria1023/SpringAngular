@@ -50,4 +50,9 @@ public class PruebaController {
         PruebaDTO pruebaActualizada = pruebaService.editarPrueba(id, file, pruebaDTO);
         return ResponseEntity.ok(pruebaActualizada);
     }
+    @GetMapping("/especialidad/{especialidadId}")
+    public ResponseEntity<List<PruebaDTO>> getPruebasByEspecialidad(@PathVariable Long especialidadId) {
+    List<PruebaDTO> pruebas = pruebaService.getPruebasByEspecialidad(especialidadId);
+    return ResponseEntity.ok(pruebas);
+}
 }

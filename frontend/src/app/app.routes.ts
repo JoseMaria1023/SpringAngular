@@ -16,6 +16,7 @@ import { EditarespecialidadComponent } from './editarespecialidad/editarespecial
 import { ListaexpertoComponent } from './listaexperto/listaexperto.component';
 import { EditarexpertoComponent } from './editarexperto/editarexperto.component';
 import { PruebaComponent } from './prueba/prueba.component';
+import { CrearitemComponent } from './crearitem/crearitem.component';
 
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -34,6 +35,9 @@ export const appRoutes: Routes = [
   { path: 'admin/listar/experto', component: ListaexpertoComponent, canActivate: [AdminGuard] },
   { path: 'admin/editarexperto/:id', component: EditarexpertoComponent },
   { path: 'pruebas', component: PruebaComponent },
+  { path: 'items', component: CrearitemComponent },
+
+
 
 
 ];

@@ -5,6 +5,7 @@ import com.jve.proyecto.service.ItemService;
 
 import jakarta.validation.Valid;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,15 +21,21 @@ public class ItemController {
         this.itemService = itemService;
     }
 
-    @PostMapping
-    public ResponseEntity<ItemDTO> crearItem(@Valid @RequestBody ItemDTO itemDTO) {
-        ItemDTO savedItem = itemService.guardarItem(itemDTO);
-        return ResponseEntity.ok(savedItem);
+    @PostMapping("/crear")
+    public ResponseEntity<ItemDTO> crearItem(@RequestBody ItemDTO itemDTO) {
+        ItemDTO nuevoItem = itemService.guardarItem(itemDTO);
+        return new ResponseEntity<>(nuevoItem, HttpStatus.CREATED);
     }
 
-    @GetMapping
-    public ResponseEntity<List<ItemDTO>> TraerTodosLosItems() {
-        List<ItemDTO> items = itemService.TraerTodos();
+    @GetMapping("/todos")
+    public ResponseEntity<List<ItemDTO>> traerTodos() {
+        List<ItemDTO> items = itemService.traerTodos();
         return ResponseEntity.ok(items);
+    }
+
+    @PutMapping("/editar/{id}")
+    public ResponseEntity<ItemDTO> editarItem(@PathVariable Long id, @RequestBody ItemDTO itemDTO) {
+        ItemDTO itemActualizado = itemService.editarItem(id, itemDTO);
+        return ResponseEntity.ok(itemActualizado);
     }
 }

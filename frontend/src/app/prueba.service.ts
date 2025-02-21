@@ -23,4 +23,11 @@ export class PruebaService {
     
     return this.http.post(`${this.apiUrl}/crear-con-pdf`, formData, { headers });
   }
+  getPruebasByEspecialidad(especialidadId: number): Observable<any> {
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get(`${this.apiUrl}/especialidad/${especialidadId}`, { headers });
+  }
 }

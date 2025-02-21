@@ -94,7 +94,12 @@ import com.jve.proyecto.repository.EspecialidadRepository;
                     .map(pruebaConverter::entityToDto)
                     .collect(Collectors.toList());
         }
-    
+        public List<PruebaDTO> getPruebasByEspecialidad(Long especialidadId) {
+            List<Prueba> pruebas = pruebaRepository.findByEspecialidad_IdEspecialidad(especialidadId); // Busca las pruebas según el especialidadId
+            return pruebas.stream()
+                          .map(prueba -> new PruebaDTO(prueba)) 
+                          .collect(Collectors.toList());
+        }
         public PruebaDTO editarPrueba(Long id, MultipartFile file, PruebaDTO pruebaDTO) {
             Optional<Prueba> optionalPrueba = pruebaRepository.findById(id);
             if (optionalPrueba.isPresent()) {
@@ -115,4 +120,5 @@ import com.jve.proyecto.repository.EspecialidadRepository;
                 throw new RuntimeException("Prueba no encontrada");
             }
         }
+        
     }
