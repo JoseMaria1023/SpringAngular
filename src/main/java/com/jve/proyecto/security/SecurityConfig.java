@@ -55,8 +55,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/participantes/crear").hasAuthority("ROLE_EXPERTO") // Solo expertos pueden crear
                         .requestMatchers(HttpMethod.PUT, "/api/participantes/editar/**").hasAuthority("ROLE_EXPERTO") // Solo expertos pueden editar
                         .requestMatchers(HttpMethod.GET, "/api/especialidades/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/evaluaciones/**").hasAuthority("ROLE_EXPERTO")
                         .requestMatchers(HttpMethod.GET, "/api/especialidades/todos").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/participantes/crear").hasAuthority("ROLE_EXPERTO")
+                        .requestMatchers(HttpMethod.GET, "/api/pruebas/todas").hasAuthority("ROLE_EXPERTO")
 
 
 //                        .requestMatchers(HttpMethod.GET, "/api/especialidades/**").permitAll() // Permitir acceso público para listar especialidades

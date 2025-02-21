@@ -2,7 +2,11 @@ package com.jve.proyecto.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
 public class EvaluacionDTO {
 
     private Long idEvaluacion;
@@ -59,5 +63,9 @@ public class EvaluacionDTO {
 
     public void setNotaFinal(Double notaFinal) {
         this.notaFinal = notaFinal;
+    }
+
+    public EvaluacionDTO(Long idEvaluacion2, Double notaFinal2, Long idParticipante) {
+        //TODO Auto-generated constructor stub
     }
 }

@@ -2,9 +2,6 @@ package com.jve.proyecto.controller;
 
 import com.jve.proyecto.dto.PruebaDTO;
 import com.jve.proyecto.service.PruebaService;
-
-import jakarta.validation.Valid;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,15 +17,9 @@ public class PruebaController {
         this.pruebaService = pruebaService;
     }
 
-    @PostMapping
-    public ResponseEntity<PruebaDTO> crearPrueba(@Valid @RequestBody PruebaDTO pruebaDTO) {
-        PruebaDTO savedPrueba = pruebaService.guardarPrueba(pruebaDTO);
-        return ResponseEntity.ok(savedPrueba);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<PruebaDTO>> TraerTodasLasPruebas() {
-        List<PruebaDTO> pruebas = pruebaService.TraerTodos();
+    @GetMapping("/todas")
+    public ResponseEntity<List<PruebaDTO>> getAllPruebas() {
+        List<PruebaDTO> pruebas = pruebaService.getAllPruebas();
         return ResponseEntity.ok(pruebas);
     }
 }

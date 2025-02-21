@@ -31,6 +31,6 @@ export const appRoutes: Routes = [
   { path: 'admin', component: AdminComponent },
   { path: 'admin/crear/experto', component: CrearexpertoComponent, canActivate: [AdminGuard] },
   { path: 'admin/listar/experto', component: ListaexpertoComponent, canActivate: [AdminGuard] },
-  { path: 'admin/editarexperto/:id', component: EditarexpertoComponent }
+  { path: 'admin/editarexperto/:id', component: EditarexpertoComponent },
 
 ];
