@@ -1,0 +1,32 @@
+<div class="container">
+    <h2>Editar Prueba</h2>
+    <form (ngSubmit)="guardarEdicion(form)" #form="ngForm">
+      <div class="mb-3">
+        <label class="form-label">Puntuación Máxima</label>
+        <input type="number" class="form-control" [(ngModel)]="prueba.puntuacionMaxima" name="puntuacionMaxima" required #puntuacionMaxima="ngModel">
+        <div *ngIf="puntuacionMaxima.invalid && puntuacionMaxima.touched" class="text-danger">
+          La puntuación máxima es obligatoria.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label class="form-label">Especialidad</label>
+        <select class="form-control" [(ngModel)]="prueba.especialidadId" name="especialidad" required #especialidad="ngModel">
+          <option *ngFor="let esp of especialidades" [value]="esp.idEspecialidad">
+            {{ esp.nombre }}
+          </option>
+        </select>
+        <div *ngIf="especialidad.invalid && especialidad.touched" class="text-danger">
+          La especialidad es obligatoria.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label class="form-label">Subir nuevo PDF (Opcional)</label>
+        <input type="file" class="form-control" (change)="onFileSelected($event)" accept="application/pdf">
+      </div>
+  
+      <button type="submit" class="btn btn-success" [disabled]="form.invalid">Guardar Cambios</button>
+    </form>
+  </div>
+  

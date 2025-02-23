@@ -41,10 +41,10 @@ public ResponseEntity<List<ParticipanteDTO>> TraerParticipantes(Authentication a
         String username = authentication.getName();  
         Long especialidadId = userService.getEspecialidadByUsername(username);
         
-        List<ParticipanteDTO> participantes = participanteService.TraerParticipantesPorEspecialidad(especialidadId);
+        List<ParticipanteDTO> participantes = participanteService.traerParticipantesPorEspecialidad(especialidadId);
         return ResponseEntity.ok(participantes);
     } else {
-        List<ParticipanteDTO> participantes = participanteService.TraerParticipantes();
+        List<ParticipanteDTO> participantes = participanteService.traerParticipantes();
         return ResponseEntity.ok(participantes);
     }
 }

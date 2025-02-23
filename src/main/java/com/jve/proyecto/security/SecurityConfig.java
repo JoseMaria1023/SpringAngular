@@ -59,6 +59,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/especialidades/todos").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/participantes/crear").hasAuthority("ROLE_EXPERTO")
                         .requestMatchers(HttpMethod.GET, "/api/pruebas/todas").hasAuthority("ROLE_EXPERTO")
+                        .requestMatchers(HttpMethod.POST, "/api/pruebas/crear-con-pdf").hasAuthority("ROLE_EXPERTO")
+
 
 
 //                        .requestMatchers(HttpMethod.GET, "/api/especialidades/**").permitAll() // Permitir acceso público para listar especialidades

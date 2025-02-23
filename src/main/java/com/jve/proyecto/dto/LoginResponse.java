@@ -15,4 +15,6 @@ public class LoginResponse {
     private List<String> authorities;
     private String token;
     private Long especialidadId; 
+    private Long idUser;
 }
+ 

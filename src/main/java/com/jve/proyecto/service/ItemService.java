@@ -44,21 +44,26 @@ public class ItemService {
     }
 
     public ItemDTO editarItem(Long id, ItemDTO itemDTO) {
-        Optional<Item> optionalItem = itemRepository.findById(id);
-        if (optionalItem.isPresent()) {
-            Item item = optionalItem.get();
-            item.setDescripcion(itemDTO.getDescripcion());
-            item.setPeso(itemDTO.getPeso());
-            item.setGradosConsecucion(itemDTO.getGradosConsecucion());
-            if (itemDTO.getPruebaId() != null) {
-                Prueba prueba = pruebaRepository.findById(itemDTO.getPruebaId())
-                        .orElseThrow(() -> new RuntimeException("Prueba no encontrada"));
-                item.setPrueba(prueba);
-            }
-            Item updatedItem = itemRepository.save(item);
-            return itemConverter.entityToDto(updatedItem);
-        } else {
-            throw new RuntimeException("Item no encontrado");
+        Item item = itemRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Item no encontrado"));
+
+        item.setDescripcion(itemDTO.getDescripcion());
+        item.setPeso(itemDTO.getPeso());
+        item.setGradosConsecucion(itemDTO.getGradosConsecucion());
+
+        if (itemDTO.getPruebaId() != null) {
+            Prueba prueba = pruebaRepository.findById(itemDTO.getPruebaId())
+                    .orElseThrow(() -> new RuntimeException("Prueba no encontrada"));
+            item.setPrueba(prueba);
         }
+
+        Item updatedItem = itemRepository.save(item);
+        return itemConverter.entityToDto(updatedItem);
+    }
+
+    public ItemDTO obtenerItemPorId(Long id) {
+        Item item = itemRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Item no encontrado"));
+        return itemConverter.entityToDto(item);
     }
 }

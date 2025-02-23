@@ -2,40 +2,39 @@ package com.jve.proyecto.service;
 
 import com.jve.proyecto.dto.ParticipanteDTO;
 import com.jve.proyecto.entity.Participante;
-import com.jve.proyecto.entity.Especialidad; // Importamos la entidad Especialidad
+import com.jve.proyecto.entity.Especialidad;
 import com.jve.proyecto.repository.ParticipanteRepository;
-import com.jve.proyecto.repository.EspecialidadRepository; // Repositorio para obtener la especialidad
+import com.jve.proyecto.repository.EspecialidadRepository;
 import com.jve.proyecto.converter.ParticipanteConverter;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ParticipanteService {
 
     private final ParticipanteRepository participanteRepository;
-    private final EspecialidadRepository especialidadRepository;  
+    private final EspecialidadRepository especialidadRepository;
     private final ParticipanteConverter participanteConverter;
 
-    public ParticipanteService(ParticipanteRepository participanteRepository, EspecialidadRepository especialidadRepository, ParticipanteConverter participanteConverter) {
+    public ParticipanteService(ParticipanteRepository participanteRepository, 
+                               EspecialidadRepository especialidadRepository, 
+                               ParticipanteConverter participanteConverter) {
         this.participanteRepository = participanteRepository;
         this.especialidadRepository = especialidadRepository;
         this.participanteConverter = participanteConverter;
     }
 
-    public List<ParticipanteDTO> TraerParticipantesPorEspecialidad(long especialidadId) {
-        List<Participante> participantes = participanteRepository.findByEspecialidad_idEspecialidad(especialidadId);
-        return participantes.stream()
-                            .map(participanteConverter::entityToDto)
-                            .collect(Collectors.toList());
+    public List<ParticipanteDTO> traerParticipantesPorEspecialidad(long especialidadId) {
+        return participanteRepository.findByEspecialidad_idEspecialidad(especialidadId).stream()
+                .map(participanteConverter::entityToDto)
+                .toList();
     }
 
-    public List<ParticipanteDTO> TraerParticipantes() {
-        List<Participante> participantes = participanteRepository.findAll();
-        return participantes.stream()
-                            .map(participanteConverter::entityToDto)
-                            .collect(Collectors.toList());
+    public List<ParticipanteDTO> traerParticipantes() {
+        return participanteRepository.findAll().stream()
+                .map(participanteConverter::entityToDto)
+                .toList();
     }
 
     public ParticipanteDTO editarParticipante(Long id, ParticipanteDTO participanteDTO) {
@@ -48,30 +47,24 @@ public class ParticipanteService {
 
         Especialidad especialidad = especialidadRepository.findById(participanteDTO.getEspecialidadId())
                 .orElseThrow(() -> new RuntimeException("Especialidad no encontrada"));
-
         participanteExistente.setEspecialidad(especialidad);
 
-        Participante participanteGuardado = participanteRepository.save(participanteExistente);
-
-        return participanteConverter.entityToDto(participanteGuardado);
+        return participanteConverter.entityToDto(participanteRepository.save(participanteExistente));
     }
 
     public ParticipanteDTO guardarParticipante(ParticipanteDTO participanteDTO) {
-        Participante participante = participanteConverter.dtoToEntity(participanteDTO);
-
         Especialidad especialidad = especialidadRepository.findById(participanteDTO.getEspecialidadId())
                 .orElseThrow(() -> new RuntimeException("Especialidad no encontrada"));
 
+        Participante participante = participanteConverter.dtoToEntity(participanteDTO);
         participante.setEspecialidad(especialidad);
 
-        Participante savedParticipante = participanteRepository.save(participante);
-        return participanteConverter.entityToDto(savedParticipante);
+        return participanteConverter.entityToDto(participanteRepository.save(participante));
     }
 
     public ParticipanteDTO buscarParticipantePorId(Long id) {
-        Participante participante = participanteRepository.findById(id)
+        return participanteRepository.findById(id)
+                .map(participanteConverter::entityToDto)
                 .orElseThrow(() -> new RuntimeException("Participante no encontrado"));
-        return participanteConverter.entityToDto(participante);
     }
-    
 }

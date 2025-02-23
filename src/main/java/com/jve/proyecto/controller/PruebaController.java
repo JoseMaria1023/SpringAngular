@@ -29,23 +29,37 @@ public class PruebaController {
         PruebaDTO nuevaPrueba = pruebaService.guardarPruebaConPDF(file, puntuacionMaxima, especialidadId);
         return new ResponseEntity<>(nuevaPrueba, HttpStatus.CREATED);
     }
-
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<PruebaDTO> getPruebaById(@PathVariable Long id) {
+        PruebaDTO pruebaDTO = pruebaService.getPruebaById(id);
+        return ResponseEntity.ok(pruebaDTO);
+    }
+    
     @GetMapping("/todas")
-    public ResponseEntity<?> obtenerTodas() {
-        return ResponseEntity.ok(pruebaService.traerTodas());
+    public ResponseEntity<List<PruebaDTO>> traerTodaslaspruebas() {
+        List<PruebaDTO> pruebas = pruebaService.traerTodasLasPruebas();
+        return ResponseEntity.ok(pruebas);
     }
-
-    @PutMapping("/editar/{id}")
-    public ResponseEntity<PruebaDTO> editarPrueba(
-            @PathVariable Long id,
-            @RequestPart(value = "file", required = false) MultipartFile file,
-            @RequestPart("prueba") PruebaDTO pruebaDTO) {
-        PruebaDTO pruebaActualizada = pruebaService.editarPrueba(id, file, pruebaDTO);
-        return ResponseEntity.ok(pruebaActualizada);
-    }
+    
     @GetMapping("/especialidad/{especialidadId}")
     public ResponseEntity<List<PruebaDTO>> getPruebasByEspecialidad(@PathVariable Long especialidadId) {
-    List<PruebaDTO> pruebas = pruebaService.getPruebasByEspecialidad(especialidadId);
-    return ResponseEntity.ok(pruebas);
+        List<PruebaDTO> pruebas = pruebaService.getPruebasByEspecialidad(especialidadId);
+        return ResponseEntity.ok(pruebas);
+    }
+    
+    @PutMapping("/editar/{id}")
+    public ResponseEntity<PruebaDTO> editarPrueba(
+        @PathVariable Long id,
+        @RequestParam(value = "file", required = false) MultipartFile file,
+        @RequestParam("puntuacionMaxima") Integer puntuacionMaxima,
+        @RequestParam("especialidadId") Long especialidadId) {
+
+    PruebaDTO pruebaDTO = new PruebaDTO();
+    pruebaDTO.setPuntuacionMaxima(puntuacionMaxima);
+    pruebaDTO.setEspecialidadId(especialidadId);
+
+    PruebaDTO updatedPrueba = pruebaService.editarPrueba(id, file, pruebaDTO);
+    return ResponseEntity.ok(updatedPrueba);
 }
 }

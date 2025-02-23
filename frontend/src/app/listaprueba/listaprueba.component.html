@@ -1,0 +1,43 @@
+<div class="container">
+  <h2>Lista de Pruebas</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Puntuación Máxima</th>
+        <th>Especialidad</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let prueba of pruebas">
+        <td>{{ prueba.idPrueba }}</td>
+        <td>{{ prueba.nombre }}</td>
+        <td>{{ prueba.puntuacionMaxima }}</td>
+        <td>{{ prueba.especialidadId }} - {{ prueba.especialidad?.nombre || 'No disponible' }}</td>
+        <td>
+          <!-- Al hacer clic, se selecciona la prueba y se carga la lista de participantes -->
+          <button class="btn btn-primary" (click)="selectPrueba(prueba)">
+            Evaluar
+          </button>
+          <button class="btn btn-warning ml-2" (click)="editarPrueba(prueba.idPrueba)">
+            Editar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="selectedPrueba && participantes && participantes.length > 0" class="mt-4">
+    <h3>Participantes para la prueba: {{ selectedPrueba.nombre }}</h3>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let participante of participantes">
+        Participante ID: {{ participante.idParticipante }} - Nombre: {{ participante.nombre }}
+        <button class="btn btn-success ml-2" (click)="evaluarParticipante(participante)">
+          Evaluar Participante
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>

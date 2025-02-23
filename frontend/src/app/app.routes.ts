@@ -17,6 +17,9 @@ import { ListaexpertoComponent } from './listaexperto/listaexperto.component';
 import { EditarexpertoComponent } from './editarexperto/editarexperto.component';
 import { PruebaComponent } from './prueba/prueba.component';
 import { CrearitemComponent } from './crearitem/crearitem.component';
+import { ListapruebaComponent } from './listaprueba/listaprueba.component';
+import { RealizarEvaluacionComponent } from './realizar-evaluacion/realizar-evaluacion.component';
+import { EditarpruebaComponent } from './editarprueba/editarprueba.component';
 
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -28,14 +31,22 @@ export const appRoutes: Routes = [
   { path: 'admin/especialidad/editar/:id', component: EditarespecialidadComponent, canActivate: [AdminGuard] },
   { path: 'participantes/lista', component: ParticipanteslistaComponent },
   { path: 'experto/participante/crear', component: ParticipantescrearComponent, canActivate: [ExpertoGuard] },
+  { path: 'experto/participantes', component: ParticipantesComponent, canActivate: [ExpertoGuard] },
   { path: 'experto/participante/editar/:id', component: ParticipanteeditarComponent, canActivate: [ExpertoGuard] },
   { path: 'participantes', component: ParticipantesComponent },
-  { path: 'admin', component: AdminComponent },
+  { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] },
   { path: 'admin/crear/experto', component: CrearexpertoComponent, canActivate: [AdminGuard] },
   { path: 'admin/listar/experto', component: ListaexpertoComponent, canActivate: [AdminGuard] },
   { path: 'admin/editarexperto/:id', component: EditarexpertoComponent },
-  { path: 'pruebas', component: PruebaComponent },
-  { path: 'items', component: CrearitemComponent },
+  { path: 'experto/pruebas', component: PruebaComponent, canActivate: [ExpertoGuard] },
+  { path: 'experto/items', component: CrearitemComponent, canActivate: [ExpertoGuard] },
+  { path: 'experto/listarpruebas', component: ListapruebaComponent, canActivate: [ExpertoGuard] },
+  { path: 'experto/realizar-evaluacion', component: RealizarEvaluacionComponent, canActivate: [ExpertoGuard] },
+  { path: 'editar-prueba/:id', component: EditarpruebaComponent},
+
+
+
+
 
 
 

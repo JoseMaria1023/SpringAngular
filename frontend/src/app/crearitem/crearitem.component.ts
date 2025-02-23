@@ -17,14 +17,12 @@ export class CrearitemComponent implements OnInit {
     descripcion: '',
     peso: null,
     gradosConsecucion: null,
-    pruebaId: null
+    pruebaId: null,
+    especialidadId: null  
   };
 
-  especialidades: any[] = [];  // Lista de especialidades
-  pruebas: any[] = [];         // Lista de pruebas asociadas con la especialidad seleccionada
-
-  // Variable para manejar la especialidad seleccionada
-  selectedEspecialidadId: number | null = null;
+  especialidades: any[] = [];
+  pruebas: any[] = []; 
 
   constructor(
     private itemService: ItemService,
@@ -33,7 +31,6 @@ export class CrearitemComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Cargar especialidades al iniciar el componente
     this.especialidadService.getEspecialidades().subscribe(
       (data) => {
         this.especialidades = data;
@@ -42,43 +39,31 @@ export class CrearitemComponent implements OnInit {
         console.error('Error cargando especialidades', error);
       }
     );
-  }
 
-  // Método que se dispara al cambiar la especialidad
-  onEspecialidadChange() {
-    console.log('Especialidad seleccionada:', this.selectedEspecialidadId);
-    if (this.selectedEspecialidadId != null) {
-      this.pruebaService.getPruebasByEspecialidad(this.selectedEspecialidadId).subscribe(
+    const especialidadIdStr = sessionStorage.getItem('especialidadId');
+    if (especialidadIdStr) {
+      this.item.especialidadId = parseInt(especialidadIdStr, 10);
+
+      this.pruebaService.traerPruebasPorEspecialidad(this.item.especialidadId).subscribe(
         (data) => {
           this.pruebas = data;
         },
         (error) => {
-          console.error('Error cargando pruebas', error);
+          console.error('Error cargando pruebas por especialidad', error);
         }
       );
     } else {
-      console.error('No se ha seleccionado una especialidad válida');
+      console.error('Especialidad no encontrada en sessionStorage');
     }
   }
 
-  // Método para manejar el cambio de prueba seleccionada
-  onPruebaChange() {
-    console.log('Prueba seleccionada:', this.item.pruebaId);
-  }
-
-  // Método para enviar el formulario
   onSubmit() {
     if (!this.item.pruebaId) {
-      console.error('Se debe seleccionar una prueba');
       return;
     }
-    // Asignar opcionalmente la especialidad seleccionada al objeto item
-    this.item.especialidadId = this.selectedEspecialidadId;
-
     this.itemService.crearItem(this.item).subscribe(
       (response) => {
         console.log('Item creado exitosamente', response);
-        // Aquí puedes limpiar el formulario o redirigir
       },
       (error: HttpErrorResponse) => {
         console.error('Error creando item', error);

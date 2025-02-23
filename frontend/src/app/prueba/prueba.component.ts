@@ -46,7 +46,6 @@ export class PruebaComponent implements OnInit {
 
   onSubmit(): void {
     if (!this.file || !this.puntuacionMaxima || !this.especialidadId) {
-      alert('Por favor, completa todos los campos y selecciona un archivo PDF.');
       return;
     }
 
@@ -55,14 +54,12 @@ export class PruebaComponent implements OnInit {
         response => {
           console.log('Prueba creada exitosamente', response);
           alert('Prueba creada exitosamente');
-          // Reinicia los campos si lo deseas
           this.file = null;
           this.puntuacionMaxima = null;
           this.especialidadId = null;
         },
         error => {
           console.error('Error creando la prueba', error);
-          alert('Error al crear la prueba');
         }
       );
   }

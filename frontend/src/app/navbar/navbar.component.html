@@ -13,8 +13,8 @@
     <!-- Opciones para EXPERTO -->
     <div *ngIf="authService.isExperto()">
       <a routerLink="/experto/participantes">Participantes</a>
-      <a routerLink="/pruebas">Pruebas</a>
-      <a routerLink="/items">Items</a>
+      <a routerLink="/experto/listarpruebas">Pruebas</a>
+      <a routerLink="/experto/items">Items</a>
       <a routerLink="/experto/listar/evaluacion">Ganadores</a>
       <a routerLink="/experto/especialidad">{{ especialidadNombre }}</a>
     </div>

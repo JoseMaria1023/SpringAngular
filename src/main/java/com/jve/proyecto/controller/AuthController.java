@@ -70,15 +70,18 @@ public class AuthController {
                 ? user.getEspecialidad().getIdEspecialidad() 
                 : null;
     
+         Long idUser = user.getIdUser();
+
         return ResponseEntity.ok().body(
-                new LoginResponse(
-                        user.getUsername(), 
-                        authentication.getAuthorities().stream()
-                                      .map(GrantedAuthority::getAuthority)
-                                      .toList(),
-                        token,
-                        especialidadId 
-                )
-        );
+            new LoginResponse(
+                    user.getUsername(),
+                    authentication.getAuthorities().stream()
+                                  .map(GrantedAuthority::getAuthority)
+                                  .toList(),
+                    token,
+                    especialidadId,
+                    idUser 
+            )
+    );
     }
 }
