@@ -66,4 +66,8 @@ public class ItemService {
                 .orElseThrow(() -> new RuntimeException("Item no encontrado"));
         return itemConverter.entityToDto(item);
     }
+
+    public List<Item> guardarTodos(List<Item> items) {
+        return itemRepository.saveAll(items);
+    }
 }

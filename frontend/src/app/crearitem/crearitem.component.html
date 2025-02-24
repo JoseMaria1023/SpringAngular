@@ -1,64 +1,29 @@
 <div class="container">
-  <h2>Crear Item</h2>
-  <form (ngSubmit)="onSubmit()">
+  <h2>Crear Ítems</h2>
+  <form>
     <div class="form-group">
       <label for="descripcion">Descripción</label>
-      <input
-        type="text"
-        class="form-control"
-        id="descripcion"
-        [(ngModel)]="item.descripcion"
-        name="descripcion"
-        required
-      />
+      <input type="text" class="form-control" id="descripcion" [(ngModel)]="nuevoItem.descripcion" name="descripcion" required />
     </div>
     <div class="form-group">
       <label for="peso">Peso</label>
-      <input
-        type="number"
-        class="form-control"
-        id="peso"
-        [(ngModel)]="item.peso"
-        name="peso"
-        required
-      />
+      <input type="number" class="form-control" id="peso" [(ngModel)]="nuevoItem.peso" name="peso" required />
     </div>
     <div class="form-group">
       <label for="gradosConsecucion">Grados de Consecución</label>
-      <input
-        type="number"
-        class="form-control"
-        id="gradosConsecucion"
-        [(ngModel)]="item.gradosConsecucion"
-        name="gradosConsecucion"
-        required
-      />
+      <input type="number" class="form-control" id="gradosConsecucion" [(ngModel)]="nuevoItem.gradosConsecucion" name="gradosConsecucion" required />
     </div>
-    <div class="form-group">
-      <label for="especialidadId">Especialidad</label>
-      <input
-        type="text"
-        class="form-control"
-        id="especialidadId"
-        [value]="item.especialidadId"
-        disabled
-      />
-    </div>
-    <div class="form-group">
-      <label for="pruebaId">Prueba</label>
-      <select
-        class="form-control"
-        id="pruebaId"
-        [(ngModel)]="item.pruebaId"
-        name="pruebaId"
-        required
-      >
-        <option value="" disabled>Seleccione una prueba</option>
-        <option *ngFor="let prueba of pruebas" [value]="prueba.idPrueba">
-          {{ prueba.idPrueba }}
-        </option>
-      </select>
-    </div>
-    <button type="submit" class="btn btn-primary">Crear Item</button>
+    <button type="button" class="btn btn-secondary" (click)="anadirItem()">Añadir Ítem</button>
+    <button type="button" class="btn btn-primary" (click)="guardarTodosLosItems()" [disabled]="items.length === 0">Terminar</button>
   </form>
+
+  <div *ngIf="items.length > 0" class="mt-4">
+    <h3>Ítems Añadidos</h3>
+    <ul class="list-group">
+      <li *ngFor="let item of items; let i = index" class="list-group-item">
+        {{ i + 1 }}. {{ item.descripcion }} - Peso: {{ item.peso }} - Grados: {{ item.gradosConsecucion }}
+        <button class="btn btn-danger btn-sm float-right" (click)="eliminarItem(i)">Eliminar</button>
+      </li>
+    </ul>
+  </div>
 </div>

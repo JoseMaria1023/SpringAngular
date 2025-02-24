@@ -1,0 +1,25 @@
+<div class="container">
+    <h2>Crear Prueba (Subir PDF)</h2>
+    <form (ngSubmit)="crearPrueba(pruebaForm)" #pruebaForm="ngForm">
+      <div class="form-group">
+        <label for="pdfFile">Archivo PDF (Enunciado):</label>
+        <input type="file" id="pdfFile" class="form-control" (change)="onFileChange($event)" accept=".pdf" required>
+      </div>
+      <div class="form-group">
+        <label for="puntuacionMaxima">Puntuación Máxima:</label>
+        <input type="number" id="puntuacionMaxima" class="form-control" [(ngModel)]="puntuacionMaxima" name="puntuacionMaxima" required min="1">
+      </div>
+      <div class="form-group">
+        <label for="especialidad">Especialidad:</label>
+        <select id="especialidad" class="form-control" [(ngModel)]="especialidadId" name="especialidadId" required>
+          <option value="" disabled selected>Seleccione una especialidad</option>
+          <option *ngFor="let esp of especialidades" [value]="esp.idEspecialidad">
+            {{ esp.nombre }}
+          </option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Crear Prueba</button>
+    </form>
+  
+    
+  

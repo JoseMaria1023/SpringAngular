@@ -13,60 +13,61 @@ import { PruebaService } from '../prueba.service';
   styleUrl: './crearitem.component.css'
 })
 export class CrearitemComponent implements OnInit {
-  item: any = {
+  nuevoItem: any = {
     descripcion: '',
     peso: null,
     gradosConsecucion: null,
     pruebaId: null,
-    especialidadId: null  
+    especialidadId: null
   };
 
-  especialidades: any[] = [];
-  pruebas: any[] = []; 
+  items: any[] = []; 
+  pruebaId: number | null = null; 
 
-  constructor(
-    private itemService: ItemService,
-    private especialidadService: EspecialidadService,
-    private pruebaService: PruebaService
-  ) {}
+  constructor(private itemService: ItemService) {}
 
   ngOnInit() {
-    this.especialidadService.getEspecialidades().subscribe(
-      (data) => {
-        this.especialidades = data;
-      },
-      (error) => {
-        console.error('Error cargando especialidades', error);
-      }
-    );
-
     const especialidadIdStr = sessionStorage.getItem('especialidadId');
-    if (especialidadIdStr) {
-      this.item.especialidadId = parseInt(especialidadIdStr, 10);
+    const pruebaIdStr = sessionStorage.getItem('pruebaId'); 
 
-      this.pruebaService.traerPruebasPorEspecialidad(this.item.especialidadId).subscribe(
-        (data) => {
-          this.pruebas = data;
-        },
-        (error) => {
-          console.error('Error cargando pruebas por especialidad', error);
-        }
-      );
+    if (especialidadIdStr && pruebaIdStr) {
+      this.nuevoItem.especialidadId = parseInt(especialidadIdStr, 10);
+      this.pruebaId = parseInt(pruebaIdStr, 10);
+      this.nuevoItem.pruebaId = this.pruebaId;
     } else {
-      console.error('Especialidad no encontrada en sessionStorage');
+      console.error('Especialidad o prueba no encontrada en sessionStorage');
     }
   }
 
-  onSubmit() {
-    if (!this.item.pruebaId) {
+  anadirItem() {
+    if (!this.nuevoItem.descripcion || !this.nuevoItem.peso || !this.nuevoItem.gradosConsecucion) {
+      alert('Por favor complete todos los campos antes de añadir el ítem.');
       return;
     }
-    this.itemService.crearItem(this.item).subscribe(
+
+    this.items.push({ ...this.nuevoItem });
+    this.nuevoItem.descripcion = '';
+    this.nuevoItem.peso = null;
+    this.nuevoItem.gradosConsecucion = null;
+  }
+
+  eliminarItem(index: number) {
+    this.items.splice(index, 1);
+  }
+
+  guardarTodosLosItems() {
+    if (this.items.length === 0) {
+      alert('No hay ítems para guardar.');
+      return;
+    }
+
+    this.itemService.crearVariosItems(this.items).subscribe(
       (response) => {
-        console.log('Item creado exitosamente', response);
+        console.log('Ítems creados exitosamente', response);
+        this.items = []; 
       },
       (error: HttpErrorResponse) => {
-        console.error('Error creando item', error);
+        console.error('Error guardando ítems', error);
       }
     );
   }

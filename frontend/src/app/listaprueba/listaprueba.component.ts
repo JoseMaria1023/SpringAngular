@@ -24,7 +24,7 @@ export class ListapruebaComponent implements OnInit {
     private participanteService: ParticipanteService,
     private evaluacionService: EvaluacionService,
     private authService: AuthService,
-    private router: Router
+    public router: Router
   ) {}
 
   ngOnInit() {

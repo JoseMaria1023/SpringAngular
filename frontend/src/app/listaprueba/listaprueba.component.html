@@ -17,7 +17,6 @@
         <td>{{ prueba.puntuacionMaxima }}</td>
         <td>{{ prueba.especialidadId }} - {{ prueba.especialidad?.nombre || 'No disponible' }}</td>
         <td>
-          <!-- Al hacer clic, se selecciona la prueba y se carga la lista de participantes -->
           <button class="btn btn-primary" (click)="selectPrueba(prueba)">
             Evaluar
           </button>
@@ -40,4 +39,6 @@
       </li>
     </ul>
   </div>
-</div>
+  <button class="btn btn-success mb-3" (click)="router.navigate(['/crear-prueba'])">
+
+

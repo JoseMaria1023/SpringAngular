@@ -18,4 +18,8 @@ export class ItemService {
     });
     return this.http.post(`${this.apiUrl}/crear`, item, { headers });
   }
+
+  crearVariosItems(items: any[]): Observable<any> {
+    return this.http.post(`${this.apiUrl}/crear-multiples`, items);
+  }
 }
