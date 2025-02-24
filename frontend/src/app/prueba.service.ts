@@ -15,13 +15,9 @@ export class PruebaService {
     formData.append('file', file, file.name);
     formData.append('puntuacionMaxima', puntuacionMaxima.toString());
     formData.append('especialidadId', especialidadId.toString());
-
     const token = sessionStorage.getItem('token');
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-    
-    return this.http.post(`${this.apiUrl}/crear-con-pdf`, formData, { headers });
+    const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+    return this.http.post<any>(`${this.apiUrl}/crear-con-pdf`, formData, { headers });
   }
     obtenerEspecialidadDelUsuario(): number | null {
     const token = sessionStorage.getItem('token');
@@ -72,6 +68,11 @@ export class PruebaService {
     return this.http.get<any>(`${this.apiUrl}/${idPrueba}`, { headers });
   }
 
+  obtenerUltimoIdPrueba(): Observable<number> {
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+    return this.http.get<number>(`${this.apiUrl}/ultimo-id`, { headers });
+  }
   traerTodasLasPruebas(): Observable<any[]> {
     const token = sessionStorage.getItem('token');
     const headers = new HttpHeaders({

@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/items")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ItemController {
 
     private final ItemService itemService;
@@ -35,9 +36,9 @@ public class ItemController {
     }
 
     @PostMapping("/crear-multiples")
-    public ResponseEntity<?> crearMultiplesItems(@RequestBody List<Item> items) {
+public ResponseEntity<?> crearMultiplesItems(@RequestBody List<ItemDTO> itemDTOs) {
     try {
-        List<Item> itemsGuardados = itemService.guardarTodos(items);
+        List<Item> itemsGuardados = itemService.guardarTodos(itemDTOs);
         return ResponseEntity.ok(itemsGuardados);
     } catch (Exception e) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al guardar los ítems.");

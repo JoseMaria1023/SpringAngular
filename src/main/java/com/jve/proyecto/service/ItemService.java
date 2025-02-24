@@ -67,7 +67,16 @@ public class ItemService {
         return itemConverter.entityToDto(item);
     }
 
-    public List<Item> guardarTodos(List<Item> items) {
+    public List<Item> guardarTodos(List<ItemDTO> itemDTOs) {
+        List<Item> items = itemDTOs.stream().map(itemDTO -> {
+            Prueba prueba = pruebaRepository.findById(itemDTO.getPruebaId())
+                    .orElseThrow(() -> new RuntimeException("Prueba no encontrada"));
+
+            Item item = itemConverter.dtoToEntity(itemDTO);
+            item.setPrueba(prueba);  
+
+            return item;
+        }).collect(Collectors.toList());
         return itemRepository.saveAll(items);
     }
 }

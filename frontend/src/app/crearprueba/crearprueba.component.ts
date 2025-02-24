@@ -6,10 +6,11 @@ import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { CrearitemComponent } from "../crearitem/crearitem.component";
 
 @Component({
   selector: 'app-crearprueba',
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule, CrearitemComponent],
   templateUrl: './crearprueba.component.html',
   styleUrl: './crearprueba.component.css'
 })
@@ -17,21 +18,13 @@ export class CrearpruebaComponent implements OnInit {
   file: File | null = null;
   puntuacionMaxima: number | null = null;
   especialidadId: number | null = null;
-  pruebaCreada: any = null;
-
-  item: any = {
-    descripcion: '',
-    peso: null,
-    gradosConsecucion: null
-  };
+  pruebaCreada: any = null; // Almacena la prueba creada
 
   especialidades: any[] = [];
 
   constructor(
     private especialidadService: EspecialidadService,
     private pruebaService: PruebaService,
-    private itemService: ItemService,
-    private authService: AuthService,
     private router: Router
   ) {}
 
@@ -44,10 +37,11 @@ export class CrearpruebaComponent implements OnInit {
         console.error('Error al cargar especialidades', error);
       }
     );
-
     const espIdStr = sessionStorage.getItem('especialidadId');
     if (espIdStr) {
       this.especialidadId = Number(espIdStr);
+    } else {
+      console.error('Especialidad no encontrada en sessionStorage');
     }
   }
 
@@ -63,13 +57,18 @@ export class CrearpruebaComponent implements OnInit {
       alert('Por favor, completa todos los campos para crear la prueba.');
       return;
     }
+  
     this.pruebaService.crearPruebaConPDF(this.file, this.puntuacionMaxima, this.especialidadId)
       .subscribe(
         response => {
           alert('Prueba creada exitosamente.');
           this.pruebaCreada = response;
-          this.item.pruebaId = this.pruebaCreada.idPrueba;
-          this.item.especialidadId = this.especialidadId;
+          if (this.pruebaCreada.idPrueba) {
+            // Guardamos el idPrueba en sessionStorage para que el componente de ítems lo use
+            sessionStorage.setItem('pruebaId', this.pruebaCreada.idPrueba.toString());
+          } else {
+            console.error('El idPrueba recibido es null:', response);
+          }
         },
         error => {
           console.error('Error creando la prueba', error);

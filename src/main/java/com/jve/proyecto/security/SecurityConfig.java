@@ -60,6 +60,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/participantes/crear").hasAuthority("ROLE_EXPERTO")
                         .requestMatchers(HttpMethod.GET, "/api/pruebas/todas").hasAuthority("ROLE_EXPERTO")
                         .requestMatchers(HttpMethod.POST, "/api/pruebas/crear-con-pdf").hasAuthority("ROLE_EXPERTO")
+                        .requestMatchers(HttpMethod.POST, "/api/items/crear-multiples").hasAuthority("ROLE_EXPERTO")
+
 
 
 

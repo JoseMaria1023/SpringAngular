@@ -21,5 +21,10 @@
       <button type="submit" class="btn btn-primary">Crear Prueba</button>
     </form>
   
-    
+    <div *ngIf="pruebaCreada">
+      <h3 class="mt-4 text-success">Prueba creada exitosamente.</h3>
+      <!-- Se carga el formulario de crear ítems -->
+      <app-crearitem></app-crearitem>
+    </div>
+  </div>
   

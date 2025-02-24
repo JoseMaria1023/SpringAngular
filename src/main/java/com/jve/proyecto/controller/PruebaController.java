@@ -12,6 +12,7 @@ import com.jve.proyecto.service.PruebaService;
 
 @RestController
 @RequestMapping("/api/pruebas")
+@CrossOrigin(origins = "http://localhost:4200")
 public class PruebaController {
 
     private final PruebaService pruebaService;
@@ -47,6 +48,13 @@ public class PruebaController {
         List<PruebaDTO> pruebas = pruebaService.getPruebasByEspecialidad(especialidadId);
         return ResponseEntity.ok(pruebas);
     }
+    @GetMapping("/ultimo-id")
+    public ResponseEntity<Long> obtenerUltimoIdPrueba() {
+        Long ultimoId = pruebaService.obtenerUltimoIdPrueba();
+        return ResponseEntity.ok(ultimoId);
+    }
+
+
     
     @PutMapping("/editar/{id}")
     public ResponseEntity<PruebaDTO> editarPrueba(
@@ -55,7 +63,7 @@ public class PruebaController {
         @RequestParam("puntuacionMaxima") Integer puntuacionMaxima,
         @RequestParam("especialidadId") Long especialidadId) {
 
-    PruebaDTO pruebaDTO = new PruebaDTO();
+    PruebaDTO pruebaDTO = new PruebaDTO(null);
     pruebaDTO.setPuntuacionMaxima(puntuacionMaxima);
     pruebaDTO.setEspecialidadId(especialidadId);
 

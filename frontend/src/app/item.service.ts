@@ -20,6 +20,12 @@ export class ItemService {
   }
 
   crearVariosItems(items: any[]): Observable<any> {
-    return this.http.post(`${this.apiUrl}/crear-multiples`, items);
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+    return this.http.post(`${this.apiUrl}/crear-multiples`, items, { headers });
   }
+  
 }

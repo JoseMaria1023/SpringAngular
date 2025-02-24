@@ -44,7 +44,6 @@ public class Especialidad {
     private List<Participante> participantes = new ArrayList<>();
 
     @OneToMany(mappedBy = "especialidad", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference 
     private List<Prueba> pruebas = new ArrayList<>();
 
     @OneToMany(mappedBy = "especialidad", cascade = CascadeType.ALL, orphanRemoval = true)

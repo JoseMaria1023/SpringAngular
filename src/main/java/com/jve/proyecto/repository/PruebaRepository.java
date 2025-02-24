@@ -11,4 +11,7 @@ import com.jve.proyecto.entity.Prueba;
 public interface PruebaRepository extends JpaRepository<Prueba, Long> {
     List<Prueba> findByEspecialidad_IdEspecialidad(Long especialidadId);
 
+    Prueba findTopByOrderByIdPruebaDesc();
+
+
 }

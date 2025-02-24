@@ -66,4 +66,6 @@ public class PruebaDTO {
         this.puntuacionMaxima = puntuacionMaxima;
     }
 
+    
+
 }

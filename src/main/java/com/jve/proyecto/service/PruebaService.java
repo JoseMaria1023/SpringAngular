@@ -67,6 +67,10 @@ public class PruebaService {
             throw new RuntimeException("Error al guardar el archivo PDF", e);
         }
     }
+    public Long obtenerUltimoIdPrueba() {
+        Prueba prueba = pruebaRepository.findTopByOrderByIdPruebaDesc();
+        return prueba != null ? prueba.getIdPrueba() : null;  // Devuelve el idPrueba, o null si no hay registros
+    }
 
     public List<PruebaDTO> traerTodasLasPruebas() {
         return pruebaRepository.findAll().stream()
