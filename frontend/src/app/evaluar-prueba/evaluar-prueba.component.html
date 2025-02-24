@@ -1,0 +1,29 @@
+<div class="container">
+    <h2>Evaluar Prueba</h2>
+    <h3>{{ enunciado }}</h3>
+  
+    <form>
+      <div *ngFor="let item of items; let i = index" class="form-group">
+        <label>{{ item.descripcion }}</label>
+        <input 
+          type="number" 
+          class="form-control" 
+          [(ngModel)]="evaluaciones[i].valoracion" 
+          name="valoracion{{i}}" 
+          min="0" 
+          max="10" 
+          required 
+          [ngModelOptions]="{standalone: true}" 
+          placeholder="Valoración (0-10)" />
+        
+        <textarea 
+          class="form-control mt-2" 
+          [(ngModel)]="evaluaciones[i].explicacion" 
+          name="explicacion{{i}}" 
+          placeholder="Explicación (opcional)"></textarea>
+      </div>
+  
+      <button type="button" class="btn btn-primary mt-3" (click)="enviarEvaluacion()">Enviar Evaluación</button>
+    </form>
+  </div>
+  

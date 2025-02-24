@@ -21,6 +21,7 @@ import { ListapruebaComponent } from './listaprueba/listaprueba.component';
 import { RealizarEvaluacionComponent } from './realizar-evaluacion/realizar-evaluacion.component';
 import { EditarpruebaComponent } from './editarprueba/editarprueba.component';
 import { CrearpruebaComponent } from './crearprueba/crearprueba.component';
+import { EvaluarPruebaComponent } from './evaluar-prueba/evaluar-prueba.component';
 
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -45,6 +46,10 @@ export const appRoutes: Routes = [
   { path: 'experto/realizar-evaluacion', component: RealizarEvaluacionComponent, canActivate: [ExpertoGuard] },
   { path: 'editar-prueba/:id', component: EditarpruebaComponent},
   { path: 'crear-prueba', component: CrearpruebaComponent },
+  { path: 'evaluar-prueba/:idPrueba', component: EvaluarPruebaComponent},
+  
+
+
 
 
 

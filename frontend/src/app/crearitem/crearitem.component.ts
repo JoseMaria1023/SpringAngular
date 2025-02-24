@@ -55,8 +55,6 @@ export class CrearitemComponent implements OnInit {
       alert('No hay ítems para guardar.');
       return;
     }
-    
-    // En lugar de depender de sessionStorage, consultamos el último idPrueba desde el backend
     this.pruebaService.obtenerUltimoIdPrueba().subscribe(
       (ultimoId) => {
         console.log('Último idPrueba obtenido:', ultimoId);
@@ -67,10 +65,8 @@ export class CrearitemComponent implements OnInit {
           item.pruebaId = this.pruebaId;
         });
   
-        // Guardar los ítems en el backend
         this.itemService.crearVariosItems(this.items).subscribe(
           (response) => {
-            console.log('Ítems creados exitosamente', response);
             this.items = []; 
           },
           (error: HttpErrorResponse) => {

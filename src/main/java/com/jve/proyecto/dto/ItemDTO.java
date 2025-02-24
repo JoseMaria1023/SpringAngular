@@ -1,5 +1,7 @@
 package com.jve.proyecto.dto;
 
+import com.jve.proyecto.entity.Item;
+
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -63,5 +65,18 @@ public class ItemDTO {
 
     public void setPruebaId(Long pruebaId) {
         this.pruebaId = pruebaId;
+    }
+    public ItemDTO(Long idItem, String descripcion, Integer peso, Integer gradosConsecucion) {
+        this.idItem = idItem;
+        this.descripcion = descripcion;
+        this.peso = peso;
+        this.gradosConsecucion = gradosConsecucion;
+    }
+
+    public ItemDTO(Item item) {
+        //TODO Auto-generated constructor stub
+    }
+
+    public ItemDTO() {
     }
 }

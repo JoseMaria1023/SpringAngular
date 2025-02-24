@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { PruebaService } from '../prueba.service';
 import { EvaluacionService } from '../evaluacion.service';
 import { ParticipanteService } from '../participantes.service';
@@ -10,14 +10,16 @@ import { AuthService } from '../auth.service';
 @Component({
   selector: 'app-listaprueba',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NgFor,RouterModule],
   templateUrl: './listaprueba.component.html',
   styleUrls: ['./listaprueba.component.css']
 })
 export class ListapruebaComponent implements OnInit {
   pruebas: any[] = [];
+  items: any[] = [];  
   participantes: any[] = []; 
   selectedPrueba: any = null; 
+  evaluacionComponent: any;
 
   constructor(
     private pruebaService: PruebaService,
@@ -62,6 +64,9 @@ export class ListapruebaComponent implements OnInit {
   }
   editarPrueba(id: number) {
     this.router.navigate(['/editar-prueba', id]);
+  }
+  evaluarItems(): void {
+    this.evaluacionComponent.evaluarItems();  // Llamar al método del componente EvaluacionComponent
   }
 
   evaluarParticipante(participante: any) {

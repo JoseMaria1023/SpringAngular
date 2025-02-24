@@ -1,7 +1,10 @@
 package com.jve.proyecto.controller;
 
 import com.jve.proyecto.dto.EvaluacionitemDTO;
+import com.jve.proyecto.dto.ItemDTO;
+import com.jve.proyecto.entity.Item;
 import com.jve.proyecto.service.EvaluacionItemService;
+import com.jve.proyecto.service.ItemService;
 
 import jakarta.validation.Valid;
 
@@ -10,26 +13,41 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/api/evaluacion-items")
 @CrossOrigin(origins = "http://localhost:4200")
 public class EvaluacionItemController {
 
     private final EvaluacionItemService evaluacionItemService;
+    private final ItemService itemService; // Añadir el servicio de ítems
 
-    public EvaluacionItemController(EvaluacionItemService evaluacionItemService) {
+    public EvaluacionItemController(EvaluacionItemService evaluacionItemService, ItemService itemService) {
         this.evaluacionItemService = evaluacionItemService;
+        this.itemService = itemService;
     }
 
-    @PostMapping
-    public ResponseEntity<EvaluacionitemDTO> crearEvaluacionItem(@Valid @RequestBody EvaluacionitemDTO evaluacionItemDTO) {
-        EvaluacionitemDTO savedEvaluacionItem = evaluacionItemService.guardarEvaluacionItem(evaluacionItemDTO);
-        return ResponseEntity.ok(savedEvaluacionItem);
+    @PostMapping("/evaluar")
+    public ResponseEntity<List<EvaluacionitemDTO>> evaluarItems(@RequestBody List<EvaluacionitemDTO> evaluaciones) {
+        List<EvaluacionitemDTO> savedEvaluaciones = evaluacionItemService.guardarTodos(evaluaciones);
+        return ResponseEntity.ok(savedEvaluaciones);
     }
 
     @GetMapping
-    public ResponseEntity<List<EvaluacionitemDTO>> TraerTodosLosEvaluacionItems() {
-        List<EvaluacionitemDTO> evaluacionItems = evaluacionItemService.TraerTodos();
+    public ResponseEntity<List<EvaluacionitemDTO>> traerTodosLosEvaluacionItems() {
+        List<EvaluacionitemDTO> evaluacionItems = evaluacionItemService.traerTodos();
         return ResponseEntity.ok(evaluacionItems);
+    }
+
+    @GetMapping("/enunciado/prueba/{idPrueba}")
+    public ResponseEntity<String> obtenerEnunciadoPorPrueba(@PathVariable Long idPrueba) {
+        String enunciado = evaluacionItemService.obtenerEnunciadoPorPrueba(idPrueba);
+        return ResponseEntity.ok(enunciado);
+    }
+
+    @GetMapping("/items/prueba/{idPrueba}")
+    public ResponseEntity<List<ItemDTO>> obtenerItemsPorPrueba(@PathVariable Long idPrueba) {
+        List<ItemDTO> items = evaluacionItemService.obtenerItemsPorPrueba(idPrueba);
+        return ResponseEntity.ok(items);
     }
 }

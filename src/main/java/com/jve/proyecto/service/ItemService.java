@@ -66,7 +66,6 @@ public class ItemService {
                 .orElseThrow(() -> new RuntimeException("Item no encontrado"));
         return itemConverter.entityToDto(item);
     }
-
     public List<Item> guardarTodos(List<ItemDTO> itemDTOs) {
         List<Item> items = itemDTOs.stream().map(itemDTO -> {
             Prueba prueba = pruebaRepository.findById(itemDTO.getPruebaId())

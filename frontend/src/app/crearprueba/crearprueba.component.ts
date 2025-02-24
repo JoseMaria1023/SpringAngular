@@ -18,7 +18,7 @@ export class CrearpruebaComponent implements OnInit {
   file: File | null = null;
   puntuacionMaxima: number | null = null;
   especialidadId: number | null = null;
-  pruebaCreada: any = null; // Almacena la prueba creada
+  pruebaCreada: any = null; 
 
   especialidades: any[] = [];
 
@@ -64,8 +64,7 @@ export class CrearpruebaComponent implements OnInit {
           alert('Prueba creada exitosamente.');
           this.pruebaCreada = response;
           if (this.pruebaCreada.idPrueba) {
-            // Guardamos el idPrueba en sessionStorage para que el componente de ítems lo use
-            sessionStorage.setItem('pruebaId', this.pruebaCreada.idPrueba.toString());
+            console.log('Prueba creada con id:', this.pruebaCreada.idPrueba);
           } else {
             console.error('El idPrueba recibido es null:', response);
           }
@@ -76,4 +75,4 @@ export class CrearpruebaComponent implements OnInit {
         }
       );
   }
-}
+}  

@@ -36,7 +36,7 @@ public class ItemController {
     }
 
     @PostMapping("/crear-multiples")
-public ResponseEntity<?> crearMultiplesItems(@RequestBody List<ItemDTO> itemDTOs) {
+    public ResponseEntity<?> crearMultiplesItems(@RequestBody List<ItemDTO> itemDTOs) {
     try {
         List<Item> itemsGuardados = itemService.guardarTodos(itemDTOs);
         return ResponseEntity.ok(itemsGuardados);
@@ -49,4 +49,5 @@ public ResponseEntity<?> crearMultiplesItems(@RequestBody List<ItemDTO> itemDTOs
         ItemDTO itemActualizado = itemService.editarItem(id, itemDTO);
         return ResponseEntity.ok(itemActualizado);
     }
+   
 }

@@ -24,6 +24,14 @@
             Editar
           </button>
         </td>
+        <td>
+          <button class="btn btn-primary" [routerLink]="['/evaluar-prueba', prueba.idPrueba]">
+            Evaluar Prueba
+          </button>
+          <button class="btn btn-warning ml-2" (click)="editarPrueba(prueba.idPrueba)">
+            Editar
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
