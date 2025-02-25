@@ -69,7 +69,7 @@ public class PruebaService {
     }
     public Long obtenerUltimoIdPrueba() {
         Prueba prueba = pruebaRepository.findTopByOrderByIdPruebaDesc();
-        return prueba != null ? prueba.getIdPrueba() : null;  // Devuelve el idPrueba, o null si no hay registros
+        return prueba != null ? prueba.getIdPrueba() : null; 
     }
 
     public List<PruebaDTO> traerTodasLasPruebas() {

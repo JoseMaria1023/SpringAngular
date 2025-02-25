@@ -16,6 +16,16 @@
       <textarea class="form-control mt-2" [(ngModel)]="evaluaciones[i].explicacion" name="explicacion{{i}}" placeholder="Explicación" [ngModelOptions]="{standalone: true}"></textarea>
     </div>
 
+    <!-- Mostrar la media ponderada calculada -->
+    <div class="mt-3">
+      <strong>Media Ponderada:</strong> {{ mediaPonderada | number:'1.2-2' }}
+    </div>
+
+    <!-- Mostrar mensaje si falta alguna valoración -->
+    <div *ngIf="!todasLasValoracionesCompletas()" class="mt-3 text-danger">
+      <strong>¡Todos los ítems deben ser evaluados!</strong>
+    </div>
+
     <button type="button" class="btn btn-primary mt-3" (click)="enviarEvaluacion()">Enviar Evaluación</button>
   </form>
 </div>

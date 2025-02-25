@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { EvaluacionService } from '../evaluacion.service';
+import { EvaluacionItemService } from '../evaluacion-item.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { EvaluacionItemService } from '../evaluacion-item.service';
 
 @Component({
   selector: 'app-evaluar-prueba',
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './evaluar-prueba.component.html',
-  styleUrl: './evaluar-prueba.component.css'
+  styleUrls: ['./evaluar-prueba.component.css']
 })
 export class EvaluarPruebaComponent implements OnInit {
   pruebaId: number | null = null;
@@ -17,6 +16,7 @@ export class EvaluarPruebaComponent implements OnInit {
   items: any[] = [];
   evaluaciones: any[] = [];
   idEvaluacion!: number | null;
+  mediaPonderada: number = 0;  
 
   constructor(
     private evaluacionItemService: EvaluacionItemService,
@@ -30,7 +30,7 @@ export class EvaluarPruebaComponent implements OnInit {
         this.pruebaId = parseInt(id, 10);
         this.obtenerEnunciadoDePrueba();
         this.obtenerItemsDePrueba();
-        this.obtenerIdEvaluacion(); // 🔥 Nuevo método
+        this.obtenerIdEvaluacion(); 
       }
     });
   }
@@ -49,11 +49,12 @@ export class EvaluarPruebaComponent implements OnInit {
     if (!this.pruebaId) return;
     this.evaluacionItemService.obtenerIdEvaluacionPorPrueba(this.pruebaId).subscribe(
       (idEvaluacion) => {
-        this.idEvaluacion = idEvaluacion; // Guardamos el ID de evaluación
+        this.idEvaluacion = idEvaluacion; 
       },
       (error) => console.error('Error obteniendo ID de evaluación:', error)
     );
   }
+
   obtenerItemsDePrueba() {
     if (!this.pruebaId) return;
     this.evaluacionItemService.obtenerItemsDePrueba(this.pruebaId).subscribe(
@@ -62,26 +63,39 @@ export class EvaluarPruebaComponent implements OnInit {
         this.evaluaciones = this.items.map(item => ({
           itemId: item.idItem,
           valoracion: null,
-          explicacion: ''
+          explicacion: '',
+          peso: item.peso 
         }));
       },
       (error) => console.error('Error obteniendo los ítems:', error)
     );
   }
 
+  calcularMediaPonderada() {
+    const totalPeso = this.evaluaciones.reduce((sum, evaluacion) => sum + evaluacion.peso, 0);
+    const totalValoracion = this.evaluaciones.reduce((sum, evaluacion) => sum + (evaluacion.valoracion || 0) * evaluacion.peso, 0);
+    this.mediaPonderada = totalValoracion / totalPeso;
+  }
+
+  todasLasValoracionesCompletas(): boolean {
+    return this.evaluaciones.every(evaluacion => evaluacion.valoracion !== null);
+  }
+  
   enviarEvaluacion() {
     if (!this.idEvaluacion) {
       alert('No se pudo obtener el ID de evaluación');
       return;
     }
   
-    if (this.evaluaciones.some(e => e.valoracion === null)) {
+    if (!this.todasLasValoracionesCompletas()) {
       alert('Todos los ítems deben ser evaluados.');
       return;
     }
   
+    this.calcularMediaPonderada();
+  
     const payload = this.evaluaciones.map(evaluacion => ({
-      evaluacionId: this.idEvaluacion, // Usamos el ID de evaluación
+      evaluacionId: this.idEvaluacion, 
       itemId: evaluacion.itemId,
       valoracion: evaluacion.valoracion,
       explicacion: evaluacion.explicacion

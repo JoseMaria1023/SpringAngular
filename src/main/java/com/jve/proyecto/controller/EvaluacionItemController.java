@@ -1,5 +1,6 @@
 package com.jve.proyecto.controller;
 
+import com.jve.proyecto.dto.EvaluacionDTO;
 import com.jve.proyecto.dto.EvaluacionitemDTO;
 import com.jve.proyecto.dto.ItemDTO;
 import com.jve.proyecto.entity.Item;
@@ -50,5 +51,14 @@ public class EvaluacionItemController {
     public ResponseEntity<List<ItemDTO>> obtenerItemsPorPrueba(@PathVariable Long idPrueba) {
         List<ItemDTO> items = evaluacionItemService.obtenerItemsPorPrueba(idPrueba);
         return ResponseEntity.ok(items);
+    }
+     @PutMapping("/actualizar-nota/{idEvaluacion}")
+    public ResponseEntity<EvaluacionDTO> actualizarNotaFinal(@PathVariable Long idEvaluacion) {
+        try {
+            EvaluacionDTO evaluacionDTO = evaluacionItemService.actualizarNotaFinal(idEvaluacion);
+            return ResponseEntity.ok(evaluacionDTO);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().build(); 
+        }
     }
 }

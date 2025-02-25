@@ -17,7 +17,7 @@ export class RealizarEvaluacionComponent implements OnInit {
     participanteId: null,
     pruebaId: null,
     userId: null,
-    notaFinal: 0 // Establecer valor por defecto en 0
+    notaFinal: 0 
   };
 
   constructor(
@@ -45,7 +45,7 @@ export class RealizarEvaluacionComponent implements OnInit {
 
   onSubmit(): void {
     if (this.evaluacion.notaFinal == null || this.evaluacion.notaFinal < 0) {
-      alert('Por favor, ingresa una nota final válida.');
+      alert('Por favor, introduce una nota final válida.');
       return;
     }
 

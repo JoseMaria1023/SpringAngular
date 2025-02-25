@@ -1,7 +1,9 @@
 package com.jve.proyecto.service;
 
+import com.jve.proyecto.converter.EvaluacionConverter;
 import com.jve.proyecto.converter.EvaluacionitemConverter;
 import com.jve.proyecto.converter.ItemConverter;
+import com.jve.proyecto.dto.EvaluacionDTO;
 import com.jve.proyecto.dto.EvaluacionitemDTO;
 import com.jve.proyecto.dto.ItemDTO;
 import com.jve.proyecto.entity.Evaluacion;
@@ -27,14 +29,18 @@ public class EvaluacionItemService {
     private final PruebaRepository pruebaRepository;
     private final ItemConverter itemConverter;
     private final EvaluacionRepository evaluacionRepository;
+    private final EvaluacionConverter evaluacionConverter;
 
-    public EvaluacionItemService(EvaluacionItemRepository evaluacionItemRepository, EvaluacionitemConverter evaluacionItemConverter,ItemRepository itemRepository, PruebaRepository pruebaRepository,ItemConverter itemConverter, EvaluacionRepository evaluacionRepository) {
+
+    public EvaluacionItemService(EvaluacionItemRepository evaluacionItemRepository, EvaluacionitemConverter evaluacionItemConverter,ItemRepository itemRepository, 
+    PruebaRepository pruebaRepository,ItemConverter itemConverter, EvaluacionRepository evaluacionRepository, EvaluacionConverter evaluacionConverter) {
         this.evaluacionItemRepository = evaluacionItemRepository;
         this.evaluacionItemConverter = evaluacionItemConverter;
         this.itemRepository = itemRepository;
         this.pruebaRepository = pruebaRepository;
         this.itemConverter = itemConverter;
         this.evaluacionRepository= evaluacionRepository;
+        this.evaluacionConverter= evaluacionConverter;
 
     }
     
@@ -44,6 +50,50 @@ public class EvaluacionItemService {
         var savedItem = evaluacionItemRepository.save(evaluacionItem);
         return evaluacionItemConverter.entityToDto(savedItem);
     }
+
+      public Double calcularMediaPonderada(Long evaluacionId) {
+        Optional<Evaluacion> evaluacion = evaluacionRepository.findById(evaluacionId);
+        if (!evaluacion.isPresent()) {
+            throw new RuntimeException("Evaluación no encontrada");
+        }
+
+        List<EvaluacionItem> items = evaluacionItemRepository.findByEvaluacion_IdEvaluacion(evaluacionId);
+    
+        double sumaPonderada = 0;
+        double sumaPesos = 0;
+    
+        for (EvaluacionItem evaluacionItem : items) {
+            Item item = evaluacionItem.getItem();
+            if (item == null) {
+                throw new RuntimeException("Ítem no encontrado en EvaluacionItem");
+            }
+            double peso = item.getPeso();
+            sumaPonderada += evaluacionItem.getValoracion() * peso;
+            sumaPesos += peso;
+        }
+        if (sumaPesos == 0) {
+            throw new RuntimeException("La suma de los pesos no puede ser 0");
+        }
+        return sumaPonderada / sumaPesos;
+    }
+
+    @Transactional
+public void actualizarNotaFinal(Long evaluacionId) {
+    Evaluacion evaluacion = evaluacionRepository.findById(evaluacionId)
+        .orElseThrow(() -> new RuntimeException("Evaluación no encontrada"));
+
+    List<EvaluacionItem> evaluacionItems = evaluacionItemRepository.findByEvaluacionId(evaluacionId);
+
+    double totalPeso = evaluacionItems.stream().mapToDouble(item -> item.getItem().getPeso()).sum();
+    double totalValoracion = evaluacionItems.stream()
+        .mapToDouble(item -> item.getValoracion() * item.getItem().getPeso())
+        .sum();
+
+    double notaFinal = totalValoracion / totalPeso;
+    evaluacion.setNotaFinal(notaFinal); // Suponiendo que la entidad Evaluacion tiene un campo notaFinal
+
+    evaluacionRepository.save(evaluacion);
+}
 
     public List<EvaluacionitemDTO> guardarTodos(List<EvaluacionitemDTO> evaluaciones) {
         List<EvaluacionItem> items = evaluaciones.stream()

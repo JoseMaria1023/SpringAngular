@@ -38,7 +38,15 @@ export class EvaluacionItemService {
     });
     return this.http.post<any>(`${this.apiUrl}/evaluar`, evaluaciones, { headers });
   }
-  obtenerIdEvaluacionPorPrueba(idPrueba: number): Observable<number | null> {
+  actualizarNotaFinal(idEvaluacion: number): Observable<any> {
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+    return this.http.put<any>(`${this.apiUrl}/actualizar-nota/${idEvaluacion}`, {}, { headers });
+  }
+obtenerIdEvaluacionPorPrueba(idPrueba: number): Observable<number | null> {
     const token = sessionStorage.getItem('token');
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
