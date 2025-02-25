@@ -53,33 +53,36 @@ public class EvaluacionItemService {
         return evaluacionItemConverter.entityToDto(savedItem);
     }
 
-      public Double calcularMediaPonderada(Long evaluacionId) {
-        Optional<Evaluacion> evaluacion = evaluacionRepository.findById(evaluacionId);
-        if (!evaluacion.isPresent()) {
-            throw new RuntimeException("Evaluación no encontrada");
-        }
-
-        List<EvaluacionItem> items = evaluacionItemRepository.findByEvaluacion_IdEvaluacion(evaluacionId);
+    public Double calcularMediaPonderada(Long evaluacionId) {
+        List<EvaluacionItem> evaluacionItems = evaluacionItemRepository.findByEvaluacion_IdEvaluacion(evaluacionId);
     
-        double sumaPonderada = 0;
-        double sumaPesos = 0;
+        double sumaPonderada = 0.0;
+        double sumaPesos = 0.0;
     
-        for (EvaluacionItem evaluacionItem : items) {
-            Item item = evaluacionItem.getItem();
-            if (item == null) {
-                throw new RuntimeException("Ítem no encontrado en EvaluacionItem");
+        for (EvaluacionItem item : evaluacionItems) {
+            double gradoConsecucion = item.getValoracion(); // 🔹 Valor obtenido (0 a GC_max)
+            double maxGradoConsecucion = item.getItem().getGradosConsecucion(); // 🔹 Máximo posible
+            double peso = item.getItem().getPeso(); // 🔹 Peso del ítem
+    
+            // ⚠️ Evitamos divisiones por 0 si algún GC_max está mal configurado
+            if (maxGradoConsecucion > 0) {
+                double notaItem = (gradoConsecucion / maxGradoConsecucion) * peso; // 🔥 Normalización por su máximo
+                sumaPonderada += notaItem;
             }
-            double peso = item.getPeso();
-            sumaPonderada += evaluacionItem.getValoracion() * peso;
-            sumaPesos += peso;
+    
+            sumaPesos += peso; // 🔥 Sumamos los pesos
         }
-        if (sumaPesos == 0) {
-            throw new RuntimeException("La suma de los pesos no puede ser 0");
-        }
-        return sumaPonderada / sumaPesos;
+    
+        double notaFinal = sumaPesos > 0 ? (sumaPonderada / sumaPesos) * 100 : 0.0;
+    
+        System.out.println("Evaluación ID: " + evaluacionId);
+        System.out.println("Suma ponderada: " + sumaPonderada);
+        System.out.println("Suma de pesos: " + sumaPesos);
+        System.out.println("Nota final calculada: " + notaFinal);
+    
+        return notaFinal;
     }
-
-    @Transactional
+    
     public EvaluacionDTO actualizarNotaFinal(Long evaluacionId) {
     Double mediaPonderada = calcularMediaPonderada(evaluacionId);
     System.out.println("Nota calculada: " + mediaPonderada);
@@ -93,8 +96,6 @@ public class EvaluacionItemService {
 
     Evaluacion evaluacionActualizada = evaluacionRepository.findById(evaluacionId)
             .orElseThrow(() -> new RuntimeException("No se encontró la evaluación después de guardar"));
-
-    System.out.println("Nota final después de guardar: " + evaluacionActualizada.getNotaFinal());
 
     return evaluacionConverter.entityToDto(evaluacionActualizada);
 }

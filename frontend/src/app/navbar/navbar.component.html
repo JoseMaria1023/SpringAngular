@@ -14,12 +14,12 @@
     <div *ngIf="authService.isExperto()">
       <a routerLink="/experto/participantes">Participantes</a>
       <a routerLink="/experto/listarpruebas">Pruebas</a>
-      <a routerLink="/experto/listar/evaluacion">Ganadores</a>
       <a routerLink="/experto/especialidad">{{ especialidadNombre }}</a>
     </div>
 
     <div *ngIf="authService.isLoggedIn()" class="user-options">
       <span>Bienvenido, {{ authService.getUsername() }}</span>
+      <span *ngIf="authService.getRoles().length > 0"> | {{ authService.getRoles()[0] }}</span> 
       <button (click)="logout()">Logout</button>
     </div>
   </div>

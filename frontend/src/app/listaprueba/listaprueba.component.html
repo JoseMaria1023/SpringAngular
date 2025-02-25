@@ -20,12 +20,13 @@
           <button class="btn btn-primary" (click)="selectPrueba(prueba)">
             Evaluar Participante
           </button>
-          <button class="btn btn-warning ml-2" (click)="editarPrueba(prueba.idPrueba)">
+          <button class="btn btn-warning ml-2" [routerLink]="['/experto/editar-prueba', prueba.idPrueba]">
             Editar
           </button>
+          
         </td>
         <td>
-          <button class="btn btn-primary" [routerLink]="['/evaluar-prueba', prueba.idPrueba]">
+          <button class="btn btn-primary" [routerLink]="['/experto/evaluar-prueba', prueba.idPrueba]">
             Evaluar Prueba
           </button>
         </td>
@@ -44,6 +45,6 @@
       </li>
     </ul>
   </div>
-  <button class="btn btn-success mb-3" (click)="router.navigate(['/crear-prueba'])">Crear prueba</button>
+  <button class="btn btn-success mb-3" (click)="router.navigate(['/experto/crear-prueba'])">Crear prueba</button>
 
 

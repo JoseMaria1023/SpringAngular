@@ -16,5 +16,6 @@ public class LoginResponse {
     private String token;
     private Long especialidadId; 
     private Long idUser;
+    private String especialidadNombre;
 }
  

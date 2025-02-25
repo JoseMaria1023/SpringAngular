@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
 interface LoginResponse {
+  especialidadNombre: any;
   idUser?: number;
   username: string;
   roles?: string[];
@@ -39,13 +40,16 @@ export class AuthService {
       sessionStorage.setItem('especialidadId', response.especialidadId.toString());
     }
   
-    if (response.idUser) {  
+    if (response.idUser) {
       sessionStorage.setItem('userId', response.idUser.toString());
+    }
+  
+    if (response.especialidadNombre) {  
+      sessionStorage.setItem('especialidadNombre', response.especialidadNombre);
     }
   
     this.username = response.username;
   }
-  
   getToken(): string | null {
     return sessionStorage.getItem('token');
   }
@@ -78,6 +82,11 @@ export class AuthService {
     const especialidadId = sessionStorage.getItem('especialidadId');
     return especialidadId ? Number(especialidadId) : null;
   }
+  
+  getEspecialidadNombre(): string | null {
+    return sessionStorage.getItem('especialidadNombre');
+  }
+  
 
   logout(): void {
     sessionStorage.clear();

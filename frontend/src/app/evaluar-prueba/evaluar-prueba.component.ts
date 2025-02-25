@@ -72,9 +72,22 @@ export class EvaluarPruebaComponent implements OnInit {
   }
 
   calcularMediaPonderada() {
-    const totalPeso = this.evaluaciones.reduce((sum, evaluacion) => sum + evaluacion.peso, 0);
-    const totalValoracion = this.evaluaciones.reduce((sum, evaluacion) => sum + (evaluacion.valoracion || 0) * evaluacion.peso, 0);
-    this.mediaPonderada = totalValoracion / totalPeso;
+    let totalPeso = 0;
+    let totalValoracion = 0;
+  
+    this.evaluaciones.forEach((evaluacion, i) => {
+      const peso = this.items[i].peso; 
+      const maxGC = this.items[i].gradosConsecucion; 
+      const valoracion = evaluacion.valoracion || 0; 
+  
+      if (maxGC > 0) {
+        totalValoracion += (valoracion / maxGC) * peso; 
+      }
+  
+      totalPeso += peso; 
+    });
+  
+    this.mediaPonderada = totalPeso > 0 ? (totalValoracion / totalPeso) * 100 : 0;
   }
 
   todasLasValoracionesCompletas(): boolean {

@@ -56,32 +56,36 @@ public class AuthController {
     }*/
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login2(@RequestBody AuthRequest loginDTO) {
-    
-        Authentication authDTO = new UsernamePasswordAuthenticationToken(
-                loginDTO.getUsername(), loginDTO.getPassword()
-        );
-        Authentication authentication = this.authenticationManager.authenticate(authDTO);
-        String token = this.jwtTokenProvider.generateToken(authentication);
-    
-        User user = (User) authentication.getPrincipal();
-    
-        Long especialidadId = (user.getEspecialidad() != null) 
-                ? user.getEspecialidad().getIdEspecialidad() 
-                : null;
-    
-         Long idUser = user.getIdUser();
-
-        return ResponseEntity.ok().body(
-            new LoginResponse(
-                    user.getUsername(),
-                    authentication.getAuthorities().stream()
-                                  .map(GrantedAuthority::getAuthority)
-                                  .toList(),
-                    token,
-                    especialidadId,
-                    idUser 
-            )
+public ResponseEntity<LoginResponse> login2(@RequestBody AuthRequest loginDTO) {
+    Authentication authDTO = new UsernamePasswordAuthenticationToken(
+            loginDTO.getUsername(), loginDTO.getPassword()
     );
-    }
+    Authentication authentication = this.authenticationManager.authenticate(authDTO);
+    String token = this.jwtTokenProvider.generateToken(authentication);
+
+    User user = (User) authentication.getPrincipal();
+
+    Long especialidadId = (user.getEspecialidad() != null) 
+            ? user.getEspecialidad().getIdEspecialidad() 
+            : null;
+    
+    String especialidadNombre = (user.getEspecialidad() != null) 
+            ? user.getEspecialidad().getNombre()  
+            : null;
+
+    Long idUser = user.getIdUser();
+
+    return ResponseEntity.ok().body(
+        new LoginResponse(
+                user.getUsername(),
+                authentication.getAuthorities().stream()
+                              .map(GrantedAuthority::getAuthority)
+                              .toList(),
+                token,
+                especialidadId,
+                idUser,
+                especialidadNombre  
+        )
+    );
+}
 }

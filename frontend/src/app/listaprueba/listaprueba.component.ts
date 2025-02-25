@@ -63,10 +63,13 @@ export class ListapruebaComponent implements OnInit {
     );
   }
   editarPrueba(id: number) {
-    this.router.navigate(['/editar-prueba', id]);
+    this.router.navigate(['experto/editar-prueba', id]);
   }
   evaluarItems(): void {
     this.evaluacionComponent.evaluarItems();  // Llamar al método del componente EvaluacionComponent
+  }
+  navegarCrearPrueba() {
+    this.router.navigate(['/experto/crear-prueba']);
   }
 
   evaluarParticipante(participante: any) {

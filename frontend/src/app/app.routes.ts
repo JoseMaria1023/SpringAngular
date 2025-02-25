@@ -44,9 +44,9 @@ export const appRoutes: Routes = [
   { path: 'experto/items', component: CrearitemComponent, canActivate: [ExpertoGuard] },
   { path: 'experto/listarpruebas', component: ListapruebaComponent, canActivate: [ExpertoGuard] },
   { path: 'experto/realizar-evaluacion', component: RealizarEvaluacionComponent, canActivate: [ExpertoGuard] },
-  { path: 'editar-prueba/:id', component: EditarpruebaComponent},
-  { path: 'crear-prueba', component: CrearpruebaComponent },
-  { path: 'evaluar-prueba/:idPrueba', component: EvaluarPruebaComponent},
+  { path: 'experto/editar-prueba/:id', component: EditarpruebaComponent, canActivate: [ExpertoGuard]},
+  { path: 'experto/crear-prueba', component: CrearpruebaComponent, canActivate: [ExpertoGuard] },
+  { path: 'experto/evaluar-prueba/:idPrueba', component: EvaluarPruebaComponent, canActivate: [ExpertoGuard]},
   
 
 
