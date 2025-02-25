@@ -38,4 +38,12 @@ export class EvaluacionItemService {
     });
     return this.http.post<any>(`${this.apiUrl}/evaluar`, evaluaciones, { headers });
   }
+  obtenerIdEvaluacionPorPrueba(idPrueba: number): Observable<number | null> {
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    const url = `${this.apiUrl}/prueba/${idPrueba}`;
+    return this.http.get<number>(url, { headers });
+  }
 }

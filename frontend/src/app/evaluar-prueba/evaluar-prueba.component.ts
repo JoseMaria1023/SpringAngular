@@ -16,6 +16,7 @@ export class EvaluarPruebaComponent implements OnInit {
   enunciado: string = '';
   items: any[] = [];
   evaluaciones: any[] = [];
+  idEvaluacion!: number | null;
 
   constructor(
     private evaluacionItemService: EvaluacionItemService,
@@ -29,6 +30,7 @@ export class EvaluarPruebaComponent implements OnInit {
         this.pruebaId = parseInt(id, 10);
         this.obtenerEnunciadoDePrueba();
         this.obtenerItemsDePrueba();
+        this.obtenerIdEvaluacion(); // 🔥 Nuevo método
       }
     });
   }
@@ -43,6 +45,15 @@ export class EvaluarPruebaComponent implements OnInit {
     );
   }
 
+  obtenerIdEvaluacion() {
+    if (!this.pruebaId) return;
+    this.evaluacionItemService.obtenerIdEvaluacionPorPrueba(this.pruebaId).subscribe(
+      (idEvaluacion) => {
+        this.idEvaluacion = idEvaluacion; // Guardamos el ID de evaluación
+      },
+      (error) => console.error('Error obteniendo ID de evaluación:', error)
+    );
+  }
   obtenerItemsDePrueba() {
     if (!this.pruebaId) return;
     this.evaluacionItemService.obtenerItemsDePrueba(this.pruebaId).subscribe(
@@ -59,27 +70,28 @@ export class EvaluarPruebaComponent implements OnInit {
   }
 
   enviarEvaluacion() {
+    if (!this.idEvaluacion) {
+      alert('No se pudo obtener el ID de evaluación');
+      return;
+    }
+  
     if (this.evaluaciones.some(e => e.valoracion === null)) {
       alert('Todos los ítems deben ser evaluados.');
       return;
     }
   
-    console.log(this.evaluaciones);
-  
-    const evaluacionesConEvaluacionId = this.evaluaciones.map(evaluacion => ({
-      Evaluacion_idEvaluacion: this.pruebaId, 
-      Item_idItem: evaluacion.itemId,
-      Valoracion: evaluacion.valoracion,
-      Explicacion: evaluacion.explicacion
+    const payload = this.evaluaciones.map(evaluacion => ({
+      evaluacionId: this.idEvaluacion, // Usamos el ID de evaluación
+      itemId: evaluacion.itemId,
+      valoracion: evaluacion.valoracion,
+      explicacion: evaluacion.explicacion
     }));
   
-    this.evaluacionItemService.enviarEvaluacion(evaluacionesConEvaluacionId).subscribe(
+    this.evaluacionItemService.enviarEvaluacion(payload).subscribe(
       () => {
         alert('Evaluación enviada correctamente.');
       },
-      (error) => {
-        console.error('Error enviando la evaluación:', error);
-      }
-    );
+      (error) => console.error('Error enviando la evaluación:', error)
+    );  
   }
 }

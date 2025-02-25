@@ -4,16 +4,19 @@ import com.jve.proyecto.converter.EvaluacionitemConverter;
 import com.jve.proyecto.converter.ItemConverter;
 import com.jve.proyecto.dto.EvaluacionitemDTO;
 import com.jve.proyecto.dto.ItemDTO;
+import com.jve.proyecto.entity.Evaluacion;
 import com.jve.proyecto.entity.EvaluacionItem;
 import com.jve.proyecto.entity.Item;
 import com.jve.proyecto.entity.Prueba;
 import com.jve.proyecto.repository.EvaluacionItemRepository;
+import com.jve.proyecto.repository.EvaluacionRepository;
 import com.jve.proyecto.repository.ItemRepository;
 import com.jve.proyecto.repository.PruebaRepository;
 
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,15 +26,18 @@ public class EvaluacionItemService {
     private final ItemRepository itemRepository;
     private final PruebaRepository pruebaRepository;
     private final ItemConverter itemConverter;
+    private final EvaluacionRepository evaluacionRepository;
 
-    public EvaluacionItemService(EvaluacionItemRepository evaluacionItemRepository, EvaluacionitemConverter evaluacionItemConverter,ItemRepository itemRepository, PruebaRepository pruebaRepository,ItemConverter itemConverter) {
+    public EvaluacionItemService(EvaluacionItemRepository evaluacionItemRepository, EvaluacionitemConverter evaluacionItemConverter,ItemRepository itemRepository, PruebaRepository pruebaRepository,ItemConverter itemConverter, EvaluacionRepository evaluacionRepository) {
         this.evaluacionItemRepository = evaluacionItemRepository;
         this.evaluacionItemConverter = evaluacionItemConverter;
         this.itemRepository = itemRepository;
         this.pruebaRepository = pruebaRepository;
         this.itemConverter = itemConverter;
+        this.evaluacionRepository= evaluacionRepository;
 
     }
+    
 
     public EvaluacionitemDTO guardarEvaluacionItem(EvaluacionitemDTO evaluacionItemDTO) {
         var evaluacionItem = evaluacionItemConverter.dtoToEntity(evaluacionItemDTO);
@@ -49,6 +55,12 @@ public class EvaluacionItemService {
                 .collect(Collectors.toList());
     }
 
+    public Optional<Long> obtenerIdEvaluacionPorPrueba(Long idPrueba) {
+        return evaluacionRepository.findByPrueba_IdPrueba(idPrueba)
+                .stream()
+                .map(Evaluacion::getIdEvaluacion)
+                .findFirst();
+    }
     public List<EvaluacionitemDTO> traerTodos() {
         return evaluacionItemRepository.findAll().stream()
                 .map(evaluacionItemConverter::entityToDto)

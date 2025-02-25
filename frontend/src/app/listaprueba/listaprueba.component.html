@@ -28,9 +28,6 @@
           <button class="btn btn-primary" [routerLink]="['/evaluar-prueba', prueba.idPrueba]">
             Evaluar Prueba
           </button>
-          <button class="btn btn-warning ml-2" (click)="editarPrueba(prueba.idPrueba)">
-            Editar
-          </button>
         </td>
       </tr>
     </tbody>
@@ -47,6 +44,6 @@
       </li>
     </ul>
   </div>
-  <button class="btn btn-success mb-3" (click)="router.navigate(['/crear-prueba'])">
+  <button class="btn btn-success mb-3" (click)="router.navigate(['/crear-prueba'])">Crear prueba</button>
 
 

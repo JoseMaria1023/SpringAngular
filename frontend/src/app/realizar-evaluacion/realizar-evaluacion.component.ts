@@ -17,7 +17,7 @@ export class RealizarEvaluacionComponent implements OnInit {
     participanteId: null,
     pruebaId: null,
     userId: null,
-    notaFinal: null
+    notaFinal: 0 // Establecer valor por defecto en 0
   };
 
   constructor(
@@ -40,18 +40,18 @@ export class RealizarEvaluacionComponent implements OnInit {
     const userId = this.authService.getUserId();
     if (userId) {
       this.evaluacion.userId = userId;
-    } 
+    }
   }
 
   onSubmit(): void {
-    if (this.evaluacion.notaFinal == null) {
-      alert('Por favor, ingresa la nota final.');
+    if (this.evaluacion.notaFinal == null || this.evaluacion.notaFinal < 0) {
+      alert('Por favor, ingresa una nota final válida.');
       return;
     }
+
     this.evaluacionService.evaluarParticipante(this.evaluacion).subscribe(
       response => {
         alert('Evaluación guardada con éxito.');
-
       },
       error => {
         console.error('Error al guardar la evaluación:', error);
@@ -60,3 +60,4 @@ export class RealizarEvaluacionComponent implements OnInit {
     );
   }
 }
+

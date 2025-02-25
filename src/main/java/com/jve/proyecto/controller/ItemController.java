@@ -37,13 +37,10 @@ public class ItemController {
 
     @PostMapping("/crear-multiples")
     public ResponseEntity<?> crearMultiplesItems(@RequestBody List<ItemDTO> itemDTOs) {
-    try {
         List<Item> itemsGuardados = itemService.guardarTodos(itemDTOs);
         return ResponseEntity.ok(itemsGuardados);
-    } catch (Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al guardar los ítems.");
     }
-}
+
     @PutMapping("/editar/{id}")
     public ResponseEntity<ItemDTO> editarItem(@PathVariable Long id, @RequestBody ItemDTO itemDTO) {
         ItemDTO itemActualizado = itemService.editarItem(id, itemDTO);

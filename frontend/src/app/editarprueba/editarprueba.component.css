@@ -1,0 +1,99 @@
+/* Estilo general para el contenedor */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilo para el encabezado */
+  .container h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilo para los campos del formulario */
+  .form-label {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+  }
+  
+  /* Estilo para los inputs y selects */
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 12px;
+    transition: border-color 0.3s ease;
+  }
+  
+  /* Foco en los inputs y selects */
+  .form-control:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  /* Estilo para el mensaje de error */
+  .text-danger {
+    font-size: 0.875rem;
+    color: #dc3545;
+    margin-top: 5px;
+  }
+  
+  /* Estilo para el botón */
+  button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Foco en el botón */
+  button:focus {
+    outline: none;
+  }
+  
+  /* Cambiar el color del botón al pasar el mouse */
+  button:hover {
+    background-color: #218838;
+  }
+  
+  /* Botón deshabilitado */
+  button[disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* Espaciado adicional para los campos y el formulario */
+  .mb-3 {
+    margin-bottom: 15px;
+  }
+  
+  /* Estilo para el input de archivo */
+  input[type="file"] {
+    font-size: 1rem;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  input[type="file"]:focus {
+    border-color: #007bff;
+  }
+  

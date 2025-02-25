@@ -64,36 +64,23 @@ export class EditarpruebaComponent implements OnInit {
       console.error('Error: idPrueba no está definido');
       return;
     }
-
-    // Si hay un archivo seleccionado, usamos FormData
+  
+    const formData = new FormData();
+    formData.append('idPrueba', this.prueba.idPrueba.toString());
+    formData.append('puntuacionMaxima', this.prueba.puntuacionMaxima.toString());
+    formData.append('especialidadId', this.prueba.especialidadId.toString());
     if (this.selectedFile) {
-      const formData = new FormData();
-      // Incluir el id de la prueba en el FormData
-      formData.append('idPrueba', this.prueba.idPrueba.toString());
-      formData.append('puntuacionMaxima', this.prueba.puntuacionMaxima.toString());
-      formData.append('especialidadId', this.prueba.especialidadId.toString());
       formData.append('file', this.selectedFile);
-
-      this.pruebaService.editarPrueba(formData).subscribe({
-        next: () => {
-          alert('Prueba actualizada correctamente');
-          this.router.navigate(['/pruebas']);
-        },
-        error: (error) => {
-          console.error('Error al actualizar la prueba', error);
-        }
-      });
-    } else {
-      // Si no hay archivo, enviamos solo JSON
-      this.pruebaService.editarPrueba(this.prueba).subscribe({
-        next: () => {
-          alert('Prueba actualizada correctamente');
-          this.router.navigate(['/pruebas']);
-        },
-        error: (error) => {
-          console.error('Error al actualizar la prueba', error);
-        }
-      });
     }
+  
+    this.pruebaService.editarPrueba(formData).subscribe({
+      next: () => {
+        alert('Prueba actualizada correctamente');
+        this.router.navigate(['/pruebas']);
+      },
+      error: (error) => {
+        console.error('Error al actualizar la prueba', error);
+      }
+    });
   }
 }

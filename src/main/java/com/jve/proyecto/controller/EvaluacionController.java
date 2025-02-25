@@ -1,6 +1,7 @@
 package com.jve.proyecto.controller;
 
 import com.jve.proyecto.dto.EvaluacionDTO;
+import com.jve.proyecto.service.EvaluacionItemService;
 import com.jve.proyecto.service.EvaluacionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,6 @@ public class EvaluacionController {
         return ResponseEntity.ok(evaluacionService.obtenerTodas());
     }
 
-    // Endpoint modificado para que la URL sea /api/evaluaciones/prueba/{idPrueba}
     @GetMapping("/prueba/{idPrueba}")
     public ResponseEntity<List<EvaluacionDTO>> obtenerEvaluacionesPorPrueba(@PathVariable Long idPrueba) {
         List<EvaluacionDTO> evaluaciones = evaluacionService.obtenerEvaluacionesPorPrueba(idPrueba);
@@ -34,6 +34,7 @@ public class EvaluacionController {
     public ResponseEntity<EvaluacionDTO> evaluarParticipante(@RequestBody EvaluacionDTO evaluacionDTO) {
         return ResponseEntity.ok(evaluacionService.evaluarParticipante(evaluacionDTO));
     }
+   
 
     @GetMapping("/listar")
     public ResponseEntity<List<EvaluacionDTO>> listarEvaluaciones() {

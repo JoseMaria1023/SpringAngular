@@ -20,7 +20,7 @@ import java.util.List;
 public class EvaluacionItemController {
 
     private final EvaluacionItemService evaluacionItemService;
-    private final ItemService itemService; // Añadir el servicio de ítems
+    private final ItemService itemService; 
 
     public EvaluacionItemController(EvaluacionItemService evaluacionItemService, ItemService itemService) {
         this.evaluacionItemService = evaluacionItemService;
@@ -28,7 +28,7 @@ public class EvaluacionItemController {
     }
 
     @PostMapping("/evaluar")
-    public ResponseEntity<List<EvaluacionitemDTO>> evaluarItems(@RequestBody List<EvaluacionitemDTO> evaluaciones) {
+    public ResponseEntity<List<EvaluacionitemDTO>> evaluarItems(@Valid @RequestBody List<EvaluacionitemDTO> evaluaciones) {
         List<EvaluacionitemDTO> savedEvaluaciones = evaluacionItemService.guardarTodos(evaluaciones);
         return ResponseEntity.ok(savedEvaluaciones);
     }
@@ -39,10 +39,11 @@ public class EvaluacionItemController {
         return ResponseEntity.ok(evaluacionItems);
     }
 
-    @GetMapping("/enunciado/prueba/{idPrueba}")
-    public ResponseEntity<String> obtenerEnunciadoPorPrueba(@PathVariable Long idPrueba) {
-        String enunciado = evaluacionItemService.obtenerEnunciadoPorPrueba(idPrueba);
-        return ResponseEntity.ok(enunciado);
+    @GetMapping("/prueba/{idPrueba}")
+    public ResponseEntity<Long> obtenerIdEvaluacion(@PathVariable Long idPrueba) {
+        return evaluacionItemService.obtenerIdEvaluacionPorPrueba(idPrueba)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/items/prueba/{idPrueba}")

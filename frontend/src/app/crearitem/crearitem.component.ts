@@ -39,7 +39,6 @@ export class CrearitemComponent implements OnInit {
       alert('Por favor complete todos los campos antes de añadir el ítem.');
       return;
     }
-    // Agregamos el item (sin borrar pruebaId, ya que se asignará más adelante)
     this.items.push({ ...this.nuevoItem });
     this.nuevoItem.descripcion = '';
     this.nuevoItem.peso = null;
@@ -60,7 +59,6 @@ export class CrearitemComponent implements OnInit {
         console.log('Último idPrueba obtenido:', ultimoId);
         this.pruebaId = ultimoId;
   
-        // Asignar pruebaId a cada ítem antes de enviarlos
         this.items.forEach(item => {
           item.pruebaId = this.pruebaId;
         });
