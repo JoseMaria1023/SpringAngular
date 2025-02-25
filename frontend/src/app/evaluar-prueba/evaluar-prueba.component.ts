@@ -103,9 +103,15 @@ export class EvaluarPruebaComponent implements OnInit {
   
     this.evaluacionItemService.enviarEvaluacion(payload).subscribe(
       () => {
-        alert('Evaluación enviada correctamente.');
+        this.evaluacionItemService.actualizarNotaFinal(this.idEvaluacion!).subscribe(
+          () => {
+            alert('Evaluación enviada y nota final actualizada.');
+          },
+          (error) => console.error('Error actualizando la nota final:', error)
+        );
       },
       (error) => console.error('Error enviando la evaluación:', error)
     );  
   }
+  
 }

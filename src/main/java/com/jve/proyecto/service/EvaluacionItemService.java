@@ -15,6 +15,8 @@ import com.jve.proyecto.repository.EvaluacionRepository;
 import com.jve.proyecto.repository.ItemRepository;
 import com.jve.proyecto.repository.PruebaRepository;
 
+import jakarta.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -78,23 +80,26 @@ public class EvaluacionItemService {
     }
 
     @Transactional
-public void actualizarNotaFinal(Long evaluacionId) {
+    public EvaluacionDTO actualizarNotaFinal(Long evaluacionId) {
+    Double mediaPonderada = calcularMediaPonderada(evaluacionId);
+    System.out.println("Nota calculada: " + mediaPonderada);
+
     Evaluacion evaluacion = evaluacionRepository.findById(evaluacionId)
-        .orElseThrow(() -> new RuntimeException("Evaluación no encontrada"));
+            .orElseThrow(() -> new RuntimeException("Evaluación no encontrada"));
 
-    List<EvaluacionItem> evaluacionItems = evaluacionItemRepository.findByEvaluacionId(evaluacionId);
-
-    double totalPeso = evaluacionItems.stream().mapToDouble(item -> item.getItem().getPeso()).sum();
-    double totalValoracion = evaluacionItems.stream()
-        .mapToDouble(item -> item.getValoracion() * item.getItem().getPeso())
-        .sum();
-
-    double notaFinal = totalValoracion / totalPeso;
-    evaluacion.setNotaFinal(notaFinal); // Suponiendo que la entidad Evaluacion tiene un campo notaFinal
+    evaluacion.setNotaFinal(mediaPonderada);
 
     evaluacionRepository.save(evaluacion);
+
+    Evaluacion evaluacionActualizada = evaluacionRepository.findById(evaluacionId)
+            .orElseThrow(() -> new RuntimeException("No se encontró la evaluación después de guardar"));
+
+    System.out.println("Nota final después de guardar: " + evaluacionActualizada.getNotaFinal());
+
+    return evaluacionConverter.entityToDto(evaluacionActualizada);
 }
 
+    
     public List<EvaluacionitemDTO> guardarTodos(List<EvaluacionitemDTO> evaluaciones) {
         List<EvaluacionItem> items = evaluaciones.stream()
                 .map(evaluacionItemConverter::dtoToEntity)
