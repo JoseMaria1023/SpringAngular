@@ -8,10 +8,9 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-participantescrear',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './participantescrear.component.html',
-  styleUrl: './participantescrear.component.css'
-  
+  styleUrls: ['./participantescrear.component.css']
 })
 export class ParticipantescrearComponent implements OnInit {
   participante = {
@@ -20,6 +19,7 @@ export class ParticipantescrearComponent implements OnInit {
     centro: '',
     especialidadId: 0
   };
+  especialidadInput: string = ''; 
 
   constructor(
     private participanteService: ParticipanteService,
@@ -29,8 +29,11 @@ export class ParticipantescrearComponent implements OnInit {
 
   ngOnInit(): void {
     const especialidadId = this.authService.getEspecialidadId();
-    if (especialidadId) {
+    const especialidadNombre = this.authService.getEspecialidadNombre();
+
+    if (especialidadId && especialidadNombre) {
       this.participante.especialidadId = especialidadId;
+      this.especialidadInput = `${especialidadId} - ${especialidadNombre}`; // Concatenamos el ID y nombre
     } else {
       alert('No tienes una especialidad asignada.');
       this.router.navigate(['/home']);

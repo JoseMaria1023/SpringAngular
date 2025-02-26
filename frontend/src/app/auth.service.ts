@@ -102,7 +102,7 @@ export class AuthService {
     if (this.isAdmin()) {
       this.router.navigate(['/admin']);
     } else if (this.isExperto()) {
-      this.router.navigate(['/participantes']);
+      this.router.navigate(['/experto']);
     } else {
       this.router.navigate(['/home']);
     }

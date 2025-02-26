@@ -13,12 +13,11 @@
       <td>{{ participante.nombre }}</td>
       <td>{{ participante.apellidos }}</td>
       <td>{{ participante.centro }}</td>
-      <td>{{ participante.especialidadId }}</td>
+      <td>{{ getEspecialidadNombre(participante.especialidadId) }}</td> 
       <td>
-        <td>
-          <button [routerLink]="['/experto/participante/editar', participante.idParticipante]" class="btn-edit">
-            Editar
-          </button>        
+        <button [routerLink]="['/experto/participante/editar', participante.idParticipante]" class="btn-edit">
+          Editar
+        </button>
       </td>
     </tr>
   </tbody>

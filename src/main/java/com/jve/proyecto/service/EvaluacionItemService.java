@@ -60,25 +60,19 @@ public class EvaluacionItemService {
         double sumaPesos = 0.0;
     
         for (EvaluacionItem item : evaluacionItems) {
-            double gradoConsecucion = item.getValoracion(); // 🔹 Valor obtenido (0 a GC_max)
-            double maxGradoConsecucion = item.getItem().getGradosConsecucion(); // 🔹 Máximo posible
-            double peso = item.getItem().getPeso(); // 🔹 Peso del ítem
+            double gradoConsecucion = item.getValoracion(); 
+            double maxGradoConsecucion = item.getItem().getGradosConsecucion(); 
+            double peso = item.getItem().getPeso(); 
     
-            // ⚠️ Evitamos divisiones por 0 si algún GC_max está mal configurado
             if (maxGradoConsecucion > 0) {
-                double notaItem = (gradoConsecucion / maxGradoConsecucion) * peso; // 🔥 Normalización por su máximo
+                double notaItem = (gradoConsecucion / maxGradoConsecucion) * peso; 
                 sumaPonderada += notaItem;
             }
     
-            sumaPesos += peso; // 🔥 Sumamos los pesos
+            sumaPesos += peso; 
         }
     
         double notaFinal = sumaPesos > 0 ? (sumaPonderada / sumaPesos) * 100 : 0.0;
-    
-        System.out.println("Evaluación ID: " + evaluacionId);
-        System.out.println("Suma ponderada: " + sumaPonderada);
-        System.out.println("Suma de pesos: " + sumaPesos);
-        System.out.println("Nota final calculada: " + notaFinal);
     
         return notaFinal;
     }

@@ -34,6 +34,14 @@ export class EvaluacionService  {
   
     return this.http.get(`${this.apiUrl}/prueba/${pruebaId}`, { headers });
   }
+  obtenerTodasEvaluaciones(): Observable<any[]> {
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  
+    return this.http.get<any[]>(`${this.apiUrl}/todas`, { headers });
+  }
 
   evaluarItems(itemsEvaluados: any[]): Observable<any> {
     const token = sessionStorage.getItem('token');

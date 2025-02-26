@@ -24,6 +24,9 @@ public class EvaluacionDTO {
     @Min(value = 0, message = "La nota final no puede ser negativa")
     private Double notaFinal;
 
+    private String participanteNombre; 
+
+
     // Getters y Setters
     public Long getIdEvaluacion() {
         return idEvaluacion;
@@ -64,6 +67,14 @@ public class EvaluacionDTO {
     public void setNotaFinal(Double notaFinal) {
         this.notaFinal = notaFinal;
     }
+
+    public String getParticipanteNombre() {
+        return participanteNombre;
+    }
+    public void setParticipanteNombre(String participanteNombre) {
+        this.participanteNombre = participanteNombre;
+    }
+
 
     public EvaluacionDTO(Long idEvaluacion2, Double notaFinal2, Long idParticipante) {
         //TODO Auto-generated constructor stub

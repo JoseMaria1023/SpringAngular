@@ -8,13 +8,14 @@
     <div *ngIf="authService.isAdmin()">
       <a routerLink="/admin/listar/experto">Expertos</a>
       <a routerLink="/especialidad">Especialidades</a>
+      <a routerLink="/admin/lista-evaluacion">Ver evaluaciones</a>
+
     </div>
 
     <!-- Opciones para EXPERTO -->
     <div *ngIf="authService.isExperto()">
       <a routerLink="/experto/participantes">Participantes</a>
       <a routerLink="/experto/listarpruebas">Pruebas</a>
-      <a routerLink="/experto/especialidad">{{ especialidadNombre }}</a>
     </div>
 
     <div *ngIf="authService.isLoggedIn()" class="user-options">

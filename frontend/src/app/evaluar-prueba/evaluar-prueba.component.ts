@@ -71,49 +71,56 @@ export class EvaluarPruebaComponent implements OnInit {
     );
   }
 
+  actualizarValoracion(index: number, nuevaValoracion: number): void {
+    this.evaluaciones[index].valoracion = nuevaValoracion;
+    this.calcularMediaPonderada();  
+  }
+
   calcularMediaPonderada() {
     let totalPeso = 0;
     let totalValoracion = 0;
-  
+
     this.evaluaciones.forEach((evaluacion, i) => {
-      const peso = this.items[i].peso; 
-      const maxGC = this.items[i].gradosConsecucion; 
+      const peso = this.items[i]?.peso || 0; 
+      const maxGC = this.items[i]?.gradosConsecucion || 0; 
       const valoracion = evaluacion.valoracion || 0; 
-  
+
       if (maxGC > 0) {
         totalValoracion += (valoracion / maxGC) * peso; 
       }
-  
+
       totalPeso += peso; 
     });
-  
+
     this.mediaPonderada = totalPeso > 0 ? (totalValoracion / totalPeso) * 100 : 0;
   }
 
+  // Verifica si todas las valoraciones están completas
   todasLasValoracionesCompletas(): boolean {
     return this.evaluaciones.every(evaluacion => evaluacion.valoracion !== null);
   }
-  
+
+  // Método para enviar la evaluación
   enviarEvaluacion() {
     if (!this.idEvaluacion) {
       alert('No se pudo obtener el ID de evaluación');
       return;
     }
-  
+
     if (!this.todasLasValoracionesCompletas()) {
       alert('Todos los ítems deben ser evaluados.');
       return;
     }
-  
+
     this.calcularMediaPonderada();
-  
+
     const payload = this.evaluaciones.map(evaluacion => ({
       evaluacionId: this.idEvaluacion, 
       itemId: evaluacion.itemId,
       valoracion: evaluacion.valoracion,
       explicacion: evaluacion.explicacion
     }));
-  
+
     this.evaluacionItemService.enviarEvaluacion(payload).subscribe(
       () => {
         this.evaluacionItemService.actualizarNotaFinal(this.idEvaluacion!).subscribe(
@@ -126,5 +133,4 @@ export class EvaluarPruebaComponent implements OnInit {
       (error) => console.error('Error enviando la evaluación:', error)
     );  
   }
-  
 }

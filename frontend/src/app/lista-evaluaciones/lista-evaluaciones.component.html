@@ -1,0 +1,16 @@
+<h2>Lista de Evaluaciones</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Participante</th>
+      <th>Nota Final</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let evaluacion of evaluaciones">
+      <td>{{ evaluacion.participanteNombre }}</td>
+      <td>{{ evaluacion.notaFinal }}</td>
+    </tr>
+  </tbody>
+</table>

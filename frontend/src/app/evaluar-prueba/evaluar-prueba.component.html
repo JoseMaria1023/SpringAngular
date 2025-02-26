@@ -11,9 +11,27 @@
         <strong>Grado de Consecución:</strong> {{ item.gradosConsecucion }} 
       </div>
 
-      <input type="number" class="form-control" [(ngModel)]="evaluaciones[i].valoracion" name="valoracion{{i}}" min="0" max="10" required [ngModelOptions]="{standalone: true}" />
+      <!-- Input para la valoración con actualización en tiempo real -->
+      <input 
+        type="number" 
+        class="form-control" 
+        [(ngModel)]="evaluaciones[i].valoracion" 
+        name="valoracion{{i}}" 
+        min="0" 
+        max="10" 
+        required 
+        [ngModelOptions]="{standalone: true}" 
+        (ngModelChange)="actualizarValoracion(i, $event)" 
+      />
 
-      <textarea class="form-control mt-2" [(ngModel)]="evaluaciones[i].explicacion" name="explicacion{{i}}" placeholder="Explicación" [ngModelOptions]="{standalone: true}"></textarea>
+      <!-- Área de texto para la explicación -->
+      <textarea 
+        class="form-control mt-2" 
+        [(ngModel)]="evaluaciones[i].explicacion" 
+        name="explicacion{{i}}" 
+        placeholder="Explicación" 
+        [ngModelOptions]="{standalone: true}">
+      </textarea>
     </div>
 
     <!-- Mostrar la media ponderada calculada -->
@@ -26,6 +44,7 @@
       <strong>¡Todos los ítems deben ser evaluados!</strong>
     </div>
 
+    <!-- Botón para enviar la evaluación -->
     <button type="button" class="btn btn-primary mt-3" (click)="enviarEvaluacion()">Enviar Evaluación</button>
   </form>
 </div>
