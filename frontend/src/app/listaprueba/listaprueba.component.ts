@@ -10,16 +10,19 @@ import { AuthService } from '../auth.service';
 @Component({
   selector: 'app-listaprueba',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgFor,RouterModule],
+  imports: [CommonModule, FormsModule, NgFor, RouterModule],
   templateUrl: './listaprueba.component.html',
   styleUrls: ['./listaprueba.component.css']
 })
 export class ListapruebaComponent implements OnInit {
   pruebas: any[] = [];
-  items: any[] = [];  
+  pruebasPaginadas: any[] = []; // Lista de pruebas filtrada por página
   participantes: any[] = []; 
-  selectedPrueba: any = null; 
-  evaluacionComponent: any;
+  selectedPrueba: any = null;
+
+  // Variables para paginación
+  paginaActual: number = 1;
+  pruebasPorPagina: number = 5; // Cambia este número si quieres más o menos por página
 
   constructor(
     private pruebaService: PruebaService,
@@ -37,7 +40,7 @@ export class ListapruebaComponent implements OnInit {
     this.pruebaService.traerTodasLasPruebas().subscribe(
       (data) => {
         this.pruebas = data;
-        console.log('Pruebas cargadas:', this.pruebas);
+        this.actualizarPaginacion(); // Filtrar pruebas al cargar
       },
       (error) => {
         console.error('Error cargando pruebas', error);
@@ -45,29 +48,32 @@ export class ListapruebaComponent implements OnInit {
     );
   }
 
+  actualizarPaginacion() {
+    const inicio = (this.paginaActual - 1) * this.pruebasPorPagina;
+    const fin = inicio + this.pruebasPorPagina;
+    this.pruebasPaginadas = this.pruebas.slice(inicio, fin);
+  }
+
+  cambiarPagina(direccion: number) {
+    const totalPaginas = Math.ceil(this.pruebas.length / this.pruebasPorPagina);
+    if (this.paginaActual + direccion > 0 && this.paginaActual + direccion <= totalPaginas) {
+      this.paginaActual += direccion;
+      this.actualizarPaginacion();
+    }
+  }
+
   selectPrueba(prueba: any) {
     this.selectedPrueba = prueba;
-    const especialidadId = this.authService.getEspecialidadId();
-    if (!especialidadId) {
-      alert('No se pudo obtener la especialidad del experto');
-      return;
-    }
     this.participanteService.getParticipantes().subscribe(
       (data) => {
         this.participantes = Array.isArray(data) ? data : [data];
-        console.log('Participantes cargados:', this.participantes);
       },
       (error) => {
         console.error('Error cargando participantes', error);
       }
     );
   }
-  editarPrueba(id: number) {
-    this.router.navigate(['experto/editar-prueba', id]);
-  }
-  evaluarItems(): void {
-    this.evaluacionComponent.evaluarItems();  // Llamar al método del componente EvaluacionComponent
-  }
+
   navegarCrearPrueba() {
     this.router.navigate(['/experto/crear-prueba']);
   }

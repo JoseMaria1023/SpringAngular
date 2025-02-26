@@ -1,6 +1,6 @@
 <h2>Lista de Evaluaciones</h2>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Participante</th>
@@ -8,7 +8,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let evaluacion of evaluaciones">
+    <tr *ngFor="let evaluacion of evaluaciones; let i = index" [ngClass]="getColor(i)">
       <td>{{ evaluacion.participanteNombre }}</td>
       <td>{{ evaluacion.notaFinal }}</td>
     </tr>

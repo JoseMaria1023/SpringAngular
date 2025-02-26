@@ -21,11 +21,19 @@ export class ListaEvaluacionesComponent implements OnInit {
   obtenerEvaluaciones(): void {
     this.evaluacionService.obtenerTodasEvaluaciones().subscribe({
       next: (data) => {
-        this.evaluaciones = data;
+        // Ordenar las evaluaciones de mayor a menor por notaFinal
+        this.evaluaciones = data.sort((a: any, b: any) => b.notaFinal - a.notaFinal);
       },
       error: (err) => {
         console.error('Error al obtener evaluaciones', err);
       }
     });
+  }
+
+  getColor(index: number): string {
+    if (index === 0) return 'gold'; // 🥇 Oro (1er lugar)
+    if (index === 1) return 'silver'; // 🥈 Plata (2do lugar)
+    if (index === 2) return 'bronze'; // 🥉 Bronce (3er lugar)
+    return ''; // Sin color para el resto
   }
 }

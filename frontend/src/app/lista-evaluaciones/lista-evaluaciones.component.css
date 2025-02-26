@@ -39,4 +39,18 @@ h2 {
   tbody tr:last-child td {
     border-bottom: none;
   }
+  .gold {
+    background-color: gold;
+    font-weight: bold;
+  }
+  
+  .silver {
+    background-color: silver;
+    font-weight: bold;
+  }
+  
+  .bronze {
+    background-color: #cd7f32; /* Color bronce */
+    font-weight: bold;
+  }
   
