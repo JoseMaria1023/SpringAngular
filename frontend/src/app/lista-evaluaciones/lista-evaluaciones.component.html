@@ -1,15 +1,24 @@
 <h2>Lista de Evaluaciones</h2>
 
+<!-- Selector de Especialidad -->
+<label for="filtro-especialidad">Filtrar por especialidad:</label>
+<select id="filtro-especialidad" [(ngModel)]="especialidadSeleccionada">
+  <option value="">Todas</option> 
+  <option *ngFor="let especialidad of especialidades" [value]="especialidad.nombre">{{ especialidad.nombre }}</option>
+</select>
+
 <table class="table">
   <thead>
     <tr>
       <th>Participante</th>
+      <th>Especialidad</th>
       <th>Nota Final</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let evaluacion of evaluaciones; let i = index" [ngClass]="getColor(i)">
+    <tr *ngFor="let evaluacion of evaluacionesFiltradas(); let i = index" [ngClass]="getColor(i)">
       <td>{{ evaluacion.participanteNombre }}</td>
+      <td>{{ evaluacion.especialidad }}</td>
       <td>{{ evaluacion.notaFinal }}</td>
     </tr>
   </tbody>

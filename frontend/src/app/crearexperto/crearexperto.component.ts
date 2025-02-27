@@ -51,7 +51,7 @@ export class CrearexpertoComponent implements OnInit {
   }
 
   crearExperto(): void {
-    this.userService.createUser(this.experto)
+    this.authService.createUser(this.experto)
       .subscribe({
         next: (response) => {
           this.router.navigate(['/admin']);

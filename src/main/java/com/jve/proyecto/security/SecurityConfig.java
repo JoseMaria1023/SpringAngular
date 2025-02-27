@@ -72,9 +72,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/ganadores/**").permitAll() // Permitir acceso público
 //                        .requestMatchers(HttpMethod.POST, "/api/especialidades").hasRole("ADMIN") // Solo ADMIN puede crear especialidades
 //                        .requestMatchers(HttpMethod.PUT, "/api/especialidades/**").hasRole("ADMIN") // Solo ADMIN puede editar especialidades
+                        .requestMatchers(HttpMethod.POST, "/auth/register").permitAll() // Permitir registro sin autenticación
                         .requestMatchers(HttpMethod.POST, "/auth/**").permitAll() // Permitir acceso público a autenticación
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll() // Permitir login sin autenticación
-                        .requestMatchers(HttpMethod.POST, "/auth/register").permitAll() // Permitir registro sin autenticación
                         .anyRequest().authenticated()); // Requiere autenticación para cualquier otra petición
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); // Añadir filtro JWT para validación

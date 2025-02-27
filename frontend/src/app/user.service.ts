@@ -10,15 +10,7 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  createUser(user: any): Observable<any> {
-    const token = sessionStorage.getItem('token');
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    });
-
-    return this.http.post<any>(`${this.apiUrl}/register`, user, { headers });
-  }
+ 
   loadExperts(): Observable<any> {
     const token = sessionStorage.getItem('token');
     const headers = new HttpHeaders({

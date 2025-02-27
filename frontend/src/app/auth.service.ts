@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -26,9 +26,15 @@ export class AuthService {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials);
   }
 
-  register(name: string, email: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/register`, { name, email, password });
-  }
+  createUser(user: any): Observable<any> {
+     const token = sessionStorage.getItem('token');
+     const headers = new HttpHeaders({
+       'Authorization': `Bearer ${token}`,
+       'Content-Type': 'application/json',
+     });
+ 
+     return this.http.post<any>(`${this.apiUrl}/register`, user, { headers });
+   }
 
   setSession(response: LoginResponse): void {
     sessionStorage.setItem('token', response.token);
