@@ -6,6 +6,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: springangular
+      MYSQL_INIT_DB_ALWAYS: "true"  # Asegura que el script se ejecute siempre
     ports:
       - "3306:3306"
     volumes:
@@ -24,6 +25,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/springangular
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
+      SPRING_JPA_HIBERNATE_DDL_AUTO: none
       SERVER_PORT: 9000
     depends_on:
       mysql:
@@ -32,7 +34,7 @@ services:
   frontend:
     build: ./frontend
     ports:
-      - "80:80"
+      - "4200:80"
     depends_on:
       - backend
 

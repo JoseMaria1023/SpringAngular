@@ -50,7 +50,6 @@ public class SecurityConfig {
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Estado sin sesión
                 .authorizeRequests(requests -> requests
                         .requestMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll() // Permitir acceso público
-                        .requestMatchers(HttpMethod.GET, "/api/participantes/todos").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/participantes/todos").permitAll() // Permitir acceso público
                         .requestMatchers(HttpMethod.POST, "/api/participantes/crear").hasAuthority("ROLE_EXPERTO") // Solo expertos pueden crear
                         .requestMatchers(HttpMethod.PUT, "/api/participantes/editar/**").hasAuthority("ROLE_EXPERTO") // Solo expertos pueden editar
@@ -85,7 +84,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200")); // Origen permitido
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "http://localhost:80"));; // Origen permitido
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Métodos HTTP permitidos
         configuration.setAllowedHeaders(Arrays.asList("*")); // Permitir cualquier cabecera
         configuration.setAllowCredentials(true); // Permitir credenciales

@@ -1,13 +1,23 @@
 FROM node:18 AS build
 WORKDIR /app
-COPY package.json ./
+COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
-# Añadir log para verificar la estructura de directorios
-RUN npm run build && ls -la dist/
+RUN npm run build --prod
 
 FROM nginx:alpine
-# Modificar la ruta según la estructura real
-COPY --from=build /app/dist/frontend/ /usr/share/nginx/html
+RUN rm -rf /usr/share/nginx/html/*
+COPY --from=build /app/dist/frontend/browser/ /usr/share/nginx/html/
+
+RUN echo 'server { \
+    listen 80; \
+    server_name localhost; \
+    root /usr/share/nginx/html; \
+    index index.html; \
+    location / { \
+        try_files $uri $uri/ /index.html; \
+    } \
+}' > /etc/nginx/conf.d/default.conf
+
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
