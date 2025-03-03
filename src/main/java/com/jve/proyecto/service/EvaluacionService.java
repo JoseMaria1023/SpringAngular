@@ -14,6 +14,9 @@ import com.jve.proyecto.entity.Item;
 import com.jve.proyecto.entity.Participante;
 import com.jve.proyecto.entity.Prueba;
 import com.jve.proyecto.entity.User;
+import com.jve.proyecto.exception.ErrorEvaluacionNotFoundException;
+import com.jve.proyecto.exception.ErrorParticipanteNotFoundException;
+import com.jve.proyecto.exception.ErrorPruebaNotFoundException;
 import com.jve.proyecto.repository.EvaluacionItemRepository;
 import com.jve.proyecto.repository.EvaluacionRepository;
 import com.jve.proyecto.repository.ParticipanteRepository;
@@ -40,27 +43,24 @@ public class EvaluacionService {
         this.evaluacionItemRepository=evaluacionItemRepository;
     }
 
-    public List<EvaluacionDTO> obtenerTodas() {
+    public List<EvaluacionDTO> TraerTodas() {
         return evaluacionRepository.findAll().stream()
             .map(evaluacionConverter::entityToDto)
             .toList();
     }
 
-    public List<EvaluacionDTO> obtenerEvaluacionesPorPrueba(Long pruebaId) {
+    public List<EvaluacionDTO> TraerEvaluacionesPorPrueba(Long pruebaId) {
         return evaluacionRepository.findByPrueba_IdPrueba(pruebaId).stream()
             .map(evaluacionConverter::entityToDto)
             .toList();
     }
     
     public EvaluacionDTO evaluarParticipante(EvaluacionDTO evaluacionDTO) {
-        Participante participante = participanteRepository.findById(evaluacionDTO.getParticipanteId())
-                .orElseThrow(() -> new RuntimeException("Participante no encontrado"));
+        Participante participante = participanteRepository.findById(evaluacionDTO.getParticipanteId()).orElseThrow(() -> new ErrorParticipanteNotFoundException("Participante no encontrado"));
     
-        Prueba prueba = pruebaRepository.findById(evaluacionDTO.getPruebaId())
-                .orElseThrow(() -> new RuntimeException("Prueba no encontrada"));
+        Prueba prueba = pruebaRepository.findById(evaluacionDTO.getPruebaId()).orElseThrow(() -> new ErrorPruebaNotFoundException("Prueba no encontrada"));
     
-        User evaluador = userRepository.findById(evaluacionDTO.getUserId())
-                .orElseThrow(() -> new RuntimeException("Evaluador no encontrado"));
+        User evaluador = userRepository.findById(evaluacionDTO.getUserId()).orElseThrow(() -> new RuntimeException("Evaluador no encontrado"));
     
         Evaluacion evaluacion = evaluacionConverter.dtoToEntity(evaluacionDTO);
         evaluacion.setParticipante(participante);
@@ -82,6 +82,6 @@ public class EvaluacionService {
                 evaluacionRepository.save(evaluacion);
                 return evaluacionConverter.entityToDto(evaluacion);
             })
-            .orElseThrow(() -> new RuntimeException("Evaluación no encontrada"));
+            .orElseThrow(() -> new ErrorEvaluacionNotFoundException("Evaluación no encontrada"));
     }
 }

@@ -10,6 +10,8 @@ import com.jve.proyecto.entity.Evaluacion;
 import com.jve.proyecto.entity.EvaluacionItem;
 import com.jve.proyecto.entity.Item;
 import com.jve.proyecto.entity.Prueba;
+import com.jve.proyecto.exception.ErrorEvaluacionNotFoundException;
+import com.jve.proyecto.exception.ErrorPruebaNotFoundException;
 import com.jve.proyecto.repository.EvaluacionItemRepository;
 import com.jve.proyecto.repository.EvaluacionRepository;
 import com.jve.proyecto.repository.ItemRepository;
@@ -79,17 +81,15 @@ public class EvaluacionItemService {
     
     public EvaluacionDTO actualizarNotaFinal(Long evaluacionId) {
     Double mediaPonderada = calcularMediaPonderada(evaluacionId);
-    System.out.println("Nota calculada: " + mediaPonderada);
-
     Evaluacion evaluacion = evaluacionRepository.findById(evaluacionId)
-            .orElseThrow(() -> new RuntimeException("Evaluación no encontrada"));
+            .orElseThrow(() -> new ErrorEvaluacionNotFoundException("Evaluación no encontrada"));
 
     evaluacion.setNotaFinal(mediaPonderada);
 
     evaluacionRepository.save(evaluacion);
 
     Evaluacion evaluacionActualizada = evaluacionRepository.findById(evaluacionId)
-            .orElseThrow(() -> new RuntimeException("No se encontró la evaluación después de guardar"));
+    .orElseThrow(() -> new RuntimeException("No se encontró la evaluación después de guardar"));
 
     return evaluacionConverter.entityToDto(evaluacionActualizada);
 }
@@ -105,7 +105,7 @@ public class EvaluacionItemService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<Long> obtenerIdEvaluacionPorPrueba(Long idPrueba) {
+    public Optional<Long> TraerIdEvaluacionPorPrueba(Long idPrueba) {
         return evaluacionRepository.findByPrueba_IdPrueba(idPrueba)
                 .stream()
                 .map(Evaluacion::getIdEvaluacion)
@@ -116,13 +116,12 @@ public class EvaluacionItemService {
                 .map(evaluacionItemConverter::entityToDto)
                 .collect(Collectors.toList());
     }
-     public String obtenerEnunciadoPorPrueba(Long idPrueba) {
-        Prueba prueba = pruebaRepository.findById(idPrueba)
-                .orElseThrow(() -> new RuntimeException("Prueba no encontrada"));
+     public String TraerEnunciadoPorPrueba(Long idPrueba) {
+        Prueba prueba = pruebaRepository.findById(idPrueba).orElseThrow(() -> new ErrorPruebaNotFoundException("Prueba no encontrada"));
         return prueba.getEnunciado();
     }
 
-    public List<ItemDTO> obtenerItemsPorPrueba(Long idPrueba) {
+    public List<ItemDTO> TraerItemsPorPrueba(Long idPrueba) {
         return itemRepository.findByPrueba_IdPrueba(idPrueba)
                 .stream()
                 .map(item -> itemConverter.entityToDto(item))  
@@ -130,7 +129,7 @@ public class EvaluacionItemService {
     }
 
 
-    public List<EvaluacionitemDTO> obtenerPorEvaluacion(Long idEvaluacion) {
+    public List<EvaluacionitemDTO> TraerPorEvaluacion(Long idEvaluacion) {
         return evaluacionItemRepository.findByEvaluacion_IdEvaluacion(idEvaluacion).stream()
                 .map(evaluacionItemConverter::entityToDto)
                 .collect(Collectors.toList());

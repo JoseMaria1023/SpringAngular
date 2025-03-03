@@ -11,6 +11,8 @@ import com.jve.proyecto.converter.UserConverter;
 import com.jve.proyecto.dto.UserDTO;
 import com.jve.proyecto.entity.Especialidad;
 import com.jve.proyecto.entity.User;
+import com.jve.proyecto.exception.ErrorUsuarioEncontradoException;
+import com.jve.proyecto.exception.ErrorUsuarioNotFoundException;
 import com.jve.proyecto.repository.UserRepository;
 
 @Service
@@ -51,16 +53,11 @@ public class UserService {
     }
 
     public Long getEspecialidadByUsername(String username) {
-        Optional<User> userOpt = userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ErrorUsuarioNotFoundException("Usuario no encontrado"));
     
-        if (userOpt.isPresent()) {
-            User user = userOpt.get();
-            return user.getEspecialidad() != null ? 
-                user.getEspecialidad().getIdEspecialidad() : null; 
-        } else {
-            throw new RuntimeException("Usuario no encontrado"); 
-        }
+        return (user.getEspecialidad() != null) ? user.getEspecialidad().getIdEspecialidad() : null;
     }
+    
      public List<UserDTO> getUsersByRole(String role) {
         List<User> users = userRepository.findByRole(role);
         return users.stream()
@@ -68,31 +65,29 @@ public class UserService {
                 .collect(Collectors.toList());
     }
     public UserDTO TraerUsuarioPorId(Long id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        User user = userRepository.findById(id).orElseThrow(() -> new ErrorUsuarioNotFoundException("Usuario no encontrado"));
         return userConverter.entityToDto(user);
     }
-    public UserDTO actualizarUsuario(Long id, UserDTO userDTO) {
-        Optional<User> optionalUser = userRepository.findById(id);
-        
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
     
-            user.setRole(userDTO.getRole());
-            user.setNombre(userDTO.getNombre());
-            user.setApellidos(userDTO.getApellidos());
-            user.setDni(userDTO.getDni());
-            if (userDTO.getEspecialidadId() != null) {
-                Especialidad especialidad = new Especialidad();
-                especialidad.setIdEspecialidad(userDTO.getEspecialidadId());
-                user.setEspecialidad(especialidad);
-            }
-            User updatedUser = userRepository.save(user);
-            return userConverter.entityToDto(updatedUser);
-        } else {
-            throw new RuntimeException("Usuario no encontrado con ID: " + id);
+    
+    public UserDTO actualizarUsuario(Long id, UserDTO userDTO) {
+        User user = userRepository.findById(id).orElseThrow(() -> new ErrorUsuarioEncontradoException("Usuario no encontrado con ID: " + id));
+    
+        user.setRole(userDTO.getRole());
+        user.setNombre(userDTO.getNombre());
+        user.setApellidos(userDTO.getApellidos());
+        user.setDni(userDTO.getDni());
+    
+        if (userDTO.getEspecialidadId() != null) {
+            Especialidad especialidad = new Especialidad();
+            especialidad.setIdEspecialidad(userDTO.getEspecialidadId());
+            user.setEspecialidad(especialidad);
         }
+    
+        User updatedUser = userRepository.save(user);
+        return userConverter.entityToDto(updatedUser);
     }
+    
     
 
 }

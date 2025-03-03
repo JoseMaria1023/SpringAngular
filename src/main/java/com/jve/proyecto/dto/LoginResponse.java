@@ -2,6 +2,7 @@ package com.jve.proyecto.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class LoginResponse {
     private String username;
     private List<String> authorities;

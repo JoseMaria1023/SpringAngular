@@ -49,8 +49,8 @@ public class PruebaController {
         return ResponseEntity.ok(pruebas);
     }
     @GetMapping("/ultimo-id")
-    public ResponseEntity<Long> obtenerUltimoIdPrueba() {
-        Long ultimoId = pruebaService.obtenerUltimoIdPrueba();
+    public ResponseEntity<Long> TraerUltimoIdPrueba() {
+        Long ultimoId = pruebaService.TraerUltimoIdPrueba();
         return ResponseEntity.ok(ultimoId);
     }
 

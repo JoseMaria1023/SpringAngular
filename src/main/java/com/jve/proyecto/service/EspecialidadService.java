@@ -1,6 +1,5 @@
 package com.jve.proyecto.service;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -8,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.jve.proyecto.converter.EspecialidadConverter;
 import com.jve.proyecto.dto.EspecialidadDTO;
 import com.jve.proyecto.entity.Especialidad;
+import com.jve.proyecto.exception.ErrorEspecialidadNotFoundException;
 import com.jve.proyecto.repository.EspecialidadRepository;
 @Service
 public class EspecialidadService {
@@ -33,16 +33,14 @@ public class EspecialidadService {
     }
 
     public EspecialidadDTO editarEspecialidad(Long id, EspecialidadDTO especialidadDTO) {
-        Optional<Especialidad> optionalEspecialidad = especialidadRepository.findById(id); 
-        if (optionalEspecialidad.isPresent()) {
-            Especialidad especialidad = optionalEspecialidad.get();
-            especialidad.setNombre(especialidadDTO.getNombre());
-            especialidad.setCodigo(especialidadDTO.getCodigo());
-            var updatedEspecialidad = especialidadRepository.save(especialidad);
-            return especialidadConverter.entityToDto(updatedEspecialidad);
-        } else {
-            throw new RuntimeException("Especialidad no encontrada");
-        }
+        Especialidad especialidad = especialidadRepository.findById(id).orElseThrow(() -> new ErrorEspecialidadNotFoundException("Especialidad no encontrada"));
+        
+        especialidad.setNombre(especialidadDTO.getNombre());
+        especialidad.setCodigo(especialidadDTO.getCodigo());
+        
+        var updatedEspecialidad = especialidadRepository.save(especialidad);
+        return especialidadConverter.entityToDto(updatedEspecialidad);
     }
+    
     
 }

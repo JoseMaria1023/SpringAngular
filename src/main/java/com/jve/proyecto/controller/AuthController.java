@@ -3,20 +3,13 @@ package com.jve.proyecto.controller;
 import com.jve.proyecto.dto.AuthRequest;
 import com.jve.proyecto.dto.LoginResponse;
 import com.jve.proyecto.dto.UserDTO;
-import com.jve.proyecto.entity.User;
-import com.jve.proyecto.exception.ErrorContrasenaException;
-import com.jve.proyecto.security.JwtTokenProvider;
-import com.jve.proyecto.service.UserService;
+import com.jve.proyecto.service.AuthService;
+
 
 import jakarta.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -25,67 +18,22 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:4200")
 public class AuthController {
 
-    private final UserService userService;
-    private final AuthenticationManager authenticationManager;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final AuthService authService;
 
-    public AuthController(UserService userService, AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider) {
-        this.userService = userService;
-        this.authenticationManager = authenticationManager;
-        this.jwtTokenProvider = jwtTokenProvider;
+
+     public AuthController(AuthService authService) {
+        this.authService = authService;
     }
 
     @PostMapping("/register")
     public ResponseEntity<UserDTO> register(@RequestBody @Valid UserDTO userDTO) {
-        if (userDTO.getPassword().length() < 8) {
-            throw new ErrorContrasenaException("la contrasena es muy pequena");
-        }
-        UserDTO savedUser = userService.guardarUsuario(userDTO);
+        UserDTO savedUser = authService.register(userDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
 
-    // Endpoint de Login
-    /*@PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody @Valid AuthRequest authRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
-        );
-
-        String token = jwtTokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(token);
-    }*/
-
     @PostMapping("/login")
-public ResponseEntity<LoginResponse> login2(@RequestBody AuthRequest loginDTO) {
-    Authentication authDTO = new UsernamePasswordAuthenticationToken(
-            loginDTO.getUsername(), loginDTO.getPassword()
-    );
-    Authentication authentication = this.authenticationManager.authenticate(authDTO);
-    String token = this.jwtTokenProvider.generateToken(authentication);
-
-    User user = (User) authentication.getPrincipal();
-
-    Long especialidadId = (user.getEspecialidad() != null) 
-            ? user.getEspecialidad().getIdEspecialidad() 
-            : null;
-    
-    String especialidadNombre = (user.getEspecialidad() != null) 
-            ? user.getEspecialidad().getNombre()  
-            : null;
-
-    Long idUser = user.getIdUser();
-
-    return ResponseEntity.ok().body(
-        new LoginResponse(
-                user.getUsername(),
-                authentication.getAuthorities().stream()
-                              .map(GrantedAuthority::getAuthority)
-                              .toList(),
-                token,
-                especialidadId,
-                idUser,
-                especialidadNombre  
-        )
-    );
+    public ResponseEntity<LoginResponse> login(@RequestBody AuthRequest loginDTO) {
+        LoginResponse response = authService.login(loginDTO);
+        return ResponseEntity.ok(response);
 }
 }

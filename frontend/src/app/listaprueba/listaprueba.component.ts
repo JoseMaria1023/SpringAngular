@@ -16,13 +16,12 @@ import { AuthService } from '../auth.service';
 })
 export class ListapruebaComponent implements OnInit {
   pruebas: any[] = [];
-  pruebasPaginadas: any[] = []; // Lista de pruebas filtrada por página
+  pruebasPaginadas: any[] = []; 
   participantes: any[] = []; 
   selectedPrueba: any = null;
 
-  // Variables para paginación
   paginaActual: number = 1;
-  pruebasPorPagina: number = 5; // Cambia este número si quieres más o menos por página
+  pruebasPorPagina: number = 5; 
 
   constructor(
     private pruebaService: PruebaService,
@@ -40,7 +39,7 @@ export class ListapruebaComponent implements OnInit {
     this.pruebaService.traerTodasLasPruebas().subscribe(
       (data) => {
         this.pruebas = data;
-        this.actualizarPaginacion(); // Filtrar pruebas al cargar
+        this.actualizarPaginacion(); 
       },
       (error) => {
         console.error('Error cargando pruebas', error);
@@ -66,7 +65,8 @@ export class ListapruebaComponent implements OnInit {
     this.selectedPrueba = prueba;
     this.participanteService.getParticipantes().subscribe(
       (data) => {
-        this.participantes = Array.isArray(data) ? data : [data];
+        this.participantes = (Array.isArray(data) ? data : [data])
+          .filter(participante => participante.especialidadId === prueba.especialidadId);
       },
       (error) => {
         console.error('Error cargando participantes', error);

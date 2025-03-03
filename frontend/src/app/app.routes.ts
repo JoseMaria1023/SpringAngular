@@ -51,6 +51,7 @@ export const appRoutes: Routes = [
   { path: 'experto/evaluar-prueba/:idPrueba', component: EvaluarPruebaComponent, canActivate: [ExpertoGuard]},
   { path : 'experto', component: ExpertoComponent, canActivate: [ExpertoGuard]},
   { path : 'admin/lista-evaluacion', component: ListaEvaluacionesComponent, canActivate: [AdminGuard]}
+  
 
 
   

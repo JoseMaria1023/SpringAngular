@@ -7,8 +7,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./especialidades.component.css']
 })
 export class EspecialidadesComponent {
+  role: string | null = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    this.role = sessionStorage.getItem('role'); // Obtiene el rol desde sessionStorage
+  }
 
   verEspecialidad(): void {
     this.router.navigate(['/admin/especialidad']);
@@ -22,8 +25,6 @@ export class EspecialidadesComponent {
     this.router.navigate(['/admin/especialidad/editar']);
   }
 }
-
-
 
 
 //   especialidades: any[] = [];

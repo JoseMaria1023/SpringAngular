@@ -2,6 +2,8 @@ package com.jve.proyecto.service;
 
 import com.jve.proyecto.dto.ParticipanteDTO;
 import com.jve.proyecto.entity.Participante;
+import com.jve.proyecto.exception.ErrorEspecialidadNotFoundException;
+import com.jve.proyecto.exception.ErrorParticipanteNotFoundException;
 import com.jve.proyecto.entity.Especialidad;
 import com.jve.proyecto.repository.ParticipanteRepository;
 import com.jve.proyecto.repository.EspecialidadRepository;
@@ -38,23 +40,20 @@ public class ParticipanteService {
     }
 
     public ParticipanteDTO editarParticipante(Long id, ParticipanteDTO participanteDTO) {
-        Participante participanteExistente = participanteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Participante no encontrado"));
+        Participante participanteExistente = participanteRepository.findById(id).orElseThrow(() -> new ErrorParticipanteNotFoundException("Participante no encontrado"));
 
         participanteExistente.setNombre(participanteDTO.getNombre());
         participanteExistente.setApellidos(participanteDTO.getApellidos());
         participanteExistente.setCentro(participanteDTO.getCentro());
 
-        Especialidad especialidad = especialidadRepository.findById(participanteDTO.getEspecialidadId())
-                .orElseThrow(() -> new RuntimeException("Especialidad no encontrada"));
+        Especialidad especialidad = especialidadRepository.findById(participanteDTO.getEspecialidadId()).orElseThrow(() -> new ErrorEspecialidadNotFoundException("Especialidad no encontrada"));
         participanteExistente.setEspecialidad(especialidad);
 
         return participanteConverter.entityToDto(participanteRepository.save(participanteExistente));
     }
 
     public ParticipanteDTO guardarParticipante(ParticipanteDTO participanteDTO) {
-        Especialidad especialidad = especialidadRepository.findById(participanteDTO.getEspecialidadId())
-                .orElseThrow(() -> new RuntimeException("Especialidad no encontrada"));
+        Especialidad especialidad = especialidadRepository.findById(participanteDTO.getEspecialidadId()).orElseThrow(() -> new ErrorEspecialidadNotFoundException("Especialidad no encontrada"));
 
         Participante participante = participanteConverter.dtoToEntity(participanteDTO);
         participante.setEspecialidad(especialidad);
@@ -65,6 +64,6 @@ public class ParticipanteService {
     public ParticipanteDTO buscarParticipantePorId(Long id) {
         return participanteRepository.findById(id)
                 .map(participanteConverter::entityToDto)
-                .orElseThrow(() -> new RuntimeException("Participante no encontrado"));
+                .orElseThrow(() -> new ErrorParticipanteNotFoundException("Participante no encontrado"));
     }
 }

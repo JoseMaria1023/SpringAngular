@@ -6,6 +6,15 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
 
 public class ItemDTO {
 
@@ -26,46 +35,7 @@ public class ItemDTO {
     @NotNull(message = "La prueba es obligatoria")
     private Long pruebaId;
 
-    // Getters y Setters
-    public Long getIdItem() {
-        return idItem;
-    }
-
-    public void setIdItem(Long idItem) {
-        this.idItem = idItem;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public Integer getPeso() {
-        return peso;
-    }
-
-    public void setPeso(Integer peso) {
-        this.peso = peso;
-    }
-
-    public Integer getGradosConsecucion() {
-        return gradosConsecucion;
-    }
-
-    public void setGradosConsecucion(Integer gradosConsecucion) {
-        this.gradosConsecucion = gradosConsecucion;
-    }
-
-    public Long getPruebaId() {
-        return pruebaId;
-    }
-
-    public void setPruebaId(Long pruebaId) {
-        this.pruebaId = pruebaId;
-    }
+   
     public ItemDTO(Long idItem, String descripcion, Integer peso, Integer gradosConsecucion) {
         this.idItem = idItem;
         this.descripcion = descripcion;
@@ -74,9 +44,6 @@ public class ItemDTO {
     }
 
     public ItemDTO(Item item) {
-        //TODO Auto-generated constructor stub
     }
 
-    public ItemDTO() {
-    }
 }

@@ -1,7 +1,7 @@
 <div class="participantes-main-container">
-    <h2>Gestión de Especialidades</h2>
-    <div class="button-container">
-      <button (click)="crearEspecialidad()">Crear Especialidad</button>
-    </div>
-  </div>
+  <h2>Gestión de Especialidades</h2>
   
+  <div class="button-container">
+    <button *ngIf="role === 'ROLE_ADMIN'" (click)="crearEspecialidad()">Crear Especialidad</button>
+  </div>
+</div>

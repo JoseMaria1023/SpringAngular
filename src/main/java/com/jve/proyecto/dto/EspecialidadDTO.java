@@ -2,6 +2,15 @@ package com.jve.proyecto.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 
 public class EspecialidadDTO {
 
@@ -15,27 +24,4 @@ public class EspecialidadDTO {
     @Size(min = 2, max = 45, message = "El código debe tener entre 2 y 45 caracteres")
     private String codigo;
 
-    public Long getIdEspecialidad() {
-        return idEspecialidad;
-    }
-
-    public void setIdEspecialidad(Long idEspecialidad) {
-        this.idEspecialidad = idEspecialidad;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
 }

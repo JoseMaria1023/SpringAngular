@@ -2,6 +2,15 @@ package com.jve.proyecto.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 
 public class EvaluacionitemDTO {
 
@@ -19,44 +28,5 @@ public class EvaluacionitemDTO {
     @Size(max = 200, message = "La explicación debe tener máximo 200 caracteres")
     private String explicacion;
 
-    // Getters y Setters
-    public Long getIdEvaluacionItem() {
-        return idEvaluacionItem;
-    }
-
-    public void setIdEvaluacionItem(Long idEvaluacionItem) {
-        this.idEvaluacionItem = idEvaluacionItem;
-    }
-
-    public Long getEvaluacionId() {
-        return evaluacionId;
-    }
-
-    public void setEvaluacionId(Long evaluacionId) {
-        this.evaluacionId = evaluacionId;
-    }
-
-    public Long getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(Long itemId) {
-        this.itemId = itemId;
-    }
-
-    public Integer getValoracion() {
-        return valoracion;
-    }
-
-    public void setValoracion(Integer valoracion) {
-        this.valoracion = valoracion;
-    }
-
-    public String getExplicacion() {
-        return explicacion;
-    }
-
-    public void setExplicacion(String explicacion) {
-        this.explicacion = explicacion;
-    }
+    
 }

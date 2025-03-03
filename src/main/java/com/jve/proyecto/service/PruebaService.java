@@ -15,6 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.jve.proyecto.converter.PruebaConverter;
 import com.jve.proyecto.dto.PruebaDTO;
 import com.jve.proyecto.entity.Prueba;
+import com.jve.proyecto.exception.ErrorEspecialidadNotFoundException;
+import com.jve.proyecto.exception.ErrorPDFException;
+import com.jve.proyecto.exception.ErrorPruebaNotFoundException;
 import com.jve.proyecto.entity.Especialidad;
 import com.jve.proyecto.repository.PruebaRepository;
 import com.jve.proyecto.repository.EspecialidadRepository;
@@ -39,8 +42,7 @@ public class PruebaService {
     }
 
     public PruebaDTO guardarPruebaConPDF(MultipartFile file, Integer puntuacionMaxima, Long especialidadId) {
-        Especialidad especialidad = especialidadRepository.findById(especialidadId)
-                .orElseThrow(() -> new RuntimeException("Especialidad no encontrada"));
+        Especialidad especialidad = especialidadRepository.findById(especialidadId).orElseThrow(() -> new ErrorEspecialidadNotFoundException("Especialidad no encontrada"));
 
         String fileName = guardarArchivo(file);
         String fileUrl = "/uploads/pruebas/" + fileName;
@@ -64,10 +66,11 @@ public class PruebaService {
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
             return fileName;
         } catch (IOException e) {
-            throw new RuntimeException("Error al guardar el archivo PDF", e);
+            throw new ErrorPDFException("Error al guardar el archivo PDF");
         }
     }
-    public Long obtenerUltimoIdPrueba() {
+
+    public Long TraerUltimoIdPrueba() {
         Prueba prueba = pruebaRepository.findTopByOrderByIdPruebaDesc();
         return prueba != null ? prueba.getIdPrueba() : null; 
     }
@@ -85,8 +88,7 @@ public class PruebaService {
     }
 
     public PruebaDTO editarPrueba(Long id, MultipartFile file, PruebaDTO pruebaDTO) {
-        Prueba prueba = pruebaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Prueba no encontrada"));
+        Prueba prueba = pruebaRepository.findById(id).orElseThrow(() -> new ErrorPruebaNotFoundException("Prueba no encontrada"));
 
         if (file != null && !file.isEmpty()) {
             String fileName = guardarArchivo(file);
@@ -94,8 +96,7 @@ public class PruebaService {
         }
         prueba.setPuntuacionMaxima(pruebaDTO.getPuntuacionMaxima());
         
-        Especialidad especialidad = especialidadRepository.findById(pruebaDTO.getEspecialidadId())
-                .orElseThrow(() -> new RuntimeException("Especialidad no encontrada"));
+        Especialidad especialidad = especialidadRepository.findById(pruebaDTO.getEspecialidadId()).orElseThrow(() -> new ErrorEspecialidadNotFoundException("Especialidad no encontrada"));
         prueba.setEspecialidad(especialidad);
 
         Prueba updatedPrueba = pruebaRepository.save(prueba);
@@ -103,8 +104,7 @@ public class PruebaService {
     }
 
     public PruebaDTO getPruebaById(Long id) {
-        Prueba prueba = pruebaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Prueba no encontrada"));
+        Prueba prueba = pruebaRepository.findById(id).orElseThrow(() -> new ErrorPruebaNotFoundException("Prueba no encontrada"));
         return pruebaConverter.entityToDto(prueba);
     }
 }

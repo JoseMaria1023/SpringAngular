@@ -41,17 +41,18 @@ public class EvaluacionItemController {
     }
 
     @GetMapping("/prueba/{idPrueba}")
-    public ResponseEntity<Long> obtenerIdEvaluacion(@PathVariable Long idPrueba) {
-        return evaluacionItemService.obtenerIdEvaluacionPorPrueba(idPrueba)
+    public ResponseEntity<Long> TraerIdEvaluacion(@PathVariable Long idPrueba) {
+        return evaluacionItemService.TraerIdEvaluacionPorPrueba(idPrueba)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/items/prueba/{idPrueba}")
-    public ResponseEntity<List<ItemDTO>> obtenerItemsPorPrueba(@PathVariable Long idPrueba) {
-        List<ItemDTO> items = evaluacionItemService.obtenerItemsPorPrueba(idPrueba);
+    public ResponseEntity<List<ItemDTO>> TraerItemsPorPrueba(@PathVariable Long idPrueba) {
+        List<ItemDTO> items = evaluacionItemService.TraerItemsPorPrueba(idPrueba);
         return ResponseEntity.ok(items);
     }
+    
      @PutMapping("/actualizar-nota/{idEvaluacion}")
     public ResponseEntity<EvaluacionDTO> actualizarNotaFinal(@PathVariable Long idEvaluacion) {
         try {

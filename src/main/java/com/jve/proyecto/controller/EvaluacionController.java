@@ -20,13 +20,13 @@ public class EvaluacionController {
     }
 
     @GetMapping("/todas")
-    public ResponseEntity<List<EvaluacionDTO>> obtenerTodas() {
-        return ResponseEntity.ok(evaluacionService.obtenerTodas());
+    public ResponseEntity<List<EvaluacionDTO>> TraerTodas() {
+        return ResponseEntity.ok(evaluacionService.TraerTodas());
     }
 
     @GetMapping("/prueba/{idPrueba}")
-    public ResponseEntity<List<EvaluacionDTO>> obtenerEvaluacionesPorPrueba(@PathVariable Long idPrueba) {
-        List<EvaluacionDTO> evaluaciones = evaluacionService.obtenerEvaluacionesPorPrueba(idPrueba);
+    public ResponseEntity<List<EvaluacionDTO>> TraerEvaluacionesPorPrueba(@PathVariable Long idPrueba) {
+        List<EvaluacionDTO> evaluaciones = evaluacionService.TraerEvaluacionesPorPrueba(idPrueba);
         return ResponseEntity.ok(evaluaciones);
     }
 

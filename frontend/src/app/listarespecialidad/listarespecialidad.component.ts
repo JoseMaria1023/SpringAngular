@@ -16,12 +16,15 @@ export class ListarespecialidadComponent implements OnInit {
   especialidades: any[] = [];
   mostrarFormularioCrear: boolean = false;
   especialidadEnEdicion: any = null;
+  role: string | null = '';
 
   nuevaEspecialidad: any = { nombre: '', codigo: '' };
   errorMessage: string = '';
   exitoMessage: string = '';
 
-  constructor(private especialidadService: EspecialidadService) {}
+  constructor(private especialidadService: EspecialidadService) {
+    this.role = sessionStorage.getItem('role'); 
+  }
 
   ngOnInit(): void {
     this.cargarEspecialidades();
@@ -41,8 +44,10 @@ export class ListarespecialidadComponent implements OnInit {
   }
 
   activarCreacion(): void {
-    this.mostrarFormularioCrear = true;
-    this.especialidadEnEdicion = null;
+    if (this.role === 'ROLE_ADMIN') {
+      this.mostrarFormularioCrear = true;
+      this.especialidadEnEdicion = null;
+    }
   }
 
   cancelarCreacion(): void {
@@ -51,6 +56,8 @@ export class ListarespecialidadComponent implements OnInit {
   }
 
   crearEspecialidad(): void {
+    if (this.role !== 'ROLE_ADMIN') return;
+
     this.especialidadService.crearEspecialidad(this.nuevaEspecialidad)
       .subscribe({
         next: () => {
@@ -65,8 +72,10 @@ export class ListarespecialidadComponent implements OnInit {
   }
 
   activarEdicion(especialidad: any): void {
-    this.especialidadEnEdicion = { ...especialidad };
-    this.mostrarFormularioCrear = false;
+    if (this.role === 'ROLE_ADMIN') {
+      this.especialidadEnEdicion = { ...especialidad };
+      this.mostrarFormularioCrear = false;
+    }
   }
 
   cancelarEdicion(): void {
@@ -74,7 +83,7 @@ export class ListarespecialidadComponent implements OnInit {
   }
 
   guardarEdicion(): void {
-    if (!this.especialidadEnEdicion) return;
+    if (this.role !== 'ROLE_ADMIN' || !this.especialidadEnEdicion) return;
 
     this.especialidadService.editarEspecialidad(this.especialidadEnEdicion)
       .subscribe({

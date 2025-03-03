@@ -1,7 +1,6 @@
 package com.jve.proyecto.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -10,6 +9,8 @@ import com.jve.proyecto.converter.ItemConverter;
 import com.jve.proyecto.dto.ItemDTO;
 import com.jve.proyecto.entity.Item;
 import com.jve.proyecto.entity.Prueba;
+import com.jve.proyecto.exception.ErrorItemNotFoundException;
+import com.jve.proyecto.exception.ErrorPruebaNotFoundException;
 import com.jve.proyecto.repository.ItemRepository;
 import com.jve.proyecto.repository.PruebaRepository;
 
@@ -27,9 +28,7 @@ public class ItemService {
     }
 
     public ItemDTO guardarItem(ItemDTO itemDTO) {
-        Prueba prueba = pruebaRepository.findById(itemDTO.getPruebaId())
-                .orElseThrow(() -> new RuntimeException("Prueba no encontrada"));
-
+        Prueba prueba = pruebaRepository.findById(itemDTO.getPruebaId()).orElseThrow(() -> new ErrorPruebaNotFoundException("Prueba no encontrada"));
         Item item = itemConverter.dtoToEntity(itemDTO);
         item.setPrueba(prueba);
 
@@ -44,33 +43,28 @@ public class ItemService {
     }
 
     public ItemDTO editarItem(Long id, ItemDTO itemDTO) {
-        Item item = itemRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Item no encontrado"));
-
+        Item item = itemRepository.findById(id).orElseThrow(() -> new ErrorItemNotFoundException("Item no encontrado"));
         item.setDescripcion(itemDTO.getDescripcion());
         item.setPeso(itemDTO.getPeso());
         item.setGradosConsecucion(itemDTO.getGradosConsecucion());
 
         if (itemDTO.getPruebaId() != null) {
-            Prueba prueba = pruebaRepository.findById(itemDTO.getPruebaId())
-                    .orElseThrow(() -> new RuntimeException("Prueba no encontrada"));
+            Prueba prueba = pruebaRepository.findById(itemDTO.getPruebaId()).orElseThrow(() -> new ErrorPruebaNotFoundException("Prueba no encontrada"));
             item.setPrueba(prueba);
         }
-
         Item updatedItem = itemRepository.save(item);
         return itemConverter.entityToDto(updatedItem);
     }
 
-    public ItemDTO obtenerItemPorId(Long id) {
-        Item item = itemRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Item no encontrado"));
+    public ItemDTO TraerItemPorId(Long id) {
+        Item item = itemRepository.findById(id).orElseThrow(() -> new ErrorItemNotFoundException("Item no encontrado"));
         return itemConverter.entityToDto(item);
     }
+
+
     public List<Item> guardarTodos(List<ItemDTO> itemDTOs) {
         List<Item> items = itemDTOs.stream().map(itemDTO -> {
-            Prueba prueba = pruebaRepository.findById(itemDTO.getPruebaId())
-                    .orElseThrow(() -> new RuntimeException("Prueba no encontrada"));
-
+            Prueba prueba = pruebaRepository.findById(itemDTO.getPruebaId()).orElseThrow(() -> new ErrorPruebaNotFoundException("Prueba no encontrada"));
             Item item = itemConverter.dtoToEntity(itemDTO);
             item.setPrueba(prueba);  
 
