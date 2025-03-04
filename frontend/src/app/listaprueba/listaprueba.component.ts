@@ -19,9 +19,9 @@ export class ListapruebaComponent implements OnInit {
   pruebasPaginadas: any[] = []; 
   participantes: any[] = []; 
   selectedPrueba: any = null;
-
   paginaActual: number = 1;
   pruebasPorPagina: number = 5; 
+  especialidadId: number | null = null;  // ID de la especialidad del usuario logueado
 
   constructor(
     private pruebaService: PruebaService,
@@ -29,7 +29,9 @@ export class ListapruebaComponent implements OnInit {
     private evaluacionService: EvaluacionService,
     private authService: AuthService,
     public router: Router
-  ) {}
+  ) {
+    this.especialidadId = Number(this.authService.getEspecialidadId()); // Obtener la especialidad del usuario
+  }
 
   ngOnInit() {
     this.cargarPruebas();
@@ -38,8 +40,9 @@ export class ListapruebaComponent implements OnInit {
   cargarPruebas() {
     this.pruebaService.traerTodasLasPruebas().subscribe(
       (data) => {
-        this.pruebas = data;
-        this.actualizarPaginacion(); 
+        // Filtrar pruebas por la especialidad del usuario logueado
+        this.pruebas = data.filter(prueba => prueba.especialidadId === this.especialidadId);
+        this.actualizarPaginacion();
       },
       (error) => {
         console.error('Error cargando pruebas', error);
