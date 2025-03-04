@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { EspecialidadService } from '../especialidad.service';
-import { CreaespecialidadComponent } from "../creaespecialidad/creaespecialidad.component";
-import { EditarespecialidadComponent } from "../editarespecialidad/editarespecialidad.component";
 import { CommonModule } from '@angular/common';
 import { catchError, of } from 'rxjs';
 import { FormsModule } from '@angular/forms';
@@ -10,21 +8,18 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-listarespecialidad',
   templateUrl: './listarespecialidad.component.html',
   styleUrls: ['./listarespecialidad.component.css'],
-  imports: [CreaespecialidadComponent, EditarespecialidadComponent,CommonModule,FormsModule]
+  imports: [CommonModule, FormsModule]
 })
 export class ListarespecialidadComponent implements OnInit {
   especialidades: any[] = [];
   mostrarFormularioCrear: boolean = false;
   especialidadEnEdicion: any = null;
-  role: string | null = '';
 
   nuevaEspecialidad: any = { nombre: '', codigo: '' };
   errorMessage: string = '';
   exitoMessage: string = '';
 
-  constructor(private especialidadService: EspecialidadService) {
-    this.role = sessionStorage.getItem('role'); 
-  }
+  constructor(private especialidadService: EspecialidadService) {}
 
   ngOnInit(): void {
     this.cargarEspecialidades();
@@ -44,10 +39,8 @@ export class ListarespecialidadComponent implements OnInit {
   }
 
   activarCreacion(): void {
-    if (this.role === 'ROLE_ADMIN') {
-      this.mostrarFormularioCrear = true;
-      this.especialidadEnEdicion = null;
-    }
+    this.mostrarFormularioCrear = true;
+    this.especialidadEnEdicion = null;
   }
 
   cancelarCreacion(): void {
@@ -56,8 +49,6 @@ export class ListarespecialidadComponent implements OnInit {
   }
 
   crearEspecialidad(): void {
-    if (this.role !== 'ROLE_ADMIN') return;
-
     this.especialidadService.crearEspecialidad(this.nuevaEspecialidad)
       .subscribe({
         next: () => {
@@ -72,10 +63,8 @@ export class ListarespecialidadComponent implements OnInit {
   }
 
   activarEdicion(especialidad: any): void {
-    if (this.role === 'ROLE_ADMIN') {
-      this.especialidadEnEdicion = { ...especialidad };
-      this.mostrarFormularioCrear = false;
-    }
+    this.especialidadEnEdicion = { ...especialidad };
+    this.mostrarFormularioCrear = false;
   }
 
   cancelarEdicion(): void {
@@ -83,7 +72,7 @@ export class ListarespecialidadComponent implements OnInit {
   }
 
   guardarEdicion(): void {
-    if (this.role !== 'ROLE_ADMIN' || !this.especialidadEnEdicion) return;
+    if (!this.especialidadEnEdicion) return;
 
     this.especialidadService.editarEspecialidad(this.especialidadEnEdicion)
       .subscribe({

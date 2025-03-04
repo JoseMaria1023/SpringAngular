@@ -49,6 +49,14 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // Deshabilitar CSRF para API REST
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Estado sin sesión
                 .authorizeRequests(requests -> requests
+                .requestMatchers(
+                                HttpMethod.GET,
+                                "/swagger-ui.html", 
+                                "/swagger-ui/**", 
+                                "/v3/api-docs/**", 
+                                "/swagger-resources/**", 
+                                "/webjars/**"
+                        ).permitAll()
                         .requestMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll() // Permitir acceso público
                         .requestMatchers(HttpMethod.GET, "/api/participantes/todos").permitAll() // Permitir acceso público
                         .requestMatchers(HttpMethod.POST, "/api/participantes/crear").hasAuthority("ROLE_EXPERTO") // Solo expertos pueden crear

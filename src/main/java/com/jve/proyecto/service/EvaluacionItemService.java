@@ -81,8 +81,7 @@ public class EvaluacionItemService {
     
     public EvaluacionDTO actualizarNotaFinal(Long evaluacionId) {
     Double mediaPonderada = calcularMediaPonderada(evaluacionId);
-    Evaluacion evaluacion = evaluacionRepository.findById(evaluacionId)
-            .orElseThrow(() -> new ErrorEvaluacionNotFoundException("Evaluación no encontrada"));
+    Evaluacion evaluacion = evaluacionRepository.findById(evaluacionId).orElseThrow(() -> new ErrorEvaluacionNotFoundException("Evaluacion no encontrada"));
 
     evaluacion.setNotaFinal(mediaPonderada);
 

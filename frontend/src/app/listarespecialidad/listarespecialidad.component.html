@@ -1,8 +1,8 @@
 <div class="especialidad-container">
   <h2>Gestión de Especialidades</h2>
 
-  <!-- Botón para activar la creación (Solo ADMIN) -->
-  <button *ngIf="role === 'ROLE_ADMIN'" (click)="activarCreacion()" class="btn-crear">Crear Especialidad</button>
+  <!-- Botón para activar la creación (Disponible para todos) -->
+  <button (click)="activarCreacion()" class="btn-crear">Crear Especialidad</button>
 
   <!-- Formulario de creación -->
   <div *ngIf="mostrarFormularioCrear" class="form-container">
@@ -28,8 +28,8 @@
     <li *ngFor="let especialidad of especialidades">
       {{ especialidad.nombre }} ({{ especialidad.codigo }})
 
-      <!-- Botón de Editar (Solo ADMIN) -->
-      <button *ngIf="role === 'ROLE_ADMIN'" (click)="activarEdicion(especialidad)" class="btn-editar">Editar</button>
+      <!-- Botón de Editar (Disponible para todos) -->
+      <button (click)="activarEdicion(especialidad)" class="btn-editar">Editar</button>
     </li>
   </ul>
 

@@ -17,7 +17,7 @@ public class Swagger {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("API-REST | Cochemaría")
+                        .title("API-REST | Jose maría")
                         .version("1")
                         .description("This is a list of controllers names and their endpoints."))
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
