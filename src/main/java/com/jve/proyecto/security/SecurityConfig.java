@@ -47,7 +47,7 @@ public class SecurityConfig {
         http
                 .cors(withDefaults()) // Habilitar CORS
                 .csrf(csrf -> csrf.disable()) // Deshabilitar CSRF para API REST
-                .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Estado sin sesión
+                .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) 
                 .authorizeRequests(requests -> requests
                 .requestMatchers(
                                 HttpMethod.GET,
@@ -59,8 +59,8 @@ public class SecurityConfig {
                         ).permitAll()
                         .requestMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll() // Permitir acceso público
                         .requestMatchers(HttpMethod.GET, "/api/participantes/todos").permitAll() // Permitir acceso público
-                        .requestMatchers(HttpMethod.POST, "/api/participantes/crear").hasAuthority("ROLE_EXPERTO") // Solo expertos pueden crear
-                        .requestMatchers(HttpMethod.PUT, "/api/participantes/editar/**").hasAuthority("ROLE_EXPERTO") // Solo expertos pueden editar
+                        .requestMatchers(HttpMethod.POST, "/api/participantes/crear").hasAuthority("ROLE_EXPERTO") 
+                        .requestMatchers(HttpMethod.PUT, "/api/participantes/editar/**").hasAuthority("ROLE_EXPERTO") 
                         .requestMatchers(HttpMethod.GET, "/api/especialidades/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/evaluaciones/todas").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/evaluaciones/**").hasAuthority("ROLE_EXPERTO")

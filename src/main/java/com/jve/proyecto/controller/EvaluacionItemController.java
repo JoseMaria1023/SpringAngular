@@ -47,7 +47,7 @@ public class EvaluacionItemController {
     }
 
     @GetMapping
-    @Operation(summary = "Obtener todos los ítems evaluados", description = "Devuelve una lista de todos los ítems evaluados en el sistema")
+    @Operation(summary = "Traer todos los ítems evaluados", description = "Devuelve una lista de todos los ítems evaluados en el sistema")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Lista de ítems evaluados obtenida con éxito", 
                      content = @Content(mediaType = "application/json", 
@@ -60,7 +60,7 @@ public class EvaluacionItemController {
     }
 
     @GetMapping("/prueba/{idPrueba}")
-    @Operation(summary = "Obtener ID de evaluación por prueba", description = "Devuelve el ID de la evaluación asociada a una prueba específica")
+    @Operation(summary = "Traer ID de evaluación por prueba", description = "Devuelve el ID de la evaluación asociada a una prueba específica")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "ID de evaluación obtenido con éxito", 
                      content = @Content(mediaType = "application/json", 
@@ -75,7 +75,7 @@ public class EvaluacionItemController {
     }
 
     @GetMapping("/items/prueba/{idPrueba}")
-    @Operation(summary = "Obtener ítems por prueba", description = "Devuelve una lista de los ítems asociados a una prueba específica")
+    @Operation(summary = "Traer ítems por prueba", description = "Devuelve una lista de los ítems asociados a una prueba específica")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Lista de ítems obtenida con éxito", 
                      content = @Content(mediaType = "application/json", 

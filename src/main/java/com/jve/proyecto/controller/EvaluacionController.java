@@ -25,7 +25,7 @@ public class EvaluacionController {
     }
 
     @GetMapping("/todas")
-    @Operation(summary = "Obtener todas las evaluaciones", description = "Devuelve una lista de todas las evaluaciones")
+    @Operation(summary = "Traer todas las evaluaciones", description = "Devuelve una lista de todas las evaluaciones")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Lista de evaluaciones obtenida con éxito", 
                      content = @Content(mediaType = "application/json", 
@@ -37,7 +37,7 @@ public class EvaluacionController {
     }
 
     @GetMapping("/prueba/{idPrueba}")
-    @Operation(summary = "Obtener evaluaciones por prueba", description = "Devuelve una lista de evaluaciones asociadas a una prueba específica")
+    @Operation(summary = "Traer evaluaciones por prueba", description = "Devuelve una lista de evaluaciones asociadas a una prueba específica")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Lista de evaluaciones por prueba obtenida con éxito", 
                      content = @Content(mediaType = "application/json", 

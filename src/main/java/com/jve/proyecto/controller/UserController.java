@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @GetMapping
-    @Operation(summary = "Obtener todos los usuarios", description = "Obtiene la lista de todos los usuarios registrados en el sistema")
+    @Operation(summary = "Traer todos los usuarios", description = "Trae la lista de todos los usuarios registrados en el sistema")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Lista de usuarios obtenida con éxito", 
                      content = @Content(mediaType = "application/json", 
@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Obtener usuario por ID", description = "Obtiene los detalles de un usuario mediante su ID")
+    @Operation(summary = "Traer usuario por ID", description = "Trae los detalles de un usuario mediante su ID")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Usuario encontrado con éxito", 
                      content = @Content(mediaType = "application/json", 
@@ -56,7 +56,7 @@ public class UserController {
     }
 
     @GetMapping("/role/{role}")
-    @Operation(summary = "Obtener usuarios por rol", description = "Obtiene una lista de usuarios según su rol (ej. ADMIN, USER)")
+    @Operation(summary = "Traer usuarios por rol", description = "Trae una lista de usuarios según su rol (ej. ADMIN, USER)")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Lista de usuarios con el rol solicitado obtenida con éxito", 
                      content = @Content(mediaType = "application/json", 

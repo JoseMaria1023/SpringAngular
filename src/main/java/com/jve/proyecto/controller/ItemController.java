@@ -44,7 +44,7 @@ public class ItemController {
     }
 
     @GetMapping("/todos")
-    @Operation(summary = "Obtener todos los ítems", description = "Devuelve una lista de todos los ítems disponibles en el sistema")
+    @Operation(summary = "Traer todos los ítems", description = "Devuelve una lista de todos los ítems disponibles en el sistema")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Lista de ítems obtenida con éxito", 
                      content = @Content(mediaType = "application/json", 

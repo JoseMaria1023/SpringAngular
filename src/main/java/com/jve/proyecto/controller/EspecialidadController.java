@@ -42,7 +42,7 @@ public class EspecialidadController {
     }
 
     @GetMapping("/todos")
-    @Operation(summary = "Obtener todas las especialidades", description = "Devuelve una lista de todas las especialidades")
+    @Operation(summary = "Traer todas las especialidades", description = "Devuelve una lista de todas las especialidades")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Lista de especialidades obtenida con éxito", 
                      content = @Content(mediaType = "application/json", 

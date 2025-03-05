@@ -95,12 +95,10 @@ export class EvaluarPruebaComponent implements OnInit {
     this.mediaPonderada = totalPeso > 0 ? (totalValoracion / totalPeso) * 100 : 0;
   }
 
-  // Verifica si todas las valoraciones están completas
   todasLasValoracionesCompletas(): boolean {
     return this.evaluaciones.every(evaluacion => evaluacion.valoracion !== null);
   }
 
-  // Método para enviar la evaluación
   enviarEvaluacion() {
     if (!this.idEvaluacion) {
       alert('No se pudo obtener el ID de evaluación');

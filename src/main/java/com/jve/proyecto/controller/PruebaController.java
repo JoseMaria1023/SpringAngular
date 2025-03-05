@@ -49,7 +49,7 @@ public class PruebaController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Obtener prueba por ID", description = "Obtiene los detalles de una prueba mediante su ID")
+    @Operation(summary = "Traer prueba por ID", description = "Trae los detalles de una prueba mediante su ID")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Prueba encontrada con éxito", 
                      content = @Content(mediaType = "application/json", 
@@ -65,7 +65,7 @@ public class PruebaController {
     }
 
     @GetMapping("/todas")
-    @Operation(summary = "Obtener todas las pruebas", description = "Obtiene una lista de todas las pruebas")
+    @Operation(summary = "Traer todas las pruebas", description = "Trae una lista de todas las pruebas")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Lista de pruebas obtenida con éxito", 
                      content = @Content(mediaType = "application/json", 
@@ -78,7 +78,7 @@ public class PruebaController {
     }
 
     @GetMapping("/especialidad/{especialidadId}")
-    @Operation(summary = "Obtener pruebas por especialidad", description = "Obtiene las pruebas asociadas a una especialidad específica")
+    @Operation(summary = "Traer pruebas por especialidad", description = "Trae las pruebas asociadas a una especialidad específica")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Lista de pruebas de la especialidad obtenida con éxito", 
                      content = @Content(mediaType = "application/json", 
@@ -94,7 +94,7 @@ public class PruebaController {
     }
 
     @GetMapping("/ultimo-id")
-    @Operation(summary = "Obtener el último ID de prueba", description = "Obtiene el último ID de prueba creado en el sistema")
+    @Operation(summary = "Traer el último ID de prueba", description = "Trae el último ID de prueba creado en el sistema")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Último ID de prueba obtenido con éxito", 
                      content = @Content(mediaType = "application/json", 

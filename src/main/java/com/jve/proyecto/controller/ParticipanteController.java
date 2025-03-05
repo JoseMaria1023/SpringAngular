@@ -51,7 +51,7 @@ public class ParticipanteController {
     }
 
     @GetMapping("/todos")
-    @Operation(summary = "Obtener todos los participantes", description = "Devuelve una lista de participantes. Si el usuario está autenticado, se filtra por especialidad")
+    @Operation(summary = "Traer todos los participantes", description = "Devuelve una lista de participantes. Si el usuario está autenticado, se filtra por especialidad")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Lista de participantes obtenida con éxito", 
                      content = @Content(mediaType = "application/json", 
@@ -90,7 +90,7 @@ public class ParticipanteController {
     }
 
     @GetMapping("/buscar/{id}")
-    @Operation(summary = "Buscar un participante por ID", description = "Obtiene los datos de un participante por su ID")
+    @Operation(summary = "Buscar un participante por ID", description = "Trae los datos de un participante por su ID")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Participante encontrado con éxito", 
                      content = @Content(mediaType = "application/json", 
